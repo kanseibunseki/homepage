@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kansei Bunseki AI - データに、血を通わせろ。</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', 'M PLUS Rounded 1c', sans-serif;
+            background-color: #0a0a1a; /* より深く知的なダークブルー */
+            color: #E0E0E0;
+            overflow-x: hidden;
+        }
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+        /* ガラス効果 */
+        .glass-effect {
+            background: rgba(20, 20, 40, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.5s ease;
+        }
+        .header-glass {
+             background: rgba(10, 10, 26, 0.5);
+             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .hero-text-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0; /* アニメーションのために初期は非表示 */
+        }
+        .hero-text {
+            text-shadow: 0px 2px 20px rgba(0, 0, 0, 0.5);
+        }
+        .scroll-down-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #FF8A8A;
+            animation: bounce 2.5s infinite;
+            opacity: 0;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-20px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+        }
+        /* 文字アニメーション用 */
+        .anim-title {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        }
+        .anim-title .char {
+            display: inline-block;
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        .dashboard-svg {
+            width: 100%;
+            height: auto;
+            min-height: 200px;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="content-wrapper">
+        <!-- ヘッダー -->
+        <header class="p-4 md:p-6 fixed top-0 left-0 right-0 z-20">
+            <div class="container mx-auto flex justify-between items-center header-glass rounded-full px-6 py-3 shadow-lg">
+                <h1 class="text-xl md:text-2xl font-extrabold text-pink-400">Kansei Bunseki AI</h1>
+                <nav class="hidden md:flex space-x-5">
+                    <a href="#vision" class="text-gray-300 hover:text-pink-400 transition">VISION</a>
+                    <a href="#service" class="text-gray-300 hover:text-pink-400 transition">SERVICE</a>
+                    <a href="#technology" class="text-gray-300 hover:text-pink-400 transition">TECHNOLOGY</a>
+                    <a href="#business" class="text-gray-300 hover:text-pink-400 transition">BUSINESS</a>
+                    <a href="#company" class="text-gray-300 hover:text-pink-400 transition">COMPANY</a>
+                </nav>
+                <a href="#contact" class="bg-pink-500 text-white font-bold py-2 px-5 rounded-full hover:bg-pink-600 transition shadow">お問い合わせ</a>
+            </div>
+        </header>
+
+        <!-- ヒーローセクション -->
+        <main class="container mx-auto px-6">
+             <div class="hero-text-container">
+                <h2 id="hero-title" class="hero-text text-5xl md:text-7xl font-black text-gray-100 leading-tight tracking-tighter anim-title">
+                    データに、血を通わせろ。
+                </h2>
+                <p id="hero-subtitle" class="mt-8 max-w-2xl text-lg md:text-xl text-gray-300 leading-relaxed">
+                    情報の洪水の中で、見失われていく人々の「本音」。<br>私たちはAIでその心の声を拾い上げ、<br>ビジネスを、社会を、もっと人間らしい場所へ。
+                </p>
+                 <div class="scroll-down-indicator">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </div>
+
+            <!-- VISIONセクション -->
+            <section id="vision" class="py-24 min-h-screen flex items-center">
+                <div class="glass-effect p-8 md:p-12 rounded-3xl shadow-xl w-full">
+                    <h3 class="text-3xl md:text-4xl font-extrabold mb-4 text-pink-400 anim-title">OUR VISION</h3>
+                    <p class="text-gray-400 uppercase tracking-widest mb-8">感性が価値になる社会へ</p>
+                    <div class="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto text-gray-200 space-y-6">
+                        <p>
+                            私たちが目指すのは、テクノロジーが人の心を置き去りにする未来ではありません。むしろ、テクノロジーによって、これまで可視化できなかった一人ひとりの「感性」が尊重され、新しい価値を生み出す社会です。
+                        </p>
+                        <p>
+                            SNSの投稿、商品のレビュー、日々の会話。その言葉の奥に眠る、測定できないはずの「心」。私たちはその膨大なデータを、単なる数字の羅列としてではなく、人々の感情の集合体として捉えます。
+                        </p>
+                        <p>
+                            データと感性が交差する点に、ビジネスの革新と、より豊かなコミュニケーションの未来が生まれる。私たちはそう信じて、AIに「ココロ」を実装していきます。
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- サービスセクション -->
+            <section id="service" class="py-24 min-h-screen flex items-center">
+                 <div class="w-full">
+                    <div class="text-center mb-16">
+                        <h3 class="text-4xl md:text-5xl font-extrabold mb-4 text-cyan-400 anim-title">混沌から、答えを。</h3>
+                        <p class="text-gray-300 text-lg max-w-2xl mx-auto">散らばった顧客の声を、ビジネスを動かす「ひらめき」に変える。私たちのサービスが、データドリブンな意思決定に、人間ならではの温かみを加えます。</p>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-8 text-center">
+                        <div class="glass-effect p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                            <h4 class="text-xl font-bold mb-4 text-cyan-300">「リアルタイムで、市場の“空気”を読む」</h4>
+                            <p class="text-gray-300">SNSやレビューに散らばる膨大な “心の声” をリアルタイムに集約・分析。情報過多の時代に、ビジネスの羅針盤となるインサイトを提供します。</p>
+                        </div>
+                        <div class="glass-effect p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                            <h4 class="text-xl font-bold mb-4 text-cyan-300">「データと感性の“翻訳家”になる」</h4>
+                            <p class="text-gray-300">AIが導き出した発見を、経験豊富なアナリストが解釈し、貴社の課題に即した具体的な戦略へ。次の一手を共に考えます。</p>
+                        </div>
+                        <div class="glass-effect p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                            <h4 class="text-xl font-bold mb-4 text-cyan-300">「貴社だけの“感性理解エンジン”を」</h4>
+                            <p class="text-gray-300">業界特有の言葉のニュアンスや、独自の顧客層が持つ価値観を学習。貴社のビジネスに最適化されたオーダーメイドのAIを開発します。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- コア技術セクション -->
+            <section id="technology" class="py-24 min-h-screen flex items-center">
+                <div class="w-full">
+                    <div class="text-center mb-16">
+                        <h3 class="text-4xl md:text-5xl font-extrabold mb-4 text-purple-400 anim-title">CORE TECHNOLOGY</h3>
+                        <p class="text-gray-400 uppercase tracking-widest mb-8">テクノロジーの核心</p>
+                        <p class="text-gray-300 text-lg max-w-3xl mx-auto">我々の技術的特異点、それが自社開発AI「KANSEI Agents」。単なるデータ処理を超え、人間の感情の奥底にある「なぜ」を解き明かす、知性の集合体です。</p>
+                    </div>
+                    <div class="space-y-12">
+                        <!-- Interview Agent -->
+                        <div class="glass-effect p-8 md:p-10 rounded-3xl shadow-lg flex flex-col md:flex-row items-center gap-8">
+                            <div class="md:w-1/3 text-center">
+                                <h4 class="text-2xl font-bold mb-2 text-purple-300">Interview Agent</h4>
+                                <p class="font-semibold text-gray-300">AIによる深層心理の探求者</p>
+                            </div>
+                            <div class="md:w-2/3">
+                                <p class="text-gray-300">AIが、生身のインタビュアーのように、ユーザーとの対話から本音のさらに奥にある無意識のインサイトを抽出。発話の一つひとつが、リアルタイムで構造化され、感性の地図を描き出します。</p>
+                                <div class="mt-4 p-4 bg-black bg-opacity-20 rounded-lg">
+                                    <svg viewBox="0 0 400 200" class="dashboard-svg" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="400" height="200" fill="none"/>
+                                        <line x1="200" y1="0" x2="200" y2="200" stroke="#4a5568" stroke-width="1"/>
+                                        <rect x="10" y="20" width="180" height="30" rx="5" fill="#5a32a3" fill-opacity="0.3"/>
+                                        <text x="20" y="40" font-size="12" fill="#d1c4e9">User: 「デザインは良いですね」</text>
+                                        <rect x="210" y="20" width="180" height="70" rx="5" fill="#2d3748" fill-opacity="0.5"/>
+                                        <text x="220" y="40" font-size="10" fill="#a0aec0">Sentiment: <tspan fill="#81c784">Positive (0.8)</tspan></text>
+                                        <text x="220" y="55" font-size="10" fill="#a0aec0">Keywords: <tspan fill="#b39ddb">デザイン</tspan></text>
+                                        <text x="220" y="70" font-size="10" fill="#a0aec0">Emotion: <tspan fill="#b39ddb">好意</tspan></text>
+                                        <path d="M190 35 Q 200 35 210 35" stroke="#718096" stroke-width="1" fill="none" stroke-dasharray="2 2"/>
+                                        <rect x="10" y="100" width="180" height="50" rx="5" fill="#5a32a3" fill-opacity="0.3"/>
+                                        <text x="20" y="120" font-size="12" fill="#d1c4e9">User: 「でも、少し重いかな...」</text>
+                                        <text x="20" y="135" font-size="12" fill="#d1c4e9">「特に起動が...」</text>
+                                        <rect x="210" y="100" width="180" height="70" rx="5" fill="#2d3748" fill-opacity="0.5"/>
+                                        <text x="220" y="120" font-size="10" fill="#a0aec0">Sentiment: <tspan fill="#e57373">Negative (0.6)</tspan></text>
+                                        <text x="220" y="135" font-size="10" fill="#a0aec0">Keywords: <tspan fill="#b39ddb">重い, 起動</tspan></text>
+                                        <text x="220" y="150" font-size="10" fill="#a0aec0">Emotion: <tspan fill="#b39ddb">不満, ストレス</tspan></text>
+                                        <path d="M190 125 Q 200 125 210 125" stroke="#718096" stroke-width="1" fill="none" stroke-dasharray="2 2"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- SNS Agent -->
+                        <div class="glass-effect p-8 md:p-10 rounded-3xl shadow-lg flex flex-col md:flex-row items-center gap-8">
+                            <div class="md:w-1/3 text-center">
+                                <h4 class="text-2xl font-bold mb-2 text-purple-300">SNS Agent</h4>
+                                <p class="font-semibold text-gray-300">雑音から真意を掴む分析官</p>
+                            </div>
+                            <div class="md:w-2/3">
+                                <p class="text-gray-300">ポジティブか、ネガティブか。そんな表層的な分析では意味がない。私たちのエージェントは、SNSの膨大なノイズの中から、感情の根本原因を特定。インタラクティブなダッシュボードで、市場のリアルな脈動をその手に。</p>
+                                 <div class="mt-4 p-4 bg-black bg-opacity-20 rounded-lg">
+                                    <svg viewBox="0 0 400 200" class="dashboard-svg" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="400" height="200" fill="none"/>
+                                        <path d="M 50,150 C 100,50 200,50 250,150 Z" fill="#2d3748" stroke="#4a5568"/>
+                                        <circle cx="150" cy="100" r="3" fill="#ef9a9a"><animate attributeName="r" values="3;6;3" dur="1.5s" repeatCount="indefinite" /></circle>
+                                        <circle cx="100" cy="120" r="2" fill="#a5d6a7"><animate attributeName="r" values="2;5;2" dur="2s" repeatCount="indefinite" /></circle>
+                                        <rect x="270" y="20" width="120" height="40" rx="5" fill="#2d3748"/>
+                                        <text x="280" y="35" font-size="10" fill="#a0aec0">Positive Mentions</text>
+                                        <text x="280" y="50" font-size="14" fill="#81c784" font-weight="bold">1,280</text>
+                                        <rect x="270" y="80" width="120" height="40" rx="5" fill="#2d3748"/>
+                                        <text x="280" y="95" font-size="10" fill="#a0aec0">Negative Spike</text>
+                                        <text x="280" y="110" font-size="14" fill="#e57373" font-weight="bold">vs Yesterday +35%</text>
+                                        <polyline points="20,180 60,140 100,160 140,130 180,150 220,120" fill="none" stroke="#64b5f6" stroke-width="2"/>
+                                        <text x="20" y="195" font-size="10" fill="#718096">Weekly Sentiment Trend</text>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Review Agent -->
+                        <div class="glass-effect p-8 md:p-10 rounded-3xl shadow-lg flex flex-col md:flex-row items-center gap-8">
+                            <div class="md:w-1/3 text-center">
+                                <h4 class="text-2xl font-bold mb-2 text-purple-300">Review Agent</h4>
+                                <p class="font-semibold text-gray-300">無数の声から価値を再構築する建築家</p>
+                            </div>
+                            <div class="md:w-2/3">
+                                <p class="text-gray-300">Webに散らばる無数のレビュー。それは不満と満足の混沌。エージェントは、その一つひとつの声を構造的に解析し、製品やサービスが持つべき「真の価値構造」を可視化します。</p>
+                                 <div class="mt-4 p-4 bg-black bg-opacity-20 rounded-lg">
+                                     <svg viewBox="0 0 400 200" class="dashboard-svg" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="400" height="200" fill="none"/>
+                                        <circle cx="200" cy="100" r="30" fill="#5a32a3" fill-opacity="0.5"/>
+                                        <text x="200" y="105" text-anchor="middle" font-size="12" fill="#d1c4e9">Product A</text>
+                                        <line x1="200" y1="70" x2="200" y2="30" stroke="#718096" stroke-width="1"/>
+                                        <rect x="160" y="10" width="80" height="20" rx="3" fill="#2d3748"/>
+                                        <text x="200" y="24" text-anchor="middle" font-size="10" fill="#a0aec0">Design</text>
+                                        <line x1="230" y1="100" x2="290" y2="60" stroke="#718096" stroke-width="1"/>
+                                        <rect x="290" y="50" width="80" height="20" rx="3" fill="#2d3748"/>
+                                        <text x="330" y="64" text-anchor="middle" font-size="10" fill="#a0aec0">Performance</text>
+                                        <line x1="170" y1="100" x2="110" y2="140" stroke="#718096" stroke-width="1"/>
+                                        <rect x="30" y="130" width="80" height="20" rx="3" fill="#2d3748"/>
+                                        <text x="70" y="144" text-anchor="middle" font-size="10" fill="#a0aec0">Price</text>
+                                        <text x="180" y="5" font-size="9" fill="#81c784">+ Sleek</text>
+                                        <text x="300" y="45" font-size="9" fill="#81c784">+ Fast</text>
+                                        <text x="300" y="85" font-size="9" fill="#e57373">- Battery</text>
+                                        <text x="20" y="125" font-size="9" fill="#81c784">+ Affordable</text>
+                                    </svg>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 事業内容セクション -->
+            <section id="business" class="py-24 min-h-screen flex items-center">
+                 <div class="w-full">
+                    <div class="text-center mb-16">
+                        <h3 class="text-4xl md:text-5xl font-extrabold mb-4 text-green-400 anim-title">BUSINESS DOMAIN</h3>
+                         <p class="text-gray-400 uppercase tracking-widest mb-8">事業領域</p>
+                        <p class="text-gray-300 text-lg max-w-3xl mx-auto">私たちは単に技術を売るのではない。感性という新たな経営資源を実装し、貴社のビジネスを次の次元へと導くための羅針盤を提供します。</p>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-8 text-center">
+                        <div class="glass-effect p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                            <h4 class="text-2xl font-bold mb-4 text-green-300">Consulting</h4>
+                            <p class="font-semibold mb-4 text-gray-200">感性をビジネスの力に</p>
+                            <p class="text-gray-300">「KANSEI Agents」が暴き出すインサイトを、ビジネスの血肉へ。経験豊富なコンサルタントが、データと感性を繋ぎ、持続可能な成長戦略を共に描きます。</p>
+                        </div>
+                        <div class="glass-effect p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                            <h4 class="text-2xl font-bold mb-4 text-green-300">AI PoC</h4>
+                            <p class="font-semibold mb-4 text-gray-200">未知の可能性への伴走者</p>
+                            <p class="text-gray-300">「こんなことはできないか？」そのアイディアを私たちに。最先端のAI技術で、構想から実装まで、前人未到のビジネス価値を創造する旅路に並走します。</p>
+                        </div>
+                        <div class="glass-effect p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                            <h4 class="text-2xl font-bold mb-4 text-green-300">SaaS</h4>
+                            <p class="font-semibold mb-4 text-gray-200">感性理解を、組織のDNAへ</p>
+                            <p class="text-gray-300">「KANSEI Agents」を貴社専用にカスタマイズし提供。マーケティングの内製化と、組織全体の“感性リテラシー”向上を実現します。</p>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+        </main>
+        
+        <!-- フッター -->
+        <footer id="company" class="bg-gray-900/50 text-white py-12 mt-10">
+            <div class="container mx-auto text-center">
+                <p class="text-2xl font-bold mb-4">Kansei Bunseki AI Inc.</p>
+                <p>〒100-0000 東京都千代田区丸の内1-2-3</p>
+                <p class="mt-8 text-gray-500">&copy; 2024 Kansei Bunseki AI Inc. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
+        import * as BufferGeometryUtils from 'three/addons/utils/BufferGeometryUtils.js';
+
+        let scene, camera, renderer, particles, particleMaterial;
+        let mouseX = 0, mouseY = 0;
+        const PARTICLE_COUNT = 20000;
+        let positions, heartPositions, speechBubblePositions, brainPositions, lightbulbPositions, exclamationPositions, diffusedPositions;
+        
+        gsap.registerPlugin(ScrollTrigger);
+
+        function init() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 25;
+
+            const canvas = document.getElementById('bg-canvas');
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            
+            createParticles();
+
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+            window.addEventListener('resize', onWindowResize, false);
+        }
+
+        function createParticles() {
+            const geoms = {
+                heart: createHeartShape(),
+                speechBubble: createSpeechBubbleShape(),
+                brain: createBrainShape(),
+                lightbulb: createLightbulbShape(),
+                exclamation: createExclamationShape(),
+            };
+
+            const samplers = {
+                heart: new MeshSurfaceSampler(new THREE.Mesh(geoms.heart)).build(),
+                speechBubble: new MeshSurfaceSampler(new THREE.Mesh(geoms.speechBubble)).build(),
+                brain: new MeshSurfaceSampler(new THREE.Mesh(geoms.brain)).build(),
+                lightbulb: new MeshSurfaceSampler(new THREE.Mesh(geoms.lightbulb)).build(),
+                exclamation: new MeshSurfaceSampler(new THREE.Mesh(geoms.exclamation)).build(),
+            };
+            
+            const particlesGeom = new THREE.BufferGeometry();
+            positions = new Float32Array(PARTICLE_COUNT * 3);
+            heartPositions = new Float32Array(PARTICLE_COUNT * 3);
+            speechBubblePositions = new Float32Array(PARTICLE_COUNT * 3);
+            brainPositions = new Float32Array(PARTICLE_COUNT * 3);
+            lightbulbPositions = new Float32Array(PARTICLE_COUNT * 3);
+            exclamationPositions = new Float32Array(PARTICLE_COUNT * 3);
+            diffusedPositions = new Float32Array(PARTICLE_COUNT * 3);
+
+            const tempPosition = new THREE.Vector3();
+
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                samplers.heart.sample(tempPosition);
+                heartPositions.set([tempPosition.x, tempPosition.y, tempPosition.z], i * 3);
+
+                samplers.speechBubble.sample(tempPosition);
+                speechBubblePositions.set([tempPosition.x, tempPosition.y, tempPosition.z], i * 3);
+
+                samplers.brain.sample(tempPosition);
+                brainPositions.set([tempPosition.x, tempPosition.y, tempPosition.z], i * 3);
+
+                samplers.lightbulb.sample(tempPosition);
+                lightbulbPositions.set([tempPosition.x, tempPosition.y, tempPosition.z], i * 3);
+
+                samplers.exclamation.sample(tempPosition);
+                exclamationPositions.set([tempPosition.x, tempPosition.y, tempPosition.z], i * 3);
+                
+                diffusedPositions.set([ (Math.random() - 0.5) * 80, (Math.random() - 0.5) * 80, (Math.random() - 0.5) * 80 ], i * 3);
+            }
+
+            positions.set(heartPositions);
+            particlesGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            particleMaterial = new THREE.PointsMaterial({
+                color: 0xff8a8a, size: 0.1, blending: THREE.AdditiveBlending,
+                transparent: true, opacity: 0.9, depthWrite: false,
+            });
+
+            particles = new THREE.Points(particlesGeom, particleMaterial);
+            scene.add(particles);
+            setupAnimations();
+            animate();
+        }
+
+        function createHeartShape() {
+            const shape = new THREE.Shape();
+            shape.moveTo(2.5, 2.5); shape.bezierCurveTo(2.5, 2.5, 2, 0, 0, 0);
+            shape.bezierCurveTo(-3, 0, -3, 3.5, -3, 3.5); shape.bezierCurveTo(-3, 5.5, -1.5, 7.7, 2.5, 9.5);
+            shape.bezierCurveTo(6, 7.7, 8, 5.5, 8, 3.5); shape.bezierCurveTo(8, 3.5, 8, 0, 5, 0);
+            shape.bezierCurveTo(3.5, 0, 2.5, 2.5, 2.5, 2.5);
+            const extrudeSettings = { depth: 2, bevelEnabled: true, bevelSegments: 2, steps: 2, bevelSize: 1, bevelThickness: 1 };
+            const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+            geometry.scale(1.5, 1.5, 1.5).center();
+            return geometry;
+        }
+
+        function createSpeechBubbleShape() {
+            const shape = new THREE.Shape();
+            const w = 15, h = 10, r = 2; // width, height, radius
+            shape.moveTo(r, 0); shape.lineTo(w - r, 0); shape.quadraticCurveTo(w, 0, w, r);
+            shape.lineTo(w, h - r); shape.quadraticCurveTo(w, h, w - r, h);
+            shape.lineTo(w / 2 + 5, h); shape.lineTo(w / 2, h + 5); shape.lineTo(w / 2 - 5, h);
+            shape.lineTo(r, h); shape.quadraticCurveTo(0, h, 0, h - r);
+            shape.lineTo(0, r); shape.quadraticCurveTo(0, 0, r, 0);
+            const extrudeSettings = { depth: 2, bevelEnabled: true, bevelSegments: 1, steps: 1, bevelSize: 0.5, bevelThickness: 0.5 };
+            const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+            geometry.center();
+            return geometry;
+        }
+        
+        function createBrainShape() {
+            const leftHalf = new THREE.SphereGeometry(6, 16, 16, 0, Math.PI);
+            leftHalf.translate(-3, 0, 0);
+            const rightHalf = new THREE.SphereGeometry(6, 16, 16, 0, Math.PI);
+            rightHalf.rotateY(Math.PI);
+            rightHalf.translate(3, 0, 0);
+            const mergedGeometry = BufferGeometryUtils.mergeGeometries([leftHalf, rightHalf]);
+            mergedGeometry.scale(1.2, 1, 1.2).center();
+            return mergedGeometry;
+        }
+
+        function createLightbulbShape() {
+            const bulb = new THREE.SphereGeometry(6, 32, 32);
+            bulb.translate(0, 3, 0);
+            const base = new THREE.CylinderGeometry(2, 2, 4, 16);
+            base.translate(0, -4, 0);
+            const mergedGeometry = BufferGeometryUtils.mergeGeometries([bulb, base]);
+            mergedGeometry.scale(1.1, 1.1, 1.1).center();
+            return mergedGeometry;
+        }
+
+        function createExclamationShape() {
+            const bar = new THREE.BoxGeometry(2.5, 9, 2.5); bar.translate(0, 3.5, 0);
+            const dot = new THREE.SphereGeometry(1.5, 32, 32); dot.translate(0, -6, 0);
+            const mergedGeometry = BufferGeometryUtils.mergeGeometries([bar, dot]);
+            mergedGeometry.scale(1.2, 1.2, 1.2).center();
+            return mergedGeometry;
+        }
+
+        function setupAnimations() {
+            const updateFunc = () => particles.geometry.attributes.position.needsUpdate = true;
+
+            // Text Animations
+            document.querySelectorAll('.anim-title').forEach(title => {
+                const chars = title.textContent.split('');
+                title.innerHTML = chars.map(char => `<span class="char">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
+                gsap.fromTo(title.querySelectorAll('.char'),
+                    { y: '100%', opacity: 0 },
+                    {
+                        y: '0%', opacity: 1, stagger: 0.05, duration: 1, ease: 'power3.out',
+                        scrollTrigger: { trigger: title, start: 'top 85%' }
+                    }
+                );
+            });
+            
+            // Initial load animation
+            const tl = gsap.timeline();
+            tl.to(".hero-text-container", { opacity: 1, duration: 2, ease: "power2.out" })
+              .to(".scroll-down-indicator", { opacity: 1, duration: 1, ease: "power2.out" }, "-=1");
+
+            // --- Corrected Scroll-based animation ---
+
+            // 1. Heart -> Diffuse (As hero section leaves)
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".hero-text-container",
+                    start: "center center",
+                    end: "bottom top",
+                    scrub: 1,
+                }
+            })
+            .to(positions, { endArray: diffusedPositions, onUpdate: updateFunc, ease: "power1.in" });
+
+            // 2. Diffuse -> SpeechBubble (For Vision section)
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#vision",
+                    start: "top bottom",
+                    end: "center center",
+                    scrub: 1.5,
+                }
+            })
+            .to(positions, { endArray: speechBubblePositions, onUpdate: updateFunc, ease: "power2.out" })
+            .to(particleMaterial.color, { r: 1, g: 1, b: 1 }, "<");
+            
+            // 3. SpeechBubble -> Diffuse (As Vision section leaves)
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#vision",
+                    start: "center center",
+                    end: "bottom top",
+                    scrub: 1.5,
+                }
+            })
+            .to(positions, { endArray: diffusedPositions, onUpdate: updateFunc, ease: "power1.in" });
+
+             // 4. Diffuse -> Brain (For Service section)
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#service",
+                    start: "top bottom",
+                    end: "center center",
+                    scrub: 1.5,
+                }
+            })
+            .to(positions, { endArray: brainPositions, onUpdate: updateFunc, ease: "power2.out" })
+            .to(particleMaterial.color, { r: 0.9, g: 0.3, b: 0.9 }, "<");
+
+            // 5. Brain -> Diffuse (As Service section leaves)
+             gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#service",
+                    start: "center center",
+                    end: "bottom top",
+                    scrub: 1.5,
+                }
+            })
+            .to(positions, { endArray: diffusedPositions, onUpdate: updateFunc, ease: "power1.in" });
+
+            // 6. Diffuse -> Lightbulb (For Technology section)
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#technology",
+                    start: "top bottom",
+                    end: "center center",
+                    scrub: 1.5,
+                }
+            })
+            .to(positions, { endArray: lightbulbPositions, onUpdate: updateFunc, ease: "power2.out" })
+            .to(particleMaterial.color, { r: 1, g: 0.9, b: 0.2 }, "<");
+            
+            // 7. Lightbulb -> Diffuse (As Technology section leaves)
+             gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#technology",
+                    start: "center center",
+                    end: "bottom top",
+                    scrub: 1.5,
+                }
+            })
+            .to(positions, { endArray: diffusedPositions, onUpdate: updateFunc, ease: "power1.in" });
+
+            // 8. Diffuse -> Exclamation (For Business section)
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#business",
+                    start: "top bottom",
+                    end: "center center",
+                    scrub: 1.5,
+                }
+            })
+            .to(positions, { endArray: exclamationPositions, onUpdate: updateFunc, ease: "power2.out" })
+            .to(particleMaterial.color, { r: 0.2, g: 0.8, b: 0.9 }, "<");
+        }
+
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onDocumentMouseMove(event) {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            render();
+        }
+
+        function render() {
+            camera.position.x += (mouseX * 5 - camera.position.x) * 0.05;
+            camera.position.y += (mouseY * 5 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+            
+            if (particles && !ScrollTrigger.isScrolling() && window.scrollY < 100) {
+                 particles.rotation.y += 0.0008; // アイドル時の回転
+                 const time = Date.now() * 0.005;
+                 particles.scale.setScalar(Math.sin(time) * 0.05 + 1);
+            }
+            
+            renderer.render(scene, camera);
+        }
+
+        init();
+    </script>
+</body>
+</html>
+
