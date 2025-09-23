@@ -36,11 +36,6 @@ export const emotionVertexShader = `
     pos.x += floatX;
     pos.y += floatY;
     
-    // 回転アニメーション（個別の速度）
-    float rotation = uTime * (0.5 + randomOffset * 0.5);
-    mat2 rot = mat2(cos(rotation), -sin(rotation), sin(rotation), cos(rotation));
-    pos.xy = rot * pos.xy;
-    
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
     gl_Position = projectionMatrix * mvPosition;
     

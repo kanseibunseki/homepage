@@ -2,18 +2,26 @@
 
 import { useEffect, useState } from 'react'
 import EmotionParticleSystem from '../three/EmotionParticleSystem'
+import CursorRipple from '../effects/CursorRipple'
 import styles from './HeroSection.module.css'
 
 const HeroSection = () => {
   const [mounted, setMounted] = useState(false)
+  const [rippleReady, setRippleReady] = useState(false)
   
   useEffect(() => {
     setMounted(true)
+    // CursorRippleを少し遅らせてマウント（初期化の安定性向上）
+    const timer = setTimeout(() => {
+      setRippleReady(true)
+    }, 100)
+    return () => clearTimeout(timer)
   }, [])
   
   return (
     <section className={`modern-hero-section ${styles.heroSection}`}>
       {mounted && <EmotionParticleSystem />}
+      {rippleReady && <CursorRipple />}
       
       {/* データストリーム背景 */}
       <div className={styles.dataStream}>
@@ -44,92 +52,98 @@ const HeroSection = () => {
         <div className={styles.glowEffect} />
         
         <div className={styles.mainContent}>
-          {/* データビジュアライゼーション装飾 */}
-          <div className={styles.dataViz}>
-            <div className={styles.orbit}>
-              <div className={styles.orbitDot} />
-              <div className={styles.orbitDot} />
-              <div className={styles.orbitDot} />
+          {/* 左側：テキストコンテンツ */}
+          <div className={styles.leftContent}>
+            {/* データビジュアライゼーション装飾 */}
+            <div className={styles.dataViz}>
+              <div className={styles.orbit}>
+                <div className={styles.orbitDot} />
+                <div className={styles.orbitDot} />
+                <div className={styles.orbitDot} />
+              </div>
+            </div>
+            
+            {/* 感情分析ビジュアライザー */}
+            <div className={styles.emotionAnalyzer}>
+              <div className={styles.analyzerRing}>
+                <div className={styles.analyzerIcon} data-emotion="joy">
+                  <img src="/wordpress-img/logo/lol.png" alt="" />
+                </div>
+                <div className={styles.analyzerIcon} data-emotion="love">
+                  <img src="/wordpress-img/logo/heartarrow.png" alt="" />
+                </div>
+                <div className={styles.analyzerIcon} data-emotion="surprise">
+                  <img src="/wordpress-img/logo/exclamation.png" alt="" />
+                </div>
+                <div className={styles.analyzerIcon} data-emotion="think">
+                  <img src="/wordpress-img/logo/oh.png" alt="" />
+                </div>
+              </div>
+              <div className={styles.analyzerText}>Analyzing Emotions...</div>
+            </div>
+            
+            <h1 className={styles.title}>
+              <span className={styles.titleJa}>感性分析</span>
+              <span className={styles.titleEn}>EMOTIONAL INTELLIGENCE</span>
+            </h1>
+            
+            <div className={styles.divider}>
+              <span className={styles.dividerLine} />
+              <span className={styles.dividerDot} />
+              <span className={styles.dividerLine} />
+            </div>
+            
+            <p className={styles.subtitle}>
+              データに命を吹き込み、感情を可視化する
+              <br />
+              <span className={styles.subtext}>
+                Transforming Data into Emotional Insights
+              </span>
+            </p>
+            
+            <div className={styles.statsContainer}>
+              <div className={styles.statItem}>
+                <div className={styles.statIcon}>
+                  <img src="/wordpress-img/logo/good.png" alt="" />
+                </div>
+                <span className={styles.statNumber}>98%</span>
+                <span className={styles.statLabel}>精度</span>
+              </div>
+              <div className={styles.statItem}>
+                <div className={styles.statIcon}>
+                  <img src="/wordpress-img/logo/kirakirasmall.png" alt="" />
+                </div>
+                <span className={styles.statNumber}>500+</span>
+                <span className={styles.statLabel}>プロジェクト</span>
+              </div>
+              <div className={styles.statItem}>
+                <div className={styles.statIcon}>
+                  <img src="/wordpress-img/logo/heart.png" alt="" />
+                </div>
+                <span className={styles.statNumber}>24/7</span>
+                <span className={styles.statLabel}>サポート</span>
+              </div>
+            </div>
+            
+            {/* 現在のムード表示 */}
+            <div className={styles.moodIndicator}>
+              <div className={styles.moodPulse} />
+              <span className={styles.moodText}>Current Mood:</span>
+              <span className={styles.moodValue}>Innovative</span>
             </div>
           </div>
           
-          {/* 感情分析ビジュアライザー */}
-          <div className={styles.emotionAnalyzer}>
-            <div className={styles.analyzerRing}>
-              <div className={styles.analyzerIcon} data-emotion="joy">
-                <img src="/wordpress-img/logo/lol.png" alt="" />
-              </div>
-              <div className={styles.analyzerIcon} data-emotion="love">
-                <img src="/wordpress-img/logo/heartarrow.png" alt="" />
-              </div>
-              <div className={styles.analyzerIcon} data-emotion="surprise">
-                <img src="/wordpress-img/logo/exclamation.png" alt="" />
-              </div>
-              <div className={styles.analyzerIcon} data-emotion="think">
-                <img src="/wordpress-img/logo/oh.png" alt="" />
-              </div>
+          {/* 右側：ボタン */}
+          <div className={styles.rightContent}>
+            <div className={styles.buttonGroup}>
+              <button className={styles.primaryButton}>
+                <span className={styles.buttonText}>分析を開始</span>
+                <span className={styles.buttonIcon}>→</span>
+              </button>
+              <button className={styles.secondaryButton}>
+                <span className={styles.buttonText}>詳細を見る</span>
+              </button>
             </div>
-            <div className={styles.analyzerText}>Analyzing Emotions...</div>
-          </div>
-          
-          <h1 className={styles.title}>
-            <span className={styles.titleJa}>感性分析</span>
-            <span className={styles.titleEn}>EMOTIONAL INTELLIGENCE</span>
-          </h1>
-          
-          <div className={styles.divider}>
-            <span className={styles.dividerLine} />
-            <span className={styles.dividerDot} />
-            <span className={styles.dividerLine} />
-          </div>
-          
-          <p className={styles.subtitle}>
-            データに命を吹き込み、感情を可視化する
-            <br />
-            <span className={styles.subtext}>
-              Transforming Data into Emotional Insights
-            </span>
-          </p>
-          
-          <div className={styles.statsContainer}>
-            <div className={styles.statItem}>
-              <div className={styles.statIcon}>
-                <img src="/wordpress-img/logo/good.png" alt="" />
-              </div>
-              <span className={styles.statNumber}>98%</span>
-              <span className={styles.statLabel}>精度</span>
-            </div>
-            <div className={styles.statItem}>
-              <div className={styles.statIcon}>
-                <img src="/wordpress-img/logo/kirakirasmall.png" alt="" />
-              </div>
-              <span className={styles.statNumber}>500+</span>
-              <span className={styles.statLabel}>プロジェクト</span>
-            </div>
-            <div className={styles.statItem}>
-              <div className={styles.statIcon}>
-                <img src="/wordpress-img/logo/heart.png" alt="" />
-              </div>
-              <span className={styles.statNumber}>24/7</span>
-              <span className={styles.statLabel}>サポート</span>
-            </div>
-          </div>
-          
-          <div className={styles.buttonGroup}>
-            <button className={styles.primaryButton}>
-              <span className={styles.buttonText}>分析を開始</span>
-              <span className={styles.buttonIcon}>→</span>
-            </button>
-            <button className={styles.secondaryButton}>
-              <span className={styles.buttonText}>詳細を見る</span>
-            </button>
-          </div>
-          
-          {/* 現在のムード表示 */}
-          <div className={styles.moodIndicator}>
-            <div className={styles.moodPulse} />
-            <span className={styles.moodText}>Current Mood:</span>
-            <span className={styles.moodValue}>Innovative</span>
           </div>
         </div>
       </div>

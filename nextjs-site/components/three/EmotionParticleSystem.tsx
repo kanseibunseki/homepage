@@ -17,6 +17,7 @@ export default function EmotionParticleSystem() {
   const mouseRef = useRef({ x: 0, y: 0 })
   const animationIdRef = useRef<number>()
   const clockRef = useRef<THREE.Clock>(new THREE.Clock())
+  const isInitializedRef = useRef(false)
 
   useEffect(() => {
     if (!canvasRef.current) return
@@ -63,20 +64,26 @@ export default function EmotionParticleSystem() {
       connectionManagerRef.current = connectionManager
       scene.add(connectionManager.lines)
 
+      // 初期化完了フラグを立てる
+      isInitializedRef.current = true
+
+      // アニメーション開始（初期化完了後）
+      animate()
+      
       // クリーンアップ時にアトラスジェネレーターを破棄
       return () => {
         atlasGenerator.dispose()
       }
     }
 
-    // 初期化実行
-    const cleanup = initScene()
-
-    // マウス移動ハンドラー
+    // マウス移動ハンドラー（即座に登録）
     const handleMouseMove = (event: MouseEvent) => {
       mouseRef.current.x = (event.clientX / window.innerWidth) * 2 - 1
       mouseRef.current.y = -(event.clientY / window.innerHeight) * 2 + 1
     }
+
+    // 初期化実行
+    const cleanup = initScene()
 
     // ウィンドウリサイズハンドラー
     const handleResize = () => {
@@ -94,6 +101,7 @@ export default function EmotionParticleSystem() {
 
       if (!sceneRef.current || !cameraRef.current || !rendererRef.current) return
       if (!particleManagerRef.current || !connectionManagerRef.current) return
+      if (!isInitializedRef.current) return
 
       const deltaTime = clockRef.current.getDelta()
       const elapsedTime = clockRef.current.getElapsedTime()
@@ -108,20 +116,15 @@ export default function EmotionParticleSystem() {
       const positions = particleManagerRef.current.getPositions()
       connectionManagerRef.current.updateConnections(positions)
 
-      // シーン全体を微妙に回転
+      // シーン全体を微妙に回転（横回転のみ）
       sceneRef.current.rotation.y += EMOTION_CONFIG.animation.rotationSpeed
 
-      // カメラの微妙な動き
-      cameraRef.current.position.x = Math.sin(elapsedTime * 0.1) * 10
-      cameraRef.current.position.y = Math.cos(elapsedTime * 0.1) * 10
+      // カメラは固定位置に
       cameraRef.current.lookAt(sceneRef.current.position)
 
       // レンダリング
       rendererRef.current.render(sceneRef.current, cameraRef.current)
     }
-
-    // アニメーション開始
-    animate()
 
     // イベントリスナー登録
     document.addEventListener('mousemove', handleMouseMove)
@@ -129,6 +132,7 @@ export default function EmotionParticleSystem() {
 
     // クリーンアップ
     return () => {
+      isInitializedRef.current = false
       cleanup.then(cleanupFunc => cleanupFunc?.())
       
       if (animationIdRef.current) {
