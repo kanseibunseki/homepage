@@ -22,6 +22,37 @@ export default function EmotionParticleSystem() {
   useEffect(() => {
     if (!canvasRef.current) return
 
+    // アニメーションループを先に定義
+    const animate = () => {
+      animationIdRef.current = requestAnimationFrame(animate)
+
+      if (!sceneRef.current || !cameraRef.current || !rendererRef.current) return
+      if (!particleManagerRef.current || !connectionManagerRef.current) return
+      if (!isInitializedRef.current) return
+
+      const deltaTime = clockRef.current.getDelta()
+      const elapsedTime = clockRef.current.getElapsedTime()
+
+      // マウス座標をThree.jsの座標系に変換
+      const mouse = new THREE.Vector2(mouseRef.current.x, mouseRef.current.y)
+
+      // パーティクル更新
+      particleManagerRef.current.update(deltaTime, mouse)
+
+      // 接続線更新
+      const positions = particleManagerRef.current.getPositions()
+      connectionManagerRef.current.updateConnections(positions)
+
+      // シーン全体を微妙に回転（横回転のみ）
+      sceneRef.current.rotation.y += EMOTION_CONFIG.animation.rotationSpeed
+
+      // カメラは固定位置に
+      cameraRef.current.lookAt(sceneRef.current.position)
+
+      // レンダリング
+      rendererRef.current.render(sceneRef.current, cameraRef.current)
+    }
+
     const initScene = async () => {
       // Scene setup
       const scene = new THREE.Scene()
@@ -82,8 +113,13 @@ export default function EmotionParticleSystem() {
       mouseRef.current.y = -(event.clientY / window.innerHeight) * 2 + 1
     }
 
-    // 初期化実行
-    const cleanup = initScene()
+    // 初期化実行（エラーハンドリング付き）
+    const cleanup = initScene().catch(err => {
+      console.error('Scene initialization failed:', err)
+      isInitializedRef.current = false
+      // エラーが発生しても、アニメーションループは開始する（ただし描画はスキップ）
+      animate()
+    })
 
     // ウィンドウリサイズハンドラー
     const handleResize = () => {
@@ -95,51 +131,22 @@ export default function EmotionParticleSystem() {
       rendererRef.current.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     }
 
-    // アニメーションループ
-    const animate = () => {
-      animationIdRef.current = requestAnimationFrame(animate)
-
-      if (!sceneRef.current || !cameraRef.current || !rendererRef.current) return
-      if (!particleManagerRef.current || !connectionManagerRef.current) return
-      if (!isInitializedRef.current) return
-
-      const deltaTime = clockRef.current.getDelta()
-      const elapsedTime = clockRef.current.getElapsedTime()
-
-      // マウス座標をThree.jsの座標系に変換
-      const mouse = new THREE.Vector2(mouseRef.current.x, mouseRef.current.y)
-
-      // パーティクル更新
-      particleManagerRef.current.update(deltaTime, mouse)
-
-      // 接続線更新
-      const positions = particleManagerRef.current.getPositions()
-      connectionManagerRef.current.updateConnections(positions)
-
-      // シーン全体を微妙に回転（横回転のみ）
-      sceneRef.current.rotation.y += EMOTION_CONFIG.animation.rotationSpeed
-
-      // カメラは固定位置に
-      cameraRef.current.lookAt(sceneRef.current.position)
-
-      // レンダリング
-      rendererRef.current.render(sceneRef.current, cameraRef.current)
-    }
-
-    // イベントリスナー登録
-    document.addEventListener('mousemove', handleMouseMove)
+    // イベントリスナー登録（windowに統一）
+    window.addEventListener('mousemove', handleMouseMove)
     window.addEventListener('resize', handleResize)
 
     // クリーンアップ
     return () => {
       isInitializedRef.current = false
-      cleanup.then(cleanupFunc => cleanupFunc?.())
+      cleanup.then(cleanupFunc => cleanupFunc?.()).catch(err => {
+        console.error('Cleanup error:', err)
+      })
       
       if (animationIdRef.current) {
         cancelAnimationFrame(animationIdRef.current)
       }
       
-      document.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('resize', handleResize)
       
       // Three.jsオブジェクトのクリーンアップ

@@ -8,6 +8,7 @@ import styles from './HeroSection.module.css'
 const HeroSection = () => {
   const [mounted, setMounted] = useState(false)
   const [rippleReady, setRippleReady] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
   const [emotionData, setEmotionData] = useState({
     joy: 85,
     surprise: 72,
@@ -34,14 +35,33 @@ const HeroSection = () => {
       }))
     }, 500)
     
+    // スクロール位置の監視
+    const handleScroll = () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight
+      const scrolled = (winScroll / height) * 100
+      setScrollProgress(scrolled)
+    }
+    
+    window.addEventListener('scroll', handleScroll)
+    
     return () => {
       clearTimeout(timer)
       clearInterval(interval)
+      window.removeEventListener('scroll', handleScroll)
     }
   }, [])
   
   return (
     <section className={`modern-hero-section ${styles.heroSection}`}>
+      {/* スクロールプログレスバー */}
+      <div className={styles.scrollProgress}>
+        <div 
+          className={styles.scrollProgressBar} 
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
+      
       {mounted && <EmotionParticleSystem />}
       {rippleReady && <CursorRipple />}
       
@@ -268,14 +288,6 @@ const HeroSection = () => {
           <img src="/wordpress-img/logo/good.png" alt="" />
         </div>
       </div>
-      
-      {/* ナビゲーション */}
-      <nav className={styles.navigation}>
-        <div className={styles.navItem}>About</div>
-        <div className={styles.navItem}>Services</div>
-        <div className={styles.navItem}>Technology</div>
-        <div className={styles.navItem}>Contact</div>
-      </nav>
     </section>
   )
 }

@@ -1,5 +1,20 @@
 /* グローバルCSS - WordPressのスタイルシートをメインで使用するため最小限に */
 
+/* 背景を黒に設定 */
+html, body {
+  background-color: #000000 !important;
+}
+
+/* スクロールバーを非表示 */
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
 /* Adobe Fonts wf-loading対応 */
 .wf-loading {
   visibility: hidden;
