@@ -162,7 +162,11 @@
 /* 右側：ボタン */
 .rightContent {
   display: flex;
+  flex-direction: column;
+  gap: 30px;
   align-items: center;
+  justify-content: center;
+  padding: 20px 0;
 }
 
 /* データビジュアライゼーション装飾 */
@@ -344,14 +348,17 @@
 /* ボタングループ */
 .buttonGroup {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 20px;
   margin: 0;
+  width: 100%;
+  max-width: 500px;
+  justify-content: center;
 }
 
 .primaryButton,
 .secondaryButton {
-  padding: 15px 40px;
+  padding: 15px 35px;
   font-size: 1rem;
   border-radius: 50px;
   border: none;
@@ -361,6 +368,9 @@
   letter-spacing: 0.05em;
   position: relative;
   overflow: hidden;
+  flex: 1;
+  min-width: 180px;
+  white-space: nowrap;
 }
 
 .primaryButton {
@@ -814,6 +824,127 @@
   letter-spacing: 0.1em;
 }
 
+/* 感情分析レーダー */
+.emotionRadar {
+  position: relative;
+  width: 380px;
+  height: 380px;
+  margin: 0 auto;
+}
+
+.radarContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radarSvg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.radarCircle {
+  fill: none;
+  stroke: rgba(0, 255, 204, 0.1);
+  stroke-width: 1;
+}
+
+.radarAxis {
+  stroke: rgba(0, 255, 204, 0.05);
+  stroke-width: 1;
+}
+
+.radarData {
+  fill: rgba(138, 43, 226, 0.1);
+  stroke: #00ffcc;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 20px rgba(0, 255, 204, 0.6));
+  transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scanLine {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent,
+    rgba(0, 255, 204, 0.8),
+    transparent);
+  animation: scan 4s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes scan {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.radarIcons {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.radarIcon {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.radarIcon img {
+  width: 25px;
+  height: 25px;
+  filter: drop-shadow(0 0 5px rgba(0, 255, 204, 0.8));
+}
+
+.radarValue {
+  font-size: 0.7rem;
+  color: #00ffcc;
+  font-weight: 700;
+  text-shadow: 0 0 5px rgba(0, 255, 204, 0.5);
+}
+
+.radarCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+}
+
+.radarPulse {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 255, 204, 0.5);
+  border-radius: 50%;
+  animation: radarPulse 2s ease-in-out infinite;
+}
+
+@keyframes radarPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.3;
+  }
+}
+
+
 /* 統計アイコン */
 .statIcon {
   width: 30px;
@@ -892,6 +1023,11 @@
   .statsContainer {
     gap: 30px;
     justify-content: center;
+  }
+  
+  .emotionRadar {
+    width: 200px;
+    height: 200px;
   }
   
   .buttonGroup {
