@@ -2,21 +2,15 @@
 .heroSection {
   position: relative !important;
   width: 100% !important;
-  height: 100vh !important;
-  min-height: 800px !important;
-  background: linear-gradient(180deg, 
-    #0a0a0f 0%, 
-    #1a0f2e 20%, 
-    #0f1a2e 40%, 
-    #0a0a0f 60%, 
-    #1a0f2e 80%, 
-    #0a0a0f 100%) !important;
-  overflow: hidden !important;
+  min-height: 100vh !important;
+  background: transparent !important;
+  overflow: visible !important;
   display: flex !important;
-  align-items: center !important;
+  align-items: flex-start !important;
   justify-content: center !important;
   padding: 0 !important;
   margin: 0 !important;
+  padding-top: 10vh !important;
 }
 
 /* スクロールプログレスバー */
@@ -64,14 +58,15 @@
 
 /* データストリーム背景 */
 .dataStream {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   overflow: hidden;
   opacity: 0.1;
   z-index: 1;
+  pointer-events: none;
 }
 
 .streamLine {
@@ -97,13 +92,14 @@
 
 /* 波形アニメーション */
 .waveContainer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 200px;
   z-index: 2;
   opacity: 0.3;
+  pointer-events: none;
 }
 
 .wave {
@@ -130,11 +126,11 @@
 
 /* グラデーションオーバーレイ */
 .gradientOverlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background: radial-gradient(
     ellipse at center,
     transparent 0%,

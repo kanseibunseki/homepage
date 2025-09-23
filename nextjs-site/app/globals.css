@@ -1,8 +1,24 @@
 /* グローバルCSS - WordPressのスタイルシートをメインで使用するため最小限に */
 
-/* 背景を黒に設定 */
-html, body {
-  background-color: #000000 !important;
+/* 背景を黒に設定 - グラデーション背景をページ全体に適用 */
+html {
+  background-color: #0a0a0f !important;
+  min-height: 100vh;
+}
+
+body {
+  background: linear-gradient(180deg, 
+    #0a0a0f 0%, 
+    #1a0f2e 20%, 
+    #0f1a2e 40%, 
+    #0a0a0f 60%, 
+    #1a0f2e 80%, 
+    #0a0a0f 100%) !important;
+  background-size: 100% 100vh !important;
+  background-repeat: repeat-y !important;
+  background-attachment: fixed !important;
+  background-color: #0a0a0f !important;
+  min-height: 100vh;
 }
 
 /* スクロールバーを非表示 */

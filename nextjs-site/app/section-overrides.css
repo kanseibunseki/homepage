@@ -1,0 +1,22 @@
+/* セクションの背景を透明にして、全体の統一背景を見えるようにする */
+.top-section_2,
+.top-section_3,
+.top-section_4,
+.top-section_5,
+.top-section_6,
+.top-section_7,
+.top-section_8 {
+  background: transparent !important;
+  background-image: none !important;
+}
+
+/* 各セクションのコンテンツが見やすくなるよう必要に応じて調整 */
+.top-section_2__title,
+.top-section_3__title,
+.top-section_4__title,
+.top-section_5__title,
+.top-section_6__title,
+.top-section_7__title {
+  position: relative;
+  z-index: 10;
+}

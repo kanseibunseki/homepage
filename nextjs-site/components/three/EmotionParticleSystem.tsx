@@ -117,8 +117,7 @@ export default function EmotionParticleSystem() {
     const cleanup = initScene().catch(err => {
       console.error('Scene initialization failed:', err)
       isInitializedRef.current = false
-      // エラーが発生しても、アニメーションループは開始する（ただし描画はスキップ）
-      animate()
+      // エラー時はアニメーションを開始しない（重複実行を防ぐ）
     })
 
     // ウィンドウリサイズハンドラー

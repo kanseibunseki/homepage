@@ -7,8 +7,8 @@ import styles from './HeroSection.module.css'
 
 const HeroSection = () => {
   const [mounted, setMounted] = useState(false)
-  const [rippleReady, setRippleReady] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [documentHeight, setDocumentHeight] = useState('100vh')
   const [emotionData, setEmotionData] = useState({
     joy: 85,
     surprise: 72,
@@ -19,10 +19,13 @@ const HeroSection = () => {
   
   useEffect(() => {
     setMounted(true)
-    // CursorRippleを少し遅らせてマウント（初期化の安定性向上）
-    const timer = setTimeout(() => {
-      setRippleReady(true)
-    }, 100)
+    
+    // ドキュメント高さの計算
+    const updateDocumentHeight = () => {
+      const docHeight = document.documentElement.scrollHeight
+      setDocumentHeight(`${docHeight}px`)
+    }
+    updateDocumentHeight()
     
     // 感情データのリアルタイム変動シミュレーション
     const interval = setInterval(() => {
@@ -43,17 +46,30 @@ const HeroSection = () => {
       setScrollProgress(scrolled)
     }
     
+    // リサイズ時にドキュメント高さを再計算
+    const handleResize = () => {
+      updateDocumentHeight()
+    }
+    
     window.addEventListener('scroll', handleScroll)
+    window.addEventListener('resize', handleResize)
+    
+    // MutationObserverでコンテンツの変更を監視
+    const observer = new MutationObserver(() => {
+      updateDocumentHeight()
+    })
+    observer.observe(document.body, { childList: true, subtree: true })
     
     return () => {
-      clearTimeout(timer)
       clearInterval(interval)
       window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleResize)
+      observer.disconnect()
     }
   }, [])
   
   return (
-    <section className={`modern-hero-section ${styles.heroSection}`}>
+    <section className={`modern-hero-section ${styles.heroSection}`} style={{ minHeight: documentHeight }}>
       {/* スクロールプログレスバー */}
       <div className={styles.scrollProgress}>
         <div 
@@ -63,21 +79,8 @@ const HeroSection = () => {
       </div>
       
       {mounted && <EmotionParticleSystem />}
-      {rippleReady && <CursorRipple />}
+      {mounted && <CursorRipple />}
       
-      {/* データストリーム背景 */}
-      <div className={styles.dataStream}>
-        {[...Array(20)].map((_, i) => (
-          <div 
-            key={i} 
-            className={styles.streamLine} 
-            style={{ 
-              left: `${i * 5}%`,
-              animationDelay: `${i * 0.2}s`
-            }}
-          />
-        ))}
-      </div>
       
       {/* 波形アニメーション */}
       <div className={styles.waveContainer}>
