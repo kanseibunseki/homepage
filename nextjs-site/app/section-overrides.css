@@ -20,3 +20,16 @@
   position: relative;
   z-index: 10;
 }
+
+/* ハンバーガーメニューの高さ調整 */
+.l-header__menu {
+  padding-top: clamp(0px, 12vw, 120px) !important;
+  padding-bottom: clamp(0px, 8vw, 80px) !important;
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .l-header__menu {
+    padding-top: clamp(0px, 6vw, 80px) !important;
+    padding-bottom: clamp(0px, 4vw, 60px) !important;
+  }
+}

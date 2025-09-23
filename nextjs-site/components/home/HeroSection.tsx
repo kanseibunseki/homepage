@@ -127,7 +127,10 @@ const HeroSection = () => {
             </div>
             
             <h1 className={styles.title}>
-              <span className={styles.titleJa}>感性分析</span>
+              <picture className={styles.titleLogo}>
+                <source srcSet="/img/top/sp/logo.png" media="(max-width: 860px)" />
+                <img src="/img/top/logo.png" alt="感性分析" />
+              </picture>
               <span className={styles.titleEn}>EMOTIONAL INTELLIGENCE</span>
             </h1>
             

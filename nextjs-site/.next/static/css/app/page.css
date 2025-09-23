@@ -108,7 +108,7 @@
 
 /* 波形アニメーション */
 .HeroSection_waveContainer__8SaXv {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -288,17 +288,26 @@
   }
 }
 
-.HeroSection_titleJa__u3Oqx {
+.HeroSection_titleLogo__nPwlz {
   display: block;
-  font-size: clamp(3rem, 8vw, 6rem);
-  font-weight: 900;
-  background: linear-gradient(135deg, #00ffcc 0%, #8a2be2 50%, #ff00ff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: 0.1em;
-  margin-bottom: 10px;
-  text-shadow: 0 0 80px rgba(138, 43, 226, 0.5);
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.HeroSection_titleLogo__nPwlz img {
+  width: 100%;
+  height: auto;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  -webkit-font-smoothing: antialiased;
+  filter: drop-shadow(0 0 40px rgba(138, 43, 226, 0.5));
+}
+
+@media screen and (max-width: 860px) {
+  .HeroSection_titleLogo__nPwlz {
+    max-width: 300px;
+  }
 }
 
 .HeroSection_titleEn__6SccO {
