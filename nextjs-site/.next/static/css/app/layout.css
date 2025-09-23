@@ -34,3 +34,17 @@
   --color-background-light: #f9f9f9;
   --color-border: #e0e0e0;
 }
+
+/* 新しいHeroセクションのリセット - 既存のWordPressスタイルを上書き */
+.modern-hero-section {
+  /* 既存のtop-section_1スタイルをリセット */
+  all: unset !important;
+  display: block !important;
+}
+
+.modern-hero-section * {
+  /* 子要素の既存スタイルもリセット */
+  all: unset;
+  display: revert;
+  box-sizing: border-box;
+}

@@ -2,8 +2,6 @@
 
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
-import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler.js'
-import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 
 export default function ThreeBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -11,11 +9,12 @@ export default function ThreeBackground() {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null)
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null)
   const particlesRef = useRef<THREE.Points | null>(null)
-  const particleMaterialRef = useRef<THREE.PointsMaterial | null>(null)
+  const linesRef = useRef<THREE.LineSegments | null>(null)
   const mouseRef = useRef({ x: 0, y: 0 })
   const animationIdRef = useRef<number>()
 
-  const PARTICLE_COUNT = 20000
+  const PARTICLE_COUNT = 150
+  const CONNECTION_DISTANCE = 150
 
   useEffect(() => {
     if (!canvasRef.current) return
@@ -31,7 +30,7 @@ export default function ThreeBackground() {
       0.1,
       1000
     )
-    camera.position.z = 25
+    camera.position.z = 300
     cameraRef.current = camera
 
     // Renderer setup
@@ -44,129 +43,67 @@ export default function ThreeBackground() {
     renderer.setPixelRatio(window.devicePixelRatio)
     rendererRef.current = renderer
 
-    // Create heart shape
-    function createHeartShape() {
-      const shape = new THREE.Shape()
-      shape.moveTo(2.5, 2.5)
-      shape.bezierCurveTo(2.5, 2.5, 2, 0, 0, 0)
-      shape.bezierCurveTo(-3, 0, -3, 3.5, -3, 3.5)
-      shape.bezierCurveTo(-3, 5.5, -1.5, 7.7, 2.5, 9.5)
-      shape.bezierCurveTo(6, 7.7, 8, 5.5, 8, 3.5)
-      shape.bezierCurveTo(8, 3.5, 8, 0, 5, 0)
-      shape.bezierCurveTo(3.5, 0, 2.5, 2.5, 2.5, 2.5)
-      
-      const extrudeSettings = {
-        depth: 2,
-        bevelEnabled: true,
-        bevelSegments: 2,
-        steps: 2,
-        bevelSize: 1,
-        bevelThickness: 1
-      }
-      
-      const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
-      geometry.scale(1.5, 1.5, 1.5)
-      geometry.center()
-      return geometry
-    }
-
-    // Create speech bubble shape
-    function createSpeechBubbleShape() {
-      const shape = new THREE.Shape()
-      const w = 15, h = 10, r = 2
-      shape.moveTo(r, 0)
-      shape.lineTo(w - r, 0)
-      shape.quadraticCurveTo(w, 0, w, r)
-      shape.lineTo(w, h - r)
-      shape.quadraticCurveTo(w, h, w - r, h)
-      shape.lineTo(w / 2 + 5, h)
-      shape.lineTo(w / 2, h + 5)
-      shape.lineTo(w / 2 - 5, h)
-      shape.lineTo(r, h)
-      shape.quadraticCurveTo(0, h, 0, h - r)
-      shape.lineTo(0, r)
-      shape.quadraticCurveTo(0, 0, r, 0)
-      
-      const extrudeSettings = {
-        depth: 2,
-        bevelEnabled: true,
-        bevelSegments: 1,
-        steps: 1,
-        bevelSize: 0.5,
-        bevelThickness: 0.5
-      }
-      
-      const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
-      geometry.center()
-      return geometry
-    }
-
-    // Create brain shape
-    function createBrainShape() {
-      const leftHalf = new THREE.SphereGeometry(6, 16, 16, 0, Math.PI)
-      leftHalf.translate(-3, 0, 0)
-      const rightHalf = new THREE.SphereGeometry(6, 16, 16, 0, Math.PI)
-      rightHalf.rotateY(Math.PI)
-      rightHalf.translate(3, 0, 0)
-      const mergedGeometry = BufferGeometryUtils.mergeGeometries([leftHalf, rightHalf])
-      mergedGeometry.scale(1.2, 1, 1.2)
-      mergedGeometry.center()
-      return mergedGeometry
-    }
-
-    // Create lightbulb shape
-    function createLightbulbShape() {
-      const bulb = new THREE.SphereGeometry(6, 32, 32)
-      bulb.translate(0, 3, 0)
-      const base = new THREE.CylinderGeometry(2, 2, 4, 16)
-      base.translate(0, -4, 0)
-      const mergedGeometry = BufferGeometryUtils.mergeGeometries([bulb, base])
-      mergedGeometry.scale(1.1, 1.1, 1.1)
-      mergedGeometry.center()
-      return mergedGeometry
-    }
-
-    // Create exclamation shape
-    function createExclamationShape() {
-      const bar = new THREE.BoxGeometry(2.5, 9, 2.5)
-      bar.translate(0, 3.5, 0)
-      const dot = new THREE.SphereGeometry(1.5, 32, 32)
-      dot.translate(0, -6, 0)
-      const mergedGeometry = BufferGeometryUtils.mergeGeometries([bar, dot])
-      mergedGeometry.scale(1.2, 1.2, 1.2)
-      mergedGeometry.center()
-      return mergedGeometry
-    }
-
-    // Create particles
-    const heartGeometry = createHeartShape()
-    const sampler = new MeshSurfaceSampler(new THREE.Mesh(heartGeometry))
-    sampler.build()
-
+    // Create particles (data points)
     const particlesGeometry = new THREE.BufferGeometry()
     const positions = new Float32Array(PARTICLE_COUNT * 3)
-    const tempPosition = new THREE.Vector3()
+    const velocities = new Float32Array(PARTICLE_COUNT * 3)
+    const colors = new Float32Array(PARTICLE_COUNT * 3)
 
     for (let i = 0; i < PARTICLE_COUNT; i++) {
-      sampler.sample(tempPosition)
-      positions.set([tempPosition.x, tempPosition.y, tempPosition.z], i * 3)
+      // Random positions
+      positions[i * 3] = (Math.random() - 0.5) * 600
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 400
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 200
+
+      // Random velocities
+      velocities[i * 3] = (Math.random() - 0.5) * 0.5
+      velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.5
+      velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.5
+
+      // Gradient colors (cyan to purple)
+      const t = i / PARTICLE_COUNT
+      colors[i * 3] = 0 + t * 0.54 // R
+      colors[i * 3 + 1] = 1 - t * 0.17 // G
+      colors[i * 3 + 2] = 0.8 + t * 0.14 // B
     }
 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+    particlesGeometry.setAttribute('velocity', new THREE.BufferAttribute(velocities, 3))
+    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
 
+    // Create particle material
     const particleMaterial = new THREE.PointsMaterial({
-      color: 0xff8a8a,
-      size: 0.1,
+      size: 3,
+      vertexColors: true,
       blending: THREE.AdditiveBlending,
       transparent: true,
-      opacity: 0.9,
+      opacity: 0.8,
       depthWrite: false,
     })
-    particleMaterialRef.current = particleMaterial
 
     const particles = new THREE.Points(particlesGeometry, particleMaterial)
     particlesRef.current = particles
     scene.add(particles)
+
+    // Create connection lines geometry
+    const linesGeometry = new THREE.BufferGeometry()
+    const linePositions = new Float32Array(PARTICLE_COUNT * PARTICLE_COUNT * 6)
+    const lineColors = new Float32Array(PARTICLE_COUNT * PARTICLE_COUNT * 6)
+    
+    linesGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3))
+    linesGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3))
+
+    const lineMaterial = new THREE.LineBasicMaterial({
+      vertexColors: true,
+      blending: THREE.AdditiveBlending,
+      transparent: true,
+      opacity: 0.3,
+      linewidth: 1
+    })
+
+    const lines = new THREE.LineSegments(linesGeometry, lineMaterial)
+    linesRef.current = lines
+    scene.add(lines)
 
     // Mouse movement handler
     const handleMouseMove = (event: MouseEvent) => {
@@ -182,23 +119,108 @@ export default function ThreeBackground() {
       rendererRef.current.setSize(window.innerWidth, window.innerHeight)
     }
 
+    // Update connections between particles
+    const updateConnections = () => {
+      if (!particlesRef.current || !linesRef.current) return
+
+      const positions = particlesRef.current.geometry.attributes.position.array as Float32Array
+      const linePositions = linesRef.current.geometry.attributes.position.array as Float32Array
+      const lineColors = linesRef.current.geometry.attributes.color.array as Float32Array
+      
+      let lineIndex = 0
+
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        for (let j = i + 1; j < PARTICLE_COUNT; j++) {
+          const x1 = positions[i * 3]
+          const y1 = positions[i * 3 + 1]
+          const z1 = positions[i * 3 + 2]
+          
+          const x2 = positions[j * 3]
+          const y2 = positions[j * 3 + 1]
+          const z2 = positions[j * 3 + 2]
+          
+          const distance = Math.sqrt(
+            (x2 - x1) ** 2 + 
+            (y2 - y1) ** 2 + 
+            (z2 - z1) ** 2
+          )
+          
+          if (distance < CONNECTION_DISTANCE) {
+            const opacity = 1 - distance / CONNECTION_DISTANCE
+            
+            // Line start point
+            linePositions[lineIndex * 6] = x1
+            linePositions[lineIndex * 6 + 1] = y1
+            linePositions[lineIndex * 6 + 2] = z1
+            
+            // Line end point
+            linePositions[lineIndex * 6 + 3] = x2
+            linePositions[lineIndex * 6 + 4] = y2
+            linePositions[lineIndex * 6 + 5] = z2
+            
+            // Line colors
+            lineColors[lineIndex * 6] = 0
+            lineColors[lineIndex * 6 + 1] = opacity
+            lineColors[lineIndex * 6 + 2] = opacity * 0.8
+            
+            lineColors[lineIndex * 6 + 3] = opacity * 0.54
+            lineColors[lineIndex * 6 + 4] = opacity * 0.83
+            lineColors[lineIndex * 6 + 5] = opacity * 0.94
+            
+            lineIndex++
+          }
+        }
+      }
+      
+      linesRef.current.geometry.setDrawRange(0, lineIndex * 2)
+      linesRef.current.geometry.attributes.position.needsUpdate = true
+      linesRef.current.geometry.attributes.color.needsUpdate = true
+    }
+
     // Animation loop
     const animate = () => {
       animationIdRef.current = requestAnimationFrame(animate)
 
       if (!cameraRef.current || !rendererRef.current || !sceneRef.current || !particlesRef.current) return
 
-      // Camera follows mouse (inverse direction)
-      cameraRef.current.position.x += (-mouseRef.current.x * 5 - cameraRef.current.position.x) * 0.05
-      cameraRef.current.position.y += (-mouseRef.current.y * 5 - cameraRef.current.position.y) * 0.05
-      cameraRef.current.lookAt(sceneRef.current.position)
+      // Update particle positions
+      const positions = particlesRef.current.geometry.attributes.position.array as Float32Array
+      const velocities = particlesRef.current.geometry.attributes.velocity.array as Float32Array
 
-      // Rotate particles
-      if (window.scrollY < 100) {
-        particlesRef.current.rotation.y += 0.0008
-        const time = Date.now() * 0.005
-        particlesRef.current.scale.setScalar(Math.sin(time) * 0.05 + 1)
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        positions[i * 3] += velocities[i * 3]
+        positions[i * 3 + 1] += velocities[i * 3 + 1]
+        positions[i * 3 + 2] += velocities[i * 3 + 2]
+
+        // Boundary check and bounce
+        if (Math.abs(positions[i * 3]) > 300) velocities[i * 3] *= -1
+        if (Math.abs(positions[i * 3 + 1]) > 200) velocities[i * 3 + 1] *= -1
+        if (Math.abs(positions[i * 3 + 2]) > 100) velocities[i * 3 + 2] *= -1
+
+        // Mouse influence
+        const mouseInfluence = 50
+        const dx = mouseRef.current.x * 300 - positions[i * 3]
+        const dy = -mouseRef.current.y * 200 - positions[i * 3 + 1]
+        const distance = Math.sqrt(dx * dx + dy * dy)
+        
+        if (distance < mouseInfluence * 2) {
+          velocities[i * 3] -= dx * 0.00002
+          velocities[i * 3 + 1] -= dy * 0.00002
+        }
       }
+
+      particlesRef.current.geometry.attributes.position.needsUpdate = true
+
+      // Update connections
+      updateConnections()
+
+      // Rotate entire scene slightly
+      sceneRef.current.rotation.y += 0.0005
+
+      // Camera slight movement
+      cameraRef.current.position.x = Math.sin(Date.now() * 0.0001) * 10
+      cameraRef.current.position.y = Math.cos(Date.now() * 0.0001) * 10
+      cameraRef.current.lookAt(sceneRef.current.position)
 
       rendererRef.current.render(sceneRef.current, cameraRef.current)
     }
@@ -226,6 +248,12 @@ export default function ThreeBackground() {
       }
       if (particleMaterial) {
         particleMaterial.dispose()
+      }
+      if (linesGeometry) {
+        linesGeometry.dispose()
+      }
+      if (lineMaterial) {
+        lineMaterial.dispose()
       }
     }
   }, [])
