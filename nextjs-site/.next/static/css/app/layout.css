@@ -1,0 +1,36 @@
+/*!*************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[3]!./app/globals.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************/
+/* グローバルCSS - WordPressのスタイルシートをメインで使用するため最小限に */
+
+/* Adobe Fonts wf-loading対応 */
+.wf-loading {
+  visibility: hidden;
+}
+
+.wf-active,
+.wf-inactive {
+  visibility: visible;
+}
+
+/* 追加のユーティリティクラス - WordPressのCSSと競合しない形で */
+.is-hover {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.is-hover:hover {
+  opacity: 0.8;
+  transform: translateY(-2px);
+}
+
+/* NextJSから引き継ぐ必要最小限のスタイル */
+:root {
+  --color-primary: #111936;
+  --color-accent: #eb6357;
+  --color-text: #333333;
+  --color-text-light: #666666;
+  --color-background: #ffffff;
+  --color-background-light: #f9f9f9;
+  --color-border: #e0e0e0;
+}

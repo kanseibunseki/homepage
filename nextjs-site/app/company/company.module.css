@@ -1,0 +1,111 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 40px;
+}
+
+.title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  color: #333;
+}
+
+.section {
+  margin-bottom: 50px;
+}
+
+.sectionTitle {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e0e0e0;
+  color: #444;
+}
+
+.content {
+  line-height: 1.8;
+  color: #666;
+}
+
+.companyInfo {
+  background: #f9f9f9;
+  padding: 30px;
+  border-radius: 8px;
+  margin: 30px 0;
+}
+
+.infoTable {
+  width: 100%;
+}
+
+.infoRow {
+  display: flex;
+  padding: 15px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.infoRow:last-child {
+  border-bottom: none;
+}
+
+.infoLabel {
+  width: 150px;
+  font-weight: bold;
+  color: #555;
+}
+
+.infoValue {
+  flex: 1;
+  color: #666;
+}
+
+.missionSection {
+  background: white;
+  padding: 40px;
+  border-left: 4px solid #4a90e2;
+  margin: 40px 0;
+}
+
+.missionText {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #444;
+  font-style: italic;
+}
+
+@media (max-width: 860px) {
+  .container {
+    padding: 40px 20px;
+  }
+  
+  .title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+  
+  .companyInfo {
+    padding: 20px;
+  }
+  
+  .infoRow {
+    flex-direction: column;
+  }
+  
+  .infoLabel {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  
+  .missionSection {
+    padding: 25px;
+  }
+  
+  .missionText {
+    font-size: 1.1rem;
+  }
+}

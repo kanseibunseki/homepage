@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",(function(){new Swiper(".swiper-container",{loop:!0,speed:0,allowTouchMove:!1,slidesPerView:1,spaceBetween:0})}));

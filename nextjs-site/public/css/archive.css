@@ -1,0 +1,15 @@
+.news {
+  width: 100%;
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .u-sp {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 860px) {
+  .u-pc {
+    display: none !important;
+  }
+}

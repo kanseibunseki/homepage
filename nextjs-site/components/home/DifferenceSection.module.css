@@ -1,0 +1,40 @@
+.differenceSection {
+  position: relative;
+  padding: 80px 0;
+  background: #fff;
+}
+
+.bgImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  opacity: 0.1;
+}
+
+.slider {
+  position: relative;
+  max-width: 900px;
+  margin: 60px auto 0;
+  padding: 0 40px;
+  z-index: 2;
+}
+
+.slider img {
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 860px) {
+  .differenceSection {
+    padding: 60px 0;
+  }
+
+  .slider {
+    padding: 0 20px;
+    margin-top: 40px;
+  }
+}

@@ -1,0 +1,77 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.memberGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.memberCard {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.memberCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.memberImage {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.memberInfo {
+  padding: 20px;
+}
+
+.memberName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.memberTitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.memberBio {
+  color: #777;
+  line-height: 1.6;
+}
+
+@media (max-width: 860px) {
+  .container {
+    padding: 20px;
+  }
+  
+  .title {
+    margin-bottom: 40px;
+  }
+  
+  .memberGrid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .memberImage {
+    height: 250px;
+  }
+}

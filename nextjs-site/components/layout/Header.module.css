@@ -1,0 +1,211 @@
+/* Header Layout */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Hamburger Menu Button */
+.hamburger {
+  position: fixed;
+  top: clamp(0px, 4.6511627907vw, 9999px);
+  right: clamp(0px, 4.6511627907vw, 9999px);
+  width: clamp(0px, 11.7441860465vw, 9999px);
+  height: clamp(0px, 10.6976744186vw, 9999px);
+  cursor: pointer;
+  z-index: 1002;
+  transition: all 0.3s ease;
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .hamburger {
+    top: clamp(0px, 2.8571428571vw, 9999px);
+    right: clamp(0px, 2.8571428571vw, 9999px);
+    width: clamp(0px, 7.2142857143vw, 9999px);
+    height: clamp(0px, 6.5714285714vw, 9999px);
+  }
+}
+
+.hamburgerBtn {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hamburgerBtn span {
+  position: absolute;
+  right: clamp(0px, 2.3255813953vw, 9999px);
+  width: clamp(0px, 3.488372093vw, 9999px);
+  height: clamp(0px, 0.2325581395vw, 9999px);
+  background: #111936;
+  transition: all 0.3s ease;
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .hamburgerBtn span {
+    right: clamp(0px, 1.4285714286vw, 9999px);
+    width: clamp(0px, 2.1428571429vw, 9999px);
+    height: clamp(0px, 0.1428571429vw, 9999px);
+  }
+}
+
+.hamburgerBtn span:nth-child(1) {
+  top: clamp(0px, 4.0697674419vw, 9999px);
+}
+
+.hamburgerBtn span:nth-child(2) {
+  top: clamp(0px, 5.8139534884vw, 9999px);
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .hamburgerBtn span:nth-child(1) {
+    top: clamp(0px, 2.5vw, 9999px);
+  }
+  
+  .hamburgerBtn span:nth-child(2) {
+    top: clamp(0px, 3.5714285714vw, 9999px);
+  }
+}
+
+/* Active Hamburger State */
+.hamburger.active .hamburgerBtn span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .hamburgerBtn span:nth-child(2) {
+  transform: rotate(-45deg) translate(7px, -8px);
+}
+
+/* Header Inner Container */
+.headerInner {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  height: 100vh;
+  transition: right 0.5s ease;
+  z-index: 1001;
+}
+
+/* Menu Container */
+.headerContainer {
+  position: absolute;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  background: url('/img/common/menu-bg.jpg') no-repeat center center;
+  background-size: cover;
+  transition: right 0.5s ease;
+  overflow-y: auto;
+}
+
+@media screen and (max-width: 860px) {
+  .headerContainer {
+    max-width: 100%;
+  }
+}
+
+.headerContainer.active {
+  right: 0;
+}
+
+/* Menu Navigation */
+.headerMenu {
+  padding: clamp(0px, 13.9534883721vw, 9999px) clamp(0px, 4.6511627907vw, 9999px);
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .headerMenu {
+    padding: clamp(0px, 8.5714285714vw, 9999px) clamp(0px, 2.8571428571vw, 9999px);
+  }
+}
+
+.menuList {
+  list-style: none;
+  margin: 0 0 clamp(0px, 4.6511627907vw, 9999px);
+  padding: 0;
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .menuList {
+    margin: 0 0 clamp(0px, 2.8571428571vw, 9999px);
+  }
+}
+
+.menuItem {
+  margin-bottom: clamp(0px, 3.488372093vw, 9999px);
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .menuItem {
+    margin-bottom: clamp(0px, 2.1428571429vw, 9999px);
+  }
+}
+
+.menuLink {
+  display: block;
+  color: #111936;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.menuLink:hover {
+  opacity: 0.7;
+}
+
+.menuTitle {
+  font-size: clamp(0px, 2.7906976744vw, 9999px);
+  font-weight: bold;
+  margin: 0;
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .menuTitle {
+    font-size: clamp(0px, 1.7142857143vw, 9999px);
+  }
+}
+
+/* Contact Area in Menu */
+.menuContact {
+  text-align: center;
+}
+
+.contactSentence {
+  display: block;
+  font-size: clamp(0px, 1.6279069767vw, 9999px);
+  color: #666;
+  margin-bottom: clamp(0px, 2.3255813953vw, 9999px);
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .contactSentence {
+    font-size: clamp(0px, 1vw, 9999px);
+    margin-bottom: clamp(0px, 1.4285714286vw, 9999px);
+  }
+}
+
+.contactBtn {
+  display: inline-block;
+  max-width: clamp(0px, 34.8837209302vw, 9999px);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .contactBtn {
+    max-width: clamp(0px, 21.4285714286vw, 9999px);
+  }
+}
+
+.contactBtn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.contactBtn img {
+  width: 100%;
+  height: auto;
+}

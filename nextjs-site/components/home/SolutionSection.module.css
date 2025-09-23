@@ -1,0 +1,90 @@
+.solutionSection {
+  position: relative;
+}
+
+.mainImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.titleSolution {
+  width: clamp(0px, 27.4418604651vw, 9999px);
+  position: absolute;
+  top: clamp(0px, 11.6279069767vw, 9999px);
+  left: clamp(0px, 4.6511627907vw, 9999px);
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .titleSolution {
+    width: clamp(0px, 14.8571428571vw, 9999px);
+    top: clamp(0px, 5vw, 9999px);
+    left: clamp(0px, 21.4285714286vw, 9999px);
+  }
+}
+
+/* Decorative Logos */
+.logoKirakira {
+  z-index: 1;
+  width: clamp(0px, 41.2790697674vw, 9999px);
+  position: absolute;
+  bottom: clamp(0px, 44.1860465116vw, 9999px);
+  left: clamp(0px, 59.3023255814vw, 9999px);
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .logoKirakira {
+    width: clamp(0px, 17.8571428571vw, 9999px);
+    bottom: auto;
+    top: clamp(0px, 15vw, 9999px);
+    left: clamp(0px, 1.7857142857vw, 9999px);
+  }
+}
+
+.logoTereru {
+  z-index: 1;
+  width: clamp(0px, 29.0697674419vw, 9999px);
+  position: absolute;
+  top: clamp(0px, 65.6976744186vw, 9999px);
+  left: clamp(0px, 3.488372093vw, 9999px);
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .logoTereru {
+    width: clamp(0px, 14.2857142857vw, 9999px);
+    left: auto;
+    top: clamp(0px, 0.7142857143vw, 9999px);
+    right: clamp(0px, 3.5714285714vw, 9999px);
+  }
+}
+
+.logoAkushu {
+  z-index: 2;
+  width: clamp(0px, 20.1162790698vw, 9999px);
+  position: absolute;
+  top: clamp(0px, 49.4186046512vw, 9999px);
+  right: clamp(0px, 2.3255813953vw, 9999px);
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .logoAkushu {
+    width: clamp(0px, 18vw, 9999px);
+    top: clamp(0px, 2.5714285714vw, 9999px);
+    right: clamp(0px, 19.5vw, 9999px);
+  }
+}
+
+.logoLol {
+  display: none;
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .logoLol {
+    display: block;
+    position: absolute;
+    width: clamp(0px, 11.4285714286vw, 9999px);
+    top: clamp(0px, 18.5714285714vw, 9999px);
+    right: clamp(0px, 5vw, 9999px);
+    transform: rotate(15deg);
+  }
+}

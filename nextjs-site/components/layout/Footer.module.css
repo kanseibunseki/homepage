@@ -1,0 +1,193 @@
+.footer {
+  position: relative;
+  background: linear-gradient(to bottom, #f9f9f9, #fff);
+  padding: 80px 0 40px;
+  overflow: hidden;
+}
+
+.footerInner {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.footerLogo {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 362px;
+  height: 429px;
+  opacity: 0.1;
+  z-index: 1;
+}
+
+.logoKirakirasmall {
+  position: absolute;
+  top: 20px;
+  right: 100px;
+  width: 60px;
+  height: 60px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.logoExclamation {
+  position: absolute;
+  bottom: 100px;
+  left: 80px;
+  width: 50px;
+  height: 50px;
+  animation: float 3s ease-in-out infinite 0.5s;
+}
+
+.logoHeartbreak {
+  position: absolute;
+  top: 150px;
+  left: 200px;
+  width: 70px;
+  height: 70px;
+  animation: float 3s ease-in-out infinite 1s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.footerContainer {
+  position: relative;
+  z-index: 2;
+}
+
+.footerMenu {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.menuList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+.menuItem {
+  
+}
+
+.menuLink {
+  color: #333;
+  text-decoration: none;
+}
+
+.menuTitle {
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.menuContact {
+  text-align: center;
+  flex-shrink: 0;
+  margin-left: 60px;
+}
+
+.contactSentence {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.contactBtn {
+  display: inline-block;
+  max-width: 250px;
+}
+
+.contactBtn img {
+  width: 100%;
+  height: auto;
+}
+
+.copyright {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 1px solid #eee;
+}
+
+/* Mobile Styles */
+@media (max-width: 860px) {
+  .footer {
+    padding: 60px 0 30px;
+  }
+
+  .footerInner {
+    padding: 0 20px;
+  }
+
+  .footerLogo {
+    width: 200px;
+    height: 237px;
+    top: -50px;
+  }
+
+  .logoKirakirasmall,
+  .logoExclamation,
+  .logoHeartbreak {
+    width: 40px;
+    height: 40px;
+  }
+
+  .logoKirakirasmall {
+    right: 20px;
+  }
+
+  .logoExclamation {
+    left: 20px;
+    bottom: 60px;
+  }
+
+  .logoHeartbreak {
+    left: auto;
+    right: 40px;
+    top: 100px;
+  }
+
+  .footerMenu {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .menuList {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .menuContact {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .menuTitle {
+    font-size: 14px;
+  }
+
+  .copyright {
+    margin-top: 30px;
+    padding-top: 30px;
+  }
+}

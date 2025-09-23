@@ -1,0 +1,50 @@
+.problemSection {
+  position: relative;
+}
+
+.mainImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.title {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Decorative Logos */
+.logoSkull {
+  width: clamp(0px, 29.0697674419vw, 9999px);
+  position: absolute;
+  top: clamp(0px, 5.8139534884vw, 9999px);
+  right: clamp(0px, 2.9069767442vw, 9999px);
+  transform: rotate(15deg);
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .logoSkull {
+    width: clamp(0px, 16.4285714286vw, 9999px);
+    top: clamp(0px, 27.8571428571vw, 9999px);
+    right: clamp(0px, 10vw, 9999px);
+    transform: rotate(15deg);
+  }
+}
+
+.logoOh {
+  width: clamp(0px, 29.0697674419vw, 9999px);
+  position: absolute;
+  top: clamp(0px, 66.2790697674vw, 9999px);
+  right: clamp(0px, 3.488372093vw, 9999px);
+}
+
+@media screen and (min-width: calc(860px + 1px)) {
+  .logoOh {
+    width: clamp(0px, 21.4285714286vw, 9999px);
+    top: clamp(0px, 35.7142857143vw, 9999px);
+    left: clamp(0px, 6.0714285714vw, 9999px);
+    right: auto;
+  }
+}
