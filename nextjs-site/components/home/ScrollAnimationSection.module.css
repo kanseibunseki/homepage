@@ -1,0 +1,294 @@
+.section {
+  position: relative;
+  width: 100%;
+  /* 重要: 通常のセクションとは異なり、heightは設定しない */
+  /* セクション外では固定ビューポートを非表示にする */
+}
+
+.scrollArea {
+  /* スクロール可能な高さを確保（4画面分） */
+  height: 400vh;
+  pointer-events: none;
+}
+
+.fixedViewport {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(180deg, 
+    #0a0a0f 0%, 
+    #1a0f2e 50%, 
+    #0a0a0f 100%
+  );
+  z-index: 10;
+  pointer-events: none;
+}
+
+.fixedViewport > * {
+  pointer-events: auto;
+}
+
+/* プログレスバー */
+.progressBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 100;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #00ffcc, #8a2be2);
+  transition: width 0.1s ease-out;
+}
+
+/* フレーム1: タイトル */
+.frame1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  transition: none; /* スクロール連動なのでtransitionは不要 */
+}
+
+.mainTitle {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #00ffcc, #8a2be2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* フレーム2: カード */
+.frame2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.card1, .card2, .card3 {
+  width: 300px;
+  height: 400px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(138, 43, 226, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardContent h3 {
+  font-size: 1.5rem;
+  color: #00ffcc;
+  margin-bottom: 1rem;
+}
+
+.cardContent p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+/* フレーム3: 画像とテキスト */
+.frame3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem;
+}
+
+.imageTextPair {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  margin-bottom: 3rem;
+}
+
+.imageBox {
+  flex: 1;
+  height: 300px;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, 
+    rgba(138, 43, 226, 0.2), 
+    rgba(0, 255, 204, 0.2)
+  );
+  border: 2px solid rgba(0, 255, 204, 0.5);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.2em;
+}
+
+.textBox {
+  flex: 1;
+}
+
+.textBox h3 {
+  font-size: 2rem;
+  color: #00ffcc;
+  margin-bottom: 1rem;
+}
+
+.textBox p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.8;
+}
+
+/* フレーム4: 最終メッセージ */
+.frame4 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #00ffcc;
+  border-radius: 50%;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.5);
+    opacity: 1;
+  }
+}
+
+.finalMessage {
+  text-align: center;
+  z-index: 1;
+}
+
+.finalMessage h2 {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #00ffcc, #8a2be2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.finalMessage p {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 3rem;
+}
+
+.ctaButton {
+  display: inline-block;
+  padding: 1rem 3rem;
+  background: linear-gradient(135deg, #00ffcc, #8a2be2);
+  color: white;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.ctaButton:hover {
+  transform: translateY(-5px);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 1024px) {
+  .frame2 {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .card1, .card2, .card3 {
+    width: 200px;
+    height: 250px;
+    padding: 1.5rem;
+  }
+  
+  .imageTextPair {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .frame3 {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainTitle {
+    font-size: 2rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .imageBox {
+    height: 200px;
+  }
+  
+  .textBox h3 {
+    font-size: 1.5rem;
+  }
+  
+  .textBox p {
+    font-size: 1rem;
+  }
+}
