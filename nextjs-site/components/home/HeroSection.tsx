@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react'
 import EmotionParticleSystem from '../three/EmotionParticleSystem'
 import CursorRipple from '../effects/CursorRipple'
 import styles from './HeroSection.module.css'
+import type { EmotionData } from '@/types'
 
 const HeroSection = () => {
   const [mounted, setMounted] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [documentHeight, setDocumentHeight] = useState('100vh')
-  const [emotionData, setEmotionData] = useState({
+  const [emotionData, setEmotionData] = useState<EmotionData>({
     joy: 85,
     surprise: 72,
     excitement: 90,
