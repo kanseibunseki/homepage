@@ -6,6 +6,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ScrollTopButton from '@/components/ui/ScrollTopBtn'
 import GlobalDataStream from '@/components/effects/GlobalDataStream'
+import LenisProvider from '@/components/providers/LenisProvider'
 
 export const metadata: Metadata = {
   title: '株式会社感性分析｜ＡＩをフル活用し、企業のデータ活用を支援します - 一流のデータサイエンティストが、貴社の最適なデータ活用を提案・実現します。',
@@ -83,13 +84,15 @@ export default function RootLayout({
             `
           }}
         />
-        <GlobalDataStream />
-        <Header />
-        <main className="l-main">
-          {children}
-        </main>
-        <Footer />
-        <ScrollTopButton />
+        <LenisProvider>
+          <GlobalDataStream />
+          <Header />
+          <main className="l-main">
+            {children}
+          </main>
+          <Footer />
+          <ScrollTopButton />
+        </LenisProvider>
       </body>
     </html>
   )
