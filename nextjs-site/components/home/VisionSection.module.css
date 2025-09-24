@@ -1,0 +1,570 @@
+/* VisionSection.module.css */
+
+.visionSection {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, 
+    #0a0a0f 0%,
+    #1a0f2e 25%,
+    #0f1a2e 50%,
+    #1a0f2e 75%,
+    #0a0a0f 100%);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 0;
+  margin-top: -50px;
+}
+
+/* パーティクル背景 */
+.particleBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, rgba(138, 43, 226, 0.8) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: floatParticle linear infinite;
+}
+
+@keyframes floatParticle {
+  0% {
+    transform: translateY(100vh) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) translateX(100px);
+    opacity: 0;
+  }
+}
+
+/* グリッドパターン */
+.gridPattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* コンテナ */
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  z-index: 2;
+}
+
+/* コンテンツ */
+.content {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s ease-out;
+}
+
+.contentVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* タイトルラッパー */
+.titleWrapper {
+  text-align: left;
+  margin-bottom: 30px;
+  position: relative;
+  padding-left: 20px;
+}
+
+/* メインタイトル - OUR VISION */
+.mainTitle {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: 10px;
+  color: #00ffcc;
+  text-transform: uppercase;
+  margin: 0;
+  margin-bottom: 15px;
+  opacity: 1;
+  animation: glowText 2s ease-in-out infinite alternate;
+}
+
+@keyframes glowText {
+  from {
+    text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc;
+  }
+  to {
+    text-shadow: 0 0 20px #00ffcc, 0 0 30px #00ffcc, 0 0 40px #00ffcc;
+  }
+}
+
+/* サブタイトル - 感性が価値になる社会へ */
+.subTitle {
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 400;
+  line-height: 1.4;
+  margin: 0;
+  margin-bottom: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  position: relative;
+  animation: fadeInUp 1s ease-out forwards;
+  animation-delay: 0.2s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* タイトル装飾 */
+.titleDecoration {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.decorLine {
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #00ffcc 50%, transparent 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.decorLine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, #ffffff 50%, transparent 100%);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+.decorDot {
+  width: 6px;
+  height: 6px;
+  background: #00ffcc;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* ブロック1: テクノロジーと感性 */
+.block1 {
+  max-width: none;
+  margin: 0;
+  margin-bottom: 100vh;
+  position: relative;
+  z-index: 2;
+  min-height: 50vh;
+  display: flex;
+  align-items: flex-start;
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+/* ブロック2: データと心 */
+.block2 {
+  max-width: 900px;
+  margin: 0 auto;
+  margin-bottom: 100vh;
+  position: relative;
+  z-index: 2;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+}
+
+/* ブロック3: AIとココロ */
+.block3 {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+}
+
+.paragraph {
+  margin-bottom: 40px;
+  animation: fadeIn 1s ease-out forwards;
+  opacity: 0;
+  transition: transform 0.3s ease-out;
+}
+
+.paragraph:nth-child(1) {
+  animation-delay: 0.6s;
+}
+
+.paragraph:nth-child(2) {
+  animation-delay: 0.8s;
+}
+
+.paragraph:nth-child(3) {
+  animation-delay: 1s;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.paragraphInner {
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
+  padding: 30px;
+  background: linear-gradient(135deg, 
+    rgba(138, 43, 226, 0.05) 0%, 
+    rgba(0, 255, 204, 0.05) 100%);
+  border: 1px solid rgba(138, 43, 226, 0.2);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.paragraphInner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, 
+    transparent 30%, 
+    rgba(138, 43, 226, 0.1) 50%, 
+    transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.paragraphInner:hover::before {
+  transform: translateX(100%);
+}
+
+.paragraphInner:hover {
+  border-color: rgba(0, 255, 204, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(138, 43, 226, 0.2);
+}
+
+.paragraphIcon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.paragraphIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(138, 43, 226, 0.5));
+}
+
+.paragraphInner p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+/* ビジュアル要素 */
+.visualElements {
+  position: absolute;
+  top: 50%;
+  right: -150px;
+  transform: translateY(-50%);
+  width: 300px;
+  height: 300px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.centralOrb {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 75px auto;
+}
+
+.orbCore {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #8a2be2 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(20px);
+  animation: orbPulse 4s ease-in-out infinite;
+}
+
+.orbGlow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #00ffcc 0%, transparent 60%);
+  border-radius: 50%;
+  filter: blur(30px);
+  animation: orbPulse 4s ease-in-out infinite alternate;
+}
+
+.orbPulse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(138, 43, 226, 0.5);
+  border-radius: 50%;
+  animation: orbRing 2s ease-out infinite;
+}
+
+@keyframes orbPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+@keyframes orbRing {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* 周回アイコン */
+.orbitingIcons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: rotate360 20s linear infinite;
+}
+
+@keyframes rotate360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.orbitIcon {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  animation: counterRotate 20s linear infinite;
+}
+
+@keyframes counterRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.orbitIcon:nth-child(1) {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.orbitIcon:nth-child(2) {
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.orbitIcon:nth-child(3) {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.orbitIcon:nth-child(4) {
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.orbitIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 5px rgba(0, 255, 204, 0.5));
+}
+
+/* データストリーム */
+.dataStream {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.streamLine {
+  position: absolute;
+  bottom: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to top, 
+    transparent 0%, 
+    #00ffcc 50%, 
+    transparent 100%);
+  opacity: 0;
+  animation: streamFlow 3s ease-in-out infinite;
+}
+
+.streamLine:nth-child(1) { left: 20%; }
+.streamLine:nth-child(2) { left: 35%; }
+.streamLine:nth-child(3) { left: 50%; }
+.streamLine:nth-child(4) { left: 65%; }
+.streamLine:nth-child(5) { left: 80%; }
+
+@keyframes streamFlow {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+/* 底部グラデーション */
+.bottomGradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  pointer-events: none;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 860px) {
+  .visionSection {
+    padding: 80px 0;
+  }
+
+  .titleWrapper {
+    margin-bottom: 40px;
+    padding-left: 20px;
+  }
+
+  .mainTitle {
+    font-size: clamp(24px, 6vw, 36px);
+  }
+  
+  .block1 {
+    padding-left: 20px;
+    padding-top: 30px;
+  }
+
+  .paragraphInner {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .paragraphIcon {
+    margin: 0 auto;
+  }
+
+  .visualElements {
+    display: none;
+  }
+
+  .decorLine {
+    width: 40px;
+  }
+
+  .paragraphInner p {
+    font-size: 14px;
+  }
+}

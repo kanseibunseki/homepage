@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import EmotionParticleSystem from '../three/EmotionParticleSystem'
+import EmotionParticleSystemWrapper from '../three/EmotionParticleSystemWrapper'
 import CursorRipple from '../effects/CursorRipple'
 import styles from './HeroSection.module.css'
 import type { EmotionData } from '@/types'
@@ -79,7 +79,7 @@ const HeroSection = () => {
         />
       </div>
       
-      {mounted && <EmotionParticleSystem />}
+      {mounted && <EmotionParticleSystemWrapper />}
       {mounted && <CursorRipple />}
       
       
