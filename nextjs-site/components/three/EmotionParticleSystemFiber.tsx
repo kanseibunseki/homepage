@@ -1,25 +1,46 @@
 'use client'
 
-import { useEffect, useRef, useState, useMemo } from 'react'
+import { useEffect, useRef, useState, useMemo, useCallback } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Stats } from '@react-three/drei'
 import * as THREE from 'three'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { EMOTION_CONFIG } from './constants/emotionConfig'
 import { TextureAtlasGenerator } from './utils/textureAtlasGenerator'
 import { features } from '@/config/features'
 
+// GSAPプラグインの登録
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger)
+}
+
 /**
  * 感情パーティクルコンポーネント
  */
-function EmotionParticles({ texture }: { texture: THREE.Texture }) {
+function EmotionParticles({ 
+  texture, 
+  onHeartFormationChange 
+}: { 
+  texture: THREE.Texture
+  onHeartFormationChange?: (forming: boolean) => void 
+}) {
   const meshRef = useRef<THREE.Points>(null)
   const linesRef = useRef<THREE.LineSegments>(null)
   const velocitiesRef = useRef<Float32Array>(null!)
   const mouseRef = useRef({ x: 0, y: 0 })
   const { size, camera } = useThree()
 
-  // パーティクルの初期設定
-  const particleCount = EMOTION_CONFIG.particles.count
+  // パーティクルの設定（ハート形成時は500個に増やす）
+  const baseParticleCount = EMOTION_CONFIG.particles.count  // 80個
+  const totalParticleCount = 500  // ハート形成時の総数
+  const [visibleCount, setVisibleCount] = useState(baseParticleCount)
+  
+  // ハート形成の状態管理
+  const isFormingHeart = useRef(false)
+  const heartPositionsRef = useRef<Float32Array>(null!)
+  const originalPositionsRef = useRef<Float32Array>(null!)
+  const morphProgress = useRef(0)
   
   // 重み付きランダム選択
   const selectRandomIcon = () => {
@@ -37,19 +58,19 @@ function EmotionParticles({ texture }: { texture: THREE.Texture }) {
   }
 
   const [positions, uvOffsets, scales, rotations, colors, randomOffsets, iconIndices] = useMemo(() => {
-    const positions = new Float32Array(particleCount * 3)
-    const velocities = new Float32Array(particleCount * 3)
-    const uvOffsets = new Float32Array(particleCount * 2)
-    const scales = new Float32Array(particleCount)
-    const rotations = new Float32Array(particleCount)
-    const colors = new Float32Array(particleCount * 3)
-    const randomOffsets = new Float32Array(particleCount)
-    const iconIndices = new Float32Array(particleCount)
+    const positions = new Float32Array(totalParticleCount * 3)
+    const velocities = new Float32Array(totalParticleCount * 3)
+    const uvOffsets = new Float32Array(totalParticleCount * 2)
+    const scales = new Float32Array(totalParticleCount)
+    const rotations = new Float32Array(totalParticleCount)
+    const colors = new Float32Array(totalParticleCount * 3)
+    const randomOffsets = new Float32Array(totalParticleCount)
+    const iconIndices = new Float32Array(totalParticleCount)
 
     const emotions = EMOTION_CONFIG.emotions
     const bounds = EMOTION_CONFIG.particles.bounds
 
-    for (let i = 0; i < particleCount; i++) {
+    for (let i = 0; i < totalParticleCount; i++) {
       // ランダムな位置
       positions[i * 3] = (Math.random() - 0.5) * bounds.width
       positions[i * 3 + 1] = (Math.random() - 0.5) * bounds.height
@@ -81,17 +102,128 @@ function EmotionParticles({ texture }: { texture: THREE.Texture }) {
     }
 
     velocitiesRef.current = velocities
+    // 元の位置を保存
+    originalPositionsRef.current = new Float32Array(positions)
+    
     return [positions, uvOffsets, scales, rotations, colors, randomOffsets, iconIndices]
-  }, [particleCount])
+  }, [totalParticleCount])
+
+  // ハート型の位置を生成
+  const createHeartPositions = useCallback(() => {
+    const heartPos = new Float32Array(totalParticleCount * 3)
+    
+    // ハートシェイプの生成（正しい向き）
+    const shape = new THREE.Shape()
+    shape.moveTo(2.5, -2.5)
+    shape.bezierCurveTo(2.5, -2.5, 2, 0, 0, 0)
+    shape.bezierCurveTo(-3, 0, -3, -3.5, -3, -3.5)
+    shape.bezierCurveTo(-3, -5.5, -1.5, -7.7, 2.5, -9.5)
+    shape.bezierCurveTo(6, -7.7, 8, -5.5, 8, -3.5)
+    shape.bezierCurveTo(8, -3.5, 8, 0, 5, 0)
+    shape.bezierCurveTo(3.5, 0, 2.5, -2.5, 2.5, -2.5)
+    
+    const extrudeSettings = {
+      depth: 2,
+      bevelEnabled: true,
+      bevelSegments: 2,
+      steps: 2,
+      bevelSize: 1,
+      bevelThickness: 1
+    }
+    
+    const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
+    geometry.scale(2, 2, 2)
+    geometry.center()
+    geometry.rotateY(-Math.PI / 6)  // Y軸で回転（横から見た角度を変える）
+    
+    // サーフェスサンプリング
+    const positionAttribute = geometry.getAttribute('position')
+    const vertices = positionAttribute.array
+    const vertexCount = vertices.length / 3
+    
+    for (let i = 0; i < totalParticleCount; i++) {
+      // ランダムに頂点を選択
+      const idx = Math.floor(Math.random() * vertexCount) * 3
+      
+      // スケールと位置調整（画面右側に表示）
+      heartPos[i * 3] = vertices[idx] * 15 + 100      // X: 右側
+      heartPos[i * 3 + 1] = vertices[idx + 1] * 15    // Y
+      heartPos[i * 3 + 2] = vertices[idx + 2] * 15    // Z
+    }
+    
+    return heartPos
+  }, [totalParticleCount])
+
+  // ハート位置の初期化
+  useEffect(() => {
+    heartPositionsRef.current = createHeartPositions()
+  }, [createHeartPositions])
+
+  // ScrollTriggerの設定
+  useEffect(() => {
+    if (typeof window === 'undefined' || !meshRef.current) return
+    
+    // VisionSectionの監視
+    const checkVisionSection = () => {
+      const sections = document.querySelectorAll('section')
+      const visionSection = Array.from(sections).find(section => 
+        section.textContent?.includes('OUR VISION')
+      )
+      
+      if (visionSection) {
+        ScrollTrigger.create({
+          trigger: visionSection,
+          start: "top center",
+          end: "bottom center",
+          scrub: 1,
+          onEnter: () => {
+            console.log('Entering VisionSection - forming heart')
+            isFormingHeart.current = true
+            onHeartFormationChange?.(true)
+            setVisibleCount(totalParticleCount)
+            
+            // GSAPアニメーションで滑らかに変形
+            gsap.to(morphProgress, {
+              current: 1,
+              duration: 2,
+              ease: "power2.inOut"
+            })
+          },
+          onLeaveBack: () => {
+            console.log('Leaving VisionSection - returning to normal')
+            isFormingHeart.current = false
+            onHeartFormationChange?.(false)
+            
+            gsap.to(morphProgress, {
+              current: 0,
+              duration: 2,
+              ease: "power2.inOut",
+              onComplete: () => {
+                setVisibleCount(baseParticleCount)
+              }
+            })
+          }
+        })
+      }
+    }
+    
+    // DOM読み込み後に実行
+    const timer = setTimeout(checkVisionSection, 1000)
+    
+    return () => {
+      clearTimeout(timer)
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+    }
+  }, [baseParticleCount, totalParticleCount])
 
   // 接続線の初期設定
   const linePositions = useMemo(() => {
-    return new Float32Array(particleCount * particleCount * 6)
-  }, [particleCount])
+    return new Float32Array(totalParticleCount * totalParticleCount * 6)
+  }, [totalParticleCount])
 
   const lineColors = useMemo(() => {
-    return new Float32Array(particleCount * particleCount * 6)
-  }, [particleCount])
+    return new Float32Array(totalParticleCount * totalParticleCount * 6)
+  }, [totalParticleCount])
 
   // マウス位置の更新
   useEffect(() => {
@@ -103,6 +235,13 @@ function EmotionParticles({ texture }: { texture: THREE.Texture }) {
     window.addEventListener('mousemove', handleMouseMove)
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
+
+  // パーティクル数の制御
+  useEffect(() => {
+    if (meshRef.current) {
+      meshRef.current.geometry.setDrawRange(0, visibleCount)
+    }
+  }, [visibleCount])
 
   // アニメーションループ
   useFrame((state, delta) => {
@@ -122,30 +261,50 @@ function EmotionParticles({ texture }: { texture: THREE.Texture }) {
     }
 
     // パーティクルの位置更新
-    for (let i = 0; i < particleCount; i++) {
-      // 位置更新
-      positions[i * 3] += velocities[i * 3] * EMOTION_CONFIG.particles.speed
-      positions[i * 3 + 1] += velocities[i * 3 + 1] * EMOTION_CONFIG.particles.speed
-      positions[i * 3 + 2] += velocities[i * 3 + 2] * EMOTION_CONFIG.particles.speed
+    for (let i = 0; i < visibleCount; i++) {
+      if (isFormingHeart.current && heartPositionsRef.current) {
+        // ハート形成のモーフィング
+        const progress = morphProgress.current
+        const targetX = heartPositionsRef.current[i * 3]
+        const targetY = heartPositionsRef.current[i * 3 + 1]
+        const targetZ = heartPositionsRef.current[i * 3 + 2]
+        const origX = originalPositionsRef.current[i * 3]
+        const origY = originalPositionsRef.current[i * 3 + 1]
+        const origZ = originalPositionsRef.current[i * 3 + 2]
+        
+        positions[i * 3] = origX + (targetX - origX) * progress
+        positions[i * 3 + 1] = origY + (targetY - origY) * progress
+        positions[i * 3 + 2] = origZ + (targetZ - origZ) * progress
+      } else if (morphProgress.current < 0.01) {
+        // 通常の動き（ハート形成していない時）
+        positions[i * 3] += velocities[i * 3] * EMOTION_CONFIG.particles.speed
+        positions[i * 3 + 1] += velocities[i * 3 + 1] * EMOTION_CONFIG.particles.speed
+        positions[i * 3 + 2] += velocities[i * 3 + 2] * EMOTION_CONFIG.particles.speed
 
-      // 境界チェック（バウンス） - vanilla版と同じ固定値
-      if (Math.abs(positions[i * 3]) > 300) {
-        velocities[i * 3] *= -EMOTION_CONFIG.particles.bounceSpeed
-        positions[i * 3] = Math.sign(positions[i * 3]) * 300
+        // 境界チェック（バウンス）
+        if (Math.abs(positions[i * 3]) > 300) {
+          velocities[i * 3] *= -EMOTION_CONFIG.particles.bounceSpeed
+          positions[i * 3] = Math.sign(positions[i * 3]) * 300
+        }
+        if (Math.abs(positions[i * 3 + 1]) > 200) {
+          velocities[i * 3 + 1] *= -EMOTION_CONFIG.particles.bounceSpeed
+          positions[i * 3 + 1] = Math.sign(positions[i * 3 + 1]) * 200
+        }
+        if (Math.abs(positions[i * 3 + 2]) > 100) {
+          velocities[i * 3 + 2] *= -EMOTION_CONFIG.particles.bounceSpeed
+          positions[i * 3 + 2] = Math.sign(positions[i * 3 + 2]) * 100
+        }
+        
+        // 速度減衰
+        velocities[i * 3] *= 0.999
+        velocities[i * 3 + 1] *= 0.999
+        velocities[i * 3 + 2] *= 0.999
+        
+        // 元の位置を更新
+        originalPositionsRef.current[i * 3] = positions[i * 3]
+        originalPositionsRef.current[i * 3 + 1] = positions[i * 3 + 1]
+        originalPositionsRef.current[i * 3 + 2] = positions[i * 3 + 2]
       }
-      if (Math.abs(positions[i * 3 + 1]) > 200) {
-        velocities[i * 3 + 1] *= -EMOTION_CONFIG.particles.bounceSpeed
-        positions[i * 3 + 1] = Math.sign(positions[i * 3 + 1]) * 200
-      }
-      if (Math.abs(positions[i * 3 + 2]) > 100) {
-        velocities[i * 3 + 2] *= -EMOTION_CONFIG.particles.bounceSpeed
-        positions[i * 3 + 2] = Math.sign(positions[i * 3 + 2]) * 100
-      }
-      
-      // 速度減衰
-      velocities[i * 3] *= 0.999
-      velocities[i * 3 + 1] *= 0.999
-      velocities[i * 3 + 2] *= 0.999
     }
 
     positionsAttr.needsUpdate = true
@@ -159,8 +318,8 @@ function EmotionParticles({ texture }: { texture: THREE.Texture }) {
     let lineIndex = 0
     const maxDistance = EMOTION_CONFIG.connections.maxDistance
 
-    for (let i = 0; i < particleCount; i++) {
-      for (let j = i + 1; j < particleCount; j++) {
+    for (let i = 0; i < visibleCount && i < baseParticleCount; i++) {
+      for (let j = i + 1; j < visibleCount && j < baseParticleCount; j++) {
         if (lineIndex >= EMOTION_CONFIG.connections.maxLines) break
 
         const x1 = positions[i * 3]
@@ -337,43 +496,43 @@ function EmotionParticles({ texture }: { texture: THREE.Texture }) {
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            count={particleCount}
+            count={totalParticleCount}
             array={positions}
             itemSize={3}
           />
           <bufferAttribute
             attach="attributes-uvOffset"
-            count={particleCount}
+            count={totalParticleCount}
             array={uvOffsets}
             itemSize={2}
           />
           <bufferAttribute
             attach="attributes-scale"
-            count={particleCount}
+            count={totalParticleCount}
             array={scales}
             itemSize={1}
           />
           <bufferAttribute
             attach="attributes-rotation"
-            count={particleCount}
+            count={totalParticleCount}
             array={rotations}
             itemSize={1}
           />
           <bufferAttribute
             attach="attributes-color"
-            count={particleCount}
+            count={totalParticleCount}
             array={colors}
             itemSize={3}
           />
           <bufferAttribute
             attach="attributes-randomOffset"
-            count={particleCount}
+            count={totalParticleCount}
             array={randomOffsets}
             itemSize={1}
           />
           <bufferAttribute
             attach="attributes-iconIndex"
-            count={particleCount}
+            count={totalParticleCount}
             array={iconIndices}
             itemSize={1}
           />
@@ -385,13 +544,13 @@ function EmotionParticles({ texture }: { texture: THREE.Texture }) {
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            count={particleCount * particleCount * 2}
+            count={totalParticleCount * totalParticleCount * 2}
             array={linePositions}
             itemSize={3}
           />
           <bufferAttribute
             attach="attributes-color"
-            count={particleCount * particleCount * 2}
+            count={totalParticleCount * totalParticleCount * 2}
             array={lineColors}
             itemSize={3}
           />
@@ -413,6 +572,7 @@ function EmotionParticles({ texture }: { texture: THREE.Texture }) {
 function Scene() {
   const [texture, setTexture] = useState<THREE.Texture | null>(null)
   const groupRef = useRef<THREE.Group>(null)
+  const isFormingHeart = useRef(false)
 
   // テクスチャアトラスの生成
   useEffect(() => {
@@ -432,9 +592,9 @@ function Scene() {
     }
   }, [])
 
-  // グループの回転
+  // グループの回転（ハート形成中は停止）
   useFrame((state, delta) => {
-    if (groupRef.current) {
+    if (groupRef.current && !isFormingHeart.current) {
       groupRef.current.rotation.y += EMOTION_CONFIG.animation.rotationSpeed
     }
   })
@@ -445,7 +605,12 @@ function Scene() {
 
   return (
     <group ref={groupRef}>
-      <EmotionParticles texture={texture} />
+      <EmotionParticles 
+        texture={texture} 
+        onHeartFormationChange={(forming: boolean) => {
+          isFormingHeart.current = forming
+        }}
+      />
     </group>
   )
 }
