@@ -124,10 +124,11 @@ const VisionSection = () => {
                   <span className={styles.paragraphIcon}>
                     <img src="/wordpress-img/logo/kirakirasmall.png" alt="" />
                   </span>
-                  <h3 className={styles.blockTitle}>テクノロジーと感性</h3>
                   <p>
-                    テクノロジーが人の心を置き去りにする未来ではなく、
-                    一人ひとりの「感性」が尊重され、新しい価値を生み出す社会を目指します。
+                    私たちが目指すのは、テクノロジーが人の心を置き去りにする未来ではありません。
+                    <br /><br />
+                    むしろ、テクノロジーによって、これまで可視化できなかった一人ひとりの「感性」が尊重され、
+                    新しい価値を生み出す社会です。
                   </p>
                 </div>
               </div>
@@ -140,26 +141,31 @@ const VisionSection = () => {
                   <span className={styles.paragraphIcon}>
                     <img src="/wordpress-img/logo/heart.png" alt="" />
                   </span>
-                  <h3 className={styles.blockTitle}>データと心</h3>
                   <p>
-                    SNSの投稿、レビュー、日々の会話。
-                    その言葉の奥に眠る「心」を、単なる数字ではなく感情の集合体として捉えます。
+                    SNSの投稿、商品のレビュー、日々の会話。
+                    <br />
+                    その言葉の奥に眠る、測定できないはずの「心」。
+                    <br /><br />
+                    私たちはその膨大なデータを、単なる数字の羅列としてではなく、
+                    人々の感情の集合体として捉えます。
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* ブロック3: AIとココロ */}
+            {/* ブロック3: 左下に配置（タイトルなし） */}
             <div className={styles.block3}>
-              <div className={styles.paragraph}>
-                <div className={styles.paragraphInner}>
+              <div className={styles.paragraphLeft}>
+                <div className={styles.paragraphInnerLeft}>
                   <span className={styles.paragraphIcon}>
                     <img src="/wordpress-img/logo/denkyu.png" alt="" />
                   </span>
-                  <h3 className={styles.blockTitle}>AIとココロ</h3>
                   <p>
-                    データと感性が交差する点に、ビジネスの革新と豊かなコミュニケーションの未来が生まれる。
-                    私たちはAIに「ココロ」を実装していきます。
+                    データと感性が交差する点に、
+                    <br />
+                    ビジネスの革新と、より豊かなコミュニケーションの未来が生まれる。
+                    <br /><br />
+                    私たちはそう信じて、AIに「ココロ」を実装していきます。
                   </p>
                 </div>
               </div>

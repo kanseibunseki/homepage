@@ -3,7 +3,7 @@
 .visionSection {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  min-height: auto;
   background: linear-gradient(135deg, 
     #1a1a2e 0%,
     #2d1b4e 25%,
@@ -12,9 +12,9 @@
     #1a1a2e 100%);
   overflow: hidden;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 120px 0;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 180px 0 100px 0;
   margin-top: -50px;
 }
 
@@ -93,7 +93,7 @@
   text-align: left;
   margin-bottom: 30px;
   position: relative;
-  padding-left: 20px;
+  padding-left: 0;
 }
 
 /* メインタイトル - OUR VISION */
@@ -198,13 +198,18 @@
   }
 }
 
-/* 3つのブロックを横並びに配置 */
+/* 3つのブロックを縦並びで配置 */
 .blocksContainer {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin-top: 60px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 580px;
   width: 100%;
+  max-width: 1200px;
+  margin: 0;
+  margin-top: 320px;
+  padding: 50px 0 100px 0;
+  z-index: 2;
 }
 
 /* ブロック共通スタイル */
@@ -215,14 +220,28 @@
   z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  min-height: auto;
+  padding: 0;
 }
+
 
 .paragraph {
   margin-bottom: 40px;
   animation: fadeIn 1s ease-out forwards;
   opacity: 0;
   transition: transform 0.3s ease-out;
+}
+
+.paragraphLeft {
+  margin-bottom: 0;
+  animation: fadeIn 1s ease-out forwards;
+  opacity: 0;
+  transition: transform 0.3s ease-out;
+  width: 100%;
 }
 
 .paragraph:nth-child(1) {
@@ -245,25 +264,44 @@
 
 .paragraphInner {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  text-align: center;
+  text-align: left;
   gap: 20px;
-  padding: 40px 25px;
-  background: linear-gradient(135deg, 
-    rgba(138, 43, 226, 0.15) 0%, 
-    rgba(0, 255, 204, 0.1) 100%);
-  border: 1px solid rgba(138, 43, 226, 0.3);
-  border-radius: 20px;
-  backdrop-filter: blur(20px);
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  backdrop-filter: none;
   transition: all 0.3s ease;
   position: relative;
-  overflow: hidden;
-  height: 100%;
-  min-height: 350px;
+  overflow: visible;
+  height: auto;
+  min-height: auto;
+  box-shadow: none;
 }
 
-.paragraphInner::before {
+.paragraphInnerLeft {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: left;
+  gap: 20px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  backdrop-filter: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: visible;
+  height: auto;
+  min-height: auto;
+  box-shadow: none;
+}
+
+.paragraphInner::before,
+.paragraphInnerLeft::before {
   content: '';
   position: absolute;
   top: 0;
@@ -278,14 +316,16 @@
   transition: transform 0.6s;
 }
 
-.paragraphInner:hover::before {
+.paragraphInner:hover::before,
+.paragraphInnerLeft:hover::before {
   transform: translateX(100%);
 }
 
-.paragraphInner:hover {
-  border-color: rgba(0, 255, 204, 0.4);
+.paragraphInner:hover,
+.paragraphInnerLeft:hover {
+  border-color: rgba(0, 255, 204, 0.9);
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(138, 43, 226, 0.2);
+  box-shadow: 0 10px 30px rgba(138, 43, 226, 0.4);
 }
 
 .paragraphIcon {
@@ -296,15 +336,18 @@
   align-items: center;
   justify-content: center;
   animation: iconFloat 3s ease-in-out infinite;
-  margin-bottom: 10px;
+  margin-bottom: 0;
+  margin-right: 20px;
+  filter: drop-shadow(0 0 20px rgba(0, 255, 204, 0.6));
 }
 
 .blockTitle {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
   color: #00ffcc;
-  margin: 10px 0;
-  letter-spacing: 2px;
+  margin: 15px 0;
+  letter-spacing: 3px;
+  text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
 }
 
 @keyframes iconFloat {
@@ -324,12 +367,23 @@
 }
 
 .paragraphInner p {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.8;
   color: rgba(255, 255, 255, 0.9);
   margin: 0;
   font-weight: 300;
   letter-spacing: 0.5px;
+  max-width: none;
+}
+
+.paragraphInnerLeft p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  max-width: none;
 }
 
 /* ビジュアル要素 */
@@ -525,12 +579,24 @@
 /* レスポンシブ対応 */
 @media (max-width: 1024px) {
   .blocksContainer {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    margin-top: 40px;
+    position: relative;
+    bottom: auto;
+    flex-direction: column;
+    gap: 30px;
+    padding: 40px 20px;
+    margin-top: 60px;
+  }
+
+  .block1,
+  .block2,
+  .block3 {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
   }
   
-  .paragraphInner {
+  .paragraphInner,
+  .paragraphInnerLeft {
     min-height: auto;
     padding: 30px 20px;
   }
@@ -539,6 +605,7 @@
 @media (max-width: 860px) {
   .visionSection {
     padding: 80px 0;
+    min-height: auto;
   }
 
   .titleWrapper {
@@ -549,13 +616,24 @@
   .mainTitle {
     font-size: clamp(24px, 6vw, 36px);
   }
-  
-  .block1 {
-    padding-left: 20px;
-    padding-top: 30px;
+
+  .blocksContainer {
+    position: relative;
+    bottom: auto;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
   }
 
-  .paragraphInner {
+  .block1,
+  .block2,
+  .block3 {
+    width: 100%;
+    max-width: none;
+  }
+
+  .paragraphInner,
+  .paragraphInnerLeft {
     flex-direction: column;
     text-align: center;
     padding: 20px;
@@ -573,7 +651,8 @@
     width: 40px;
   }
 
-  .paragraphInner p {
+  .paragraphInner p,
+  .paragraphInnerLeft p {
     font-size: 14px;
   }
 }

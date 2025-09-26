@@ -25,7 +25,7 @@ export default function ScrollableMiddleSection() {
     const observerOptions = {
       root: null,
       rootMargin: '0px',
-      threshold: [0, 0.1, 0.5, 1]
+      threshold: [0, 0.1, 0.3, 0.5, 0.7, 0.9, 1]
     }
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
@@ -34,8 +34,14 @@ export default function ScrollableMiddleSection() {
         if (entry.isIntersecting) {
           // スクロールに入った時のアニメーション
           const ratio = entry.intersectionRatio
-          element.style.opacity = `${Math.min(1, ratio * 1.5)}`
-          element.style.transform = `translateY(${Math.max(0, (1 - ratio) * 30)}px)`
+          // 0.3以上の表示で完全に不透明にする
+          if (ratio >= 0.3) {
+            element.style.opacity = '1'
+            element.style.transform = 'translateY(0)'
+          } else {
+            element.style.opacity = `${ratio * 3.33}`
+            element.style.transform = `translateY(${Math.max(0, (1 - ratio * 3.33) * 30)}px)`
+          }
         }
       })
     }
