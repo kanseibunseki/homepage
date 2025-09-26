@@ -38,9 +38,12 @@ function EmotionParticles({
   
   // ハート形成の状態管理
   const isFormingHeart = useRef(false)
-  const heartPositionsRef = useRef<Float32Array>(null!)
+  const heartPositionsLeftRef = useRef<Float32Array>(null!)
+  const heartPositionsRightRef = useRef<Float32Array>(null!)
   const originalPositionsRef = useRef<Float32Array>(null!)
-  const morphProgress = useRef(0)
+  const morphProgressLeft = useRef(0)
+  const morphProgressRight = useRef(0)
+  const currentHeartSide = useRef<'left' | 'right' | null>(null)
   
   // 重み付きランダム選択
   const selectRandomIcon = () => {
@@ -108,8 +111,8 @@ function EmotionParticles({
     return [positions, uvOffsets, scales, rotations, colors, randomOffsets, iconIndices]
   }, [totalParticleCount])
 
-  // ハート型の位置を生成
-  const createHeartPositions = useCallback(() => {
+  // ハート型の位置を生成（左右対応）
+  const createHeartPositions = useCallback((side: 'left' | 'right' = 'right') => {
     const heartPos = new Float32Array(totalParticleCount * 3)
     
     // ハートシェイプの生成（正しい向き）
@@ -134,74 +137,154 @@ function EmotionParticles({
     const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
     geometry.scale(2, 2, 2)
     geometry.center()
-    geometry.rotateY(-Math.PI / 6)  // Y軸で回転（横から見た角度を変える）
+    
+    // 左右で回転方向を変える
+    if (side === 'left') {
+      geometry.rotateY(Math.PI / 6)  // 左向きに回転
+    } else {
+      geometry.rotateY(-Math.PI / 6)  // 右向きに回転
+    }
     
     // サーフェスサンプリング
     const positionAttribute = geometry.getAttribute('position')
     const vertices = positionAttribute.array
     const vertexCount = vertices.length / 3
     
+    // X座標のオフセット（左:-100, 右:+100）
+    const xOffset = side === 'left' ? -100 : 100
+    
     for (let i = 0; i < totalParticleCount; i++) {
       // ランダムに頂点を選択
       const idx = Math.floor(Math.random() * vertexCount) * 3
       
-      // スケールと位置調整（画面右側に表示）
-      heartPos[i * 3] = vertices[idx] * 15 + 100      // X: 右側
-      heartPos[i * 3 + 1] = vertices[idx + 1] * 15    // Y
-      heartPos[i * 3 + 2] = vertices[idx + 2] * 15    // Z
+      // スケールと位置調整
+      heartPos[i * 3] = vertices[idx] * 15 + xOffset      // X: 左右に配置
+      heartPos[i * 3 + 1] = vertices[idx + 1] * 15        // Y
+      heartPos[i * 3 + 2] = vertices[idx + 2] * 15        // Z
     }
     
     return heartPos
   }, [totalParticleCount])
 
-  // ハート位置の初期化
+  // ハート位置の初期化（左右両方を事前に生成）
   useEffect(() => {
-    heartPositionsRef.current = createHeartPositions()
+    heartPositionsLeftRef.current = createHeartPositions('left')
+    heartPositionsRightRef.current = createHeartPositions('right')
   }, [createHeartPositions])
 
   // ScrollTriggerの設定
   useEffect(() => {
     if (typeof window === 'undefined' || !meshRef.current) return
     
-    // VisionSectionの監視
-    const checkVisionSection = () => {
-      const sections = document.querySelectorAll('section')
-      const visionSection = Array.from(sections).find(section => 
-        section.textContent?.includes('OUR VISION')
-      )
-      
+    // ブロックの監視とハート形成
+    const setupScrollTriggers = () => {
+      // VisionSection全体（最初の右ハート）
+      const visionSection = document.querySelector('.visionSection') || 
+                           document.querySelector('[class*="visionSection"]')
       if (visionSection) {
         ScrollTrigger.create({
           trigger: visionSection,
-          start: "top center",
-          end: "top top",
-          scrub: true,  // 完全にスクロールに同期
+          start: "top center",     // セクションの上端が画面中央
+          end: "top top",          // セクションの上端が画面上端
+          scrub: true,
           onUpdate: (self) => {
-            // スクロール進行度（0〜1）を直接morphProgressに設定
-            const progress = self.progress
-            morphProgress.current = progress
+            morphProgressRight.current = self.progress
             
-            // ハート形成状態の管理
-            if (progress > 0 && !isFormingHeart.current) {
-              console.log('Starting heart formation')
-              isFormingHeart.current = true
-              onHeartFormationChange?.(true)
-              setVisibleCount(totalParticleCount)
-            } else if (progress === 0 && isFormingHeart.current) {
-              console.log('Ending heart formation')
-              isFormingHeart.current = false
-              onHeartFormationChange?.(false)
-              setVisibleCount(baseParticleCount)
+            if (self.progress > 0) {
+              currentHeartSide.current = 'right'
+              if (!isFormingHeart.current) {
+                console.log('Starting initial right heart formation (VisionSection)')
+                isFormingHeart.current = true
+                onHeartFormationChange?.(true)
+                setVisibleCount(totalParticleCount)
+              }
             }
             
-            console.log(`Heart formation progress: ${(progress * 100).toFixed(1)}%`)
+            console.log(`VisionSection heart progress: ${(self.progress * 100).toFixed(1)}%`)
+          },
+          onLeave: () => {
+            // VisionSectionを通り過ぎたらリセット
+            morphProgressRight.current = 0
+            console.log('VisionSection trigger completed')
+          },
+          onEnterBack: () => {
+            currentHeartSide.current = 'right'
+          }
+        })
+      }
+      
+      // ブロック1（左ハート）
+      const block1 = document.getElementById('vision-block-1')
+      if (block1) {
+        ScrollTrigger.create({
+          trigger: block1,
+          start: "center center",  // ブロック中央が画面中央
+          end: "bottom top",       // ブロック下部が画面上端
+          scrub: true,
+          onUpdate: (self) => {
+            morphProgressLeft.current = self.progress
+            
+            if (self.progress > 0) {
+              currentHeartSide.current = 'left'
+              if (!isFormingHeart.current) {
+                console.log('Starting left heart formation')
+                isFormingHeart.current = true
+                onHeartFormationChange?.(true)
+                setVisibleCount(totalParticleCount)
+              }
+            }
+            
+            console.log(`Left heart progress: ${(self.progress * 100).toFixed(1)}%`)
+          },
+          onLeave: () => {
+            morphProgressLeft.current = 0
+            console.log('Block1 trigger completed')
+          },
+          onEnterBack: () => {
+            currentHeartSide.current = 'left'
+          }
+        })
+      }
+      
+      // ブロック2（右ハート）
+      const block2 = document.getElementById('vision-block-2')
+      if (block2) {
+        ScrollTrigger.create({
+          trigger: block2,
+          start: "center center",  // ブロック中央が画面中央
+          end: "bottom top",       // ブロック下部が画面上端
+          scrub: true,
+          onUpdate: (self) => {
+            morphProgressRight.current = self.progress
+            
+            if (self.progress > 0) {
+              currentHeartSide.current = 'right'
+              if (!isFormingHeart.current) {
+                console.log('Starting second right heart formation')
+                isFormingHeart.current = true
+                onHeartFormationChange?.(true)
+                setVisibleCount(totalParticleCount)
+              }
+            }
+            
+            console.log(`Block2 heart progress: ${(self.progress * 100).toFixed(1)}%`)
+          },
+          onComplete: () => {
+            // 全てのトリガーが完了したら通常状態に戻す
+            morphProgressLeft.current = 0
+            morphProgressRight.current = 0
+            isFormingHeart.current = false
+            currentHeartSide.current = null
+            onHeartFormationChange?.(false)
+            setVisibleCount(baseParticleCount)
+            console.log('All heart formations completed')
           }
         })
       }
     }
     
     // DOM読み込み後に実行
-    const timer = setTimeout(checkVisionSection, 1000)
+    const timer = setTimeout(setupScrollTriggers, 1000)
     
     return () => {
       clearTimeout(timer)
@@ -255,21 +338,44 @@ function EmotionParticles({
 
     // パーティクルの位置更新
     for (let i = 0; i < visibleCount; i++) {
-      const progress = morphProgress.current
+      const progressLeft = morphProgressLeft.current
+      const progressRight = morphProgressRight.current
       
-      if (progress > 0 && heartPositionsRef.current) {
-        // ハート形成のモーフィング（スクロール連動）
-        const targetX = heartPositionsRef.current[i * 3]
-        const targetY = heartPositionsRef.current[i * 3 + 1]
-        const targetZ = heartPositionsRef.current[i * 3 + 2]
-        const origX = originalPositionsRef.current[i * 3]
-        const origY = originalPositionsRef.current[i * 3 + 1]
-        const origZ = originalPositionsRef.current[i * 3 + 2]
+      // 左右どちらかのハートが形成中の場合
+      if ((progressLeft > 0 || progressRight > 0) && 
+          (heartPositionsLeftRef.current || heartPositionsRightRef.current)) {
         
-        // スクロール進行度に基づいて位置を補間
-        positions[i * 3] = origX + (targetX - origX) * progress
-        positions[i * 3 + 1] = origY + (targetY - origY) * progress
-        positions[i * 3 + 2] = origZ + (targetZ - origZ) * progress
+        // 使用するハート位置と進行度を決定
+        let targetPositions: Float32Array | null = null
+        let progress = 0
+        
+        if (currentHeartSide.current === 'left' && heartPositionsLeftRef.current) {
+          targetPositions = heartPositionsLeftRef.current
+          progress = progressLeft
+        } else if (currentHeartSide.current === 'right' && heartPositionsRightRef.current) {
+          targetPositions = heartPositionsRightRef.current
+          progress = progressRight
+        }
+        
+        if (targetPositions && progress > 0) {
+          // ハート形成のモーフィング
+          const targetX = targetPositions[i * 3]
+          const targetY = targetPositions[i * 3 + 1]
+          const targetZ = targetPositions[i * 3 + 2]
+          const origX = originalPositionsRef.current[i * 3]
+          const origY = originalPositionsRef.current[i * 3 + 1]
+          const origZ = originalPositionsRef.current[i * 3 + 2]
+          
+          // スクロール進行度に基づいて位置を補間
+          positions[i * 3] = origX + (targetX - origX) * progress
+          positions[i * 3 + 1] = origY + (targetY - origY) * progress
+          positions[i * 3 + 2] = origZ + (targetZ - origZ) * progress
+        } else {
+          // 通常の動き（ハート形成が始まっているが進行度が0の場合）
+          positions[i * 3] = originalPositionsRef.current[i * 3]
+          positions[i * 3 + 1] = originalPositionsRef.current[i * 3 + 1]
+          positions[i * 3 + 2] = originalPositionsRef.current[i * 3 + 2]
+        }
       } else {
         // 通常の動き（ハート形成していない時）
         positions[i * 3] += velocities[i * 3] * EMOTION_CONFIG.particles.speed

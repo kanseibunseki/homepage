@@ -118,7 +118,7 @@ const VisionSection = () => {
           {/* 3つのブロックをコンテナで囲む */}
           <div className={styles.blocksContainer}>
             {/* ブロック1: テクノロジーと感性 */}
-            <div className={styles.block1}>
+            <div className={styles.block1} id="vision-block-1">
               <div className={styles.paragraph}>
                 <div className={styles.paragraphInner}>
                   <span className={styles.paragraphIcon}>
@@ -135,7 +135,7 @@ const VisionSection = () => {
             </div>
 
             {/* ブロック2: データと心 */}
-            <div className={styles.block2}>
+            <div className={styles.block2} id="vision-block-2">
               <div className={styles.paragraph}>
                 <div className={styles.paragraphInner}>
                   <span className={styles.paragraphIcon}>
