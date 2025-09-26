@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import EmotionParticleSystemFiber from '../three/EmotionParticleSystemFiber'
 import CursorRipple from '../effects/CursorRipple'
+import ScrollDebugger from '../debug/ScrollDebugger'
 import styles from './HeroSection.module.css'
 import type { EmotionData } from '@/types'
 
@@ -71,6 +72,9 @@ const HeroSection = () => {
   
   return (
     <section className={`modern-hero-section ${styles.heroSection}`} style={{ minHeight: documentHeight }}>
+      {/* スクロールデバッガー */}
+      {mounted && <ScrollDebugger />}
+      
       {/* スクロールプログレスバー */}
       <div className={styles.scrollProgress}>
         <div 
