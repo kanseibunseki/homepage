@@ -32,16 +32,9 @@ export default function ScrollableMiddleSection() {
       entries.forEach(entry => {
         const element = entry.target as HTMLElement
         if (entry.isIntersecting) {
-          // スクロールに入った時のアニメーション
-          const ratio = entry.intersectionRatio
-          // 0.3以上の表示で完全に不透明にする
-          if (ratio >= 0.3) {
-            element.style.opacity = '1'
-            element.style.transform = 'translateY(0)'
-          } else {
-            element.style.opacity = `${ratio * 3.33}`
-            element.style.transform = `translateY(${Math.max(0, (1 - ratio * 3.33) * 30)}px)`
-          }
+          // 画面に少しでも入ったら完全に不透明
+          element.style.opacity = '1'
+          element.style.transform = 'translateY(0)'
         }
       })
     }

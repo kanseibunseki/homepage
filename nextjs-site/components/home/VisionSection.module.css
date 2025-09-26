@@ -203,11 +203,11 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 580px;
+  gap: 80vh;
   width: 100%;
   max-width: 1200px;
   margin: 0;
-  margin-top: 320px;
+  margin-top: 50vh;
   padding: 50px 0 100px 0;
   z-index: 2;
 }
@@ -582,9 +582,9 @@
     position: relative;
     bottom: auto;
     flex-direction: column;
-    gap: 30px;
+    gap: 50vh;
     padding: 40px 20px;
-    margin-top: 60px;
+    margin-top: 30vh;
   }
 
   .block1,
@@ -621,7 +621,8 @@
     position: relative;
     bottom: auto;
     flex-direction: column;
-    gap: 20px;
+    gap: 40vh;
+    margin-top: 25vh;
     padding: 20px;
   }
 

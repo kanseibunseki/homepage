@@ -174,34 +174,27 @@ function EmotionParticles({
         ScrollTrigger.create({
           trigger: visionSection,
           start: "top center",
-          end: "bottom center",
-          scrub: 1,
-          onEnter: () => {
-            console.log('Entering VisionSection - forming heart')
-            isFormingHeart.current = true
-            onHeartFormationChange?.(true)
-            setVisibleCount(totalParticleCount)
+          end: "top top",
+          scrub: true,  // 完全にスクロールに同期
+          onUpdate: (self) => {
+            // スクロール進行度（0〜1）を直接morphProgressに設定
+            const progress = self.progress
+            morphProgress.current = progress
             
-            // GSAPアニメーションで滑らかに変形
-            gsap.to(morphProgress, {
-              current: 1,
-              duration: 2,
-              ease: "power2.inOut"
-            })
-          },
-          onLeaveBack: () => {
-            console.log('Leaving VisionSection - returning to normal')
-            isFormingHeart.current = false
-            onHeartFormationChange?.(false)
+            // ハート形成状態の管理
+            if (progress > 0 && !isFormingHeart.current) {
+              console.log('Starting heart formation')
+              isFormingHeart.current = true
+              onHeartFormationChange?.(true)
+              setVisibleCount(totalParticleCount)
+            } else if (progress === 0 && isFormingHeart.current) {
+              console.log('Ending heart formation')
+              isFormingHeart.current = false
+              onHeartFormationChange?.(false)
+              setVisibleCount(baseParticleCount)
+            }
             
-            gsap.to(morphProgress, {
-              current: 0,
-              duration: 2,
-              ease: "power2.inOut",
-              onComplete: () => {
-                setVisibleCount(baseParticleCount)
-              }
-            })
+            console.log(`Heart formation progress: ${(progress * 100).toFixed(1)}%`)
           }
         })
       }
@@ -262,9 +255,10 @@ function EmotionParticles({
 
     // パーティクルの位置更新
     for (let i = 0; i < visibleCount; i++) {
-      if (isFormingHeart.current && heartPositionsRef.current) {
-        // ハート形成のモーフィング
-        const progress = morphProgress.current
+      const progress = morphProgress.current
+      
+      if (progress > 0 && heartPositionsRef.current) {
+        // ハート形成のモーフィング（スクロール連動）
         const targetX = heartPositionsRef.current[i * 3]
         const targetY = heartPositionsRef.current[i * 3 + 1]
         const targetZ = heartPositionsRef.current[i * 3 + 2]
@@ -272,10 +266,11 @@ function EmotionParticles({
         const origY = originalPositionsRef.current[i * 3 + 1]
         const origZ = originalPositionsRef.current[i * 3 + 2]
         
+        // スクロール進行度に基づいて位置を補間
         positions[i * 3] = origX + (targetX - origX) * progress
         positions[i * 3 + 1] = origY + (targetY - origY) * progress
         positions[i * 3 + 2] = origZ + (targetZ - origZ) * progress
-      } else if (morphProgress.current < 0.01) {
+      } else {
         // 通常の動き（ハート形成していない時）
         positions[i * 3] += velocities[i * 3] * EMOTION_CONFIG.particles.speed
         positions[i * 3 + 1] += velocities[i * 3 + 1] * EMOTION_CONFIG.particles.speed
