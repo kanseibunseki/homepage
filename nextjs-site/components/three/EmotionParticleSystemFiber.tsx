@@ -186,7 +186,8 @@ function EmotionParticles({
           trigger: visionSection,
           start: "top center",     // セクションの上端が画面中央
           end: "top top",          // セクションの上端が画面上端
-          scrub: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
           onUpdate: (self) => {
             morphProgressRight.current = self.progress
             
@@ -198,17 +199,44 @@ function EmotionParticles({
                 onHeartFormationChange?.(true)
                 setVisibleCount(totalParticleCount)
               }
+            } else if (self.progress === 0 && isFormingHeart.current) {
+              // 上スクロールでトップに戻る時
+              console.log('Returning to top from VisionSection')
+              morphProgressRight.current = 0
+              morphProgressLeft.current = 0
+              isFormingHeart.current = false
+              currentHeartSide.current = null
+              onHeartFormationChange?.(false)
+              setVisibleCount(baseParticleCount)
             }
             
             console.log(`VisionSection heart progress: ${(self.progress * 100).toFixed(1)}%`)
           },
           onLeave: () => {
-            // VisionSectionを通り過ぎたらリセット
-            morphProgressRight.current = 0
-            console.log('VisionSection trigger completed')
+            // 下スクロールでセクションを離れる時
+            console.log('Leaving VisionSection (downward)')
+            // progressはそのまま維持（次のトリガーへスムーズに遷移）
           },
           onEnterBack: () => {
+            // 上スクロールで戻ってきた時
+            console.log('Entering back to VisionSection (upward)')
             currentHeartSide.current = 'right'
+            morphProgressLeft.current = 0  // 左ハートをリセット
+            if (!isFormingHeart.current) {
+              isFormingHeart.current = true
+              onHeartFormationChange?.(true)
+              setVisibleCount(totalParticleCount)
+            }
+          },
+          onLeaveBack: () => {
+            // 上スクロールでトップに戻る時
+            console.log('Leaving VisionSection back to top')
+            morphProgressRight.current = 0
+            morphProgressLeft.current = 0
+            isFormingHeart.current = false
+            currentHeartSide.current = null
+            onHeartFormationChange?.(false)
+            setVisibleCount(baseParticleCount)
           }
         })
       }
@@ -220,9 +248,11 @@ function EmotionParticles({
           trigger: block1,
           start: "center center",  // ブロック中央が画面中央
           end: "bottom top",       // ブロック下部が画面上端
-          scrub: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
           onUpdate: (self) => {
             morphProgressLeft.current = self.progress
+            morphProgressRight.current = 1 - self.progress  // 右ハートは逆進行
             
             if (self.progress > 0) {
               currentHeartSide.current = 'left'
@@ -234,14 +264,29 @@ function EmotionParticles({
               }
             }
             
-            console.log(`Left heart progress: ${(self.progress * 100).toFixed(1)}%`)
+            console.log(`Block1: Left=${(self.progress * 100).toFixed(1)}%, Right=${((1-self.progress) * 100).toFixed(1)}%`)
           },
           onLeave: () => {
-            morphProgressLeft.current = 0
-            console.log('Block1 trigger completed')
+            // 下スクロールでblock2へ
+            console.log('Leaving Block1 (downward)')
+            // progressは維持
           },
           onEnterBack: () => {
+            // 上スクロールでblock2から戻る
+            console.log('Entering back to Block1 (upward)')
             currentHeartSide.current = 'left'
+            if (!isFormingHeart.current) {
+              isFormingHeart.current = true
+              onHeartFormationChange?.(true)
+              setVisibleCount(totalParticleCount)
+            }
+          },
+          onLeaveBack: () => {
+            // 上スクロールでVisionSectionへ戻る
+            console.log('Leaving Block1 back to VisionSection')
+            morphProgressLeft.current = 0
+            morphProgressRight.current = 1  // 右ハートへ完全遷移
+            currentHeartSide.current = 'right'
           }
         })
       }
@@ -253,9 +298,11 @@ function EmotionParticles({
           trigger: block2,
           start: "center center",  // ブロック中央が画面中央
           end: "bottom top",       // ブロック下部が画面上端
-          scrub: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
           onUpdate: (self) => {
             morphProgressRight.current = self.progress
+            morphProgressLeft.current = 1 - self.progress  // 左ハートは逆進行
             
             if (self.progress > 0) {
               currentHeartSide.current = 'right'
@@ -267,17 +314,42 @@ function EmotionParticles({
               }
             }
             
-            console.log(`Block2 heart progress: ${(self.progress * 100).toFixed(1)}%`)
+            console.log(`Block2: Right=${(self.progress * 100).toFixed(1)}%, Left=${((1-self.progress) * 100).toFixed(1)}%`)
           },
           onComplete: () => {
-            // 全てのトリガーが完了したら通常状態に戻す
-            morphProgressLeft.current = 0
+            // 下スクロールで最後まで行った時
+            console.log('Block2 completed')
+            // ハート形成は維持
+          },
+          onEnterBack: () => {
+            // 上スクロールで下から戻る
+            console.log('Entering back to Block2 (upward)')
+            currentHeartSide.current = 'right'
+            if (!isFormingHeart.current) {
+              isFormingHeart.current = true
+              onHeartFormationChange?.(true)
+              setVisibleCount(totalParticleCount)
+            }
+          },
+          onLeaveBack: () => {
+            // 上スクロールでblock1へ戻る
+            console.log('Leaving Block2 back to Block1')
             morphProgressRight.current = 0
-            isFormingHeart.current = false
-            currentHeartSide.current = null
-            onHeartFormationChange?.(false)
-            setVisibleCount(baseParticleCount)
-            console.log('All heart formations completed')
+            morphProgressLeft.current = 1  // 左ハートへ完全遷移
+            currentHeartSide.current = 'left'
+          },
+          onLeave: () => {
+            // 下スクロールで完全に離れた時
+            console.log('Leaving Block2 completely')
+            // 最後のハート状態を維持または通常状態へ
+            setTimeout(() => {
+              morphProgressLeft.current = 0
+              morphProgressRight.current = 0
+              isFormingHeart.current = false
+              currentHeartSide.current = null
+              onHeartFormationChange?.(false)
+              setVisibleCount(baseParticleCount)
+            }, 1000)
           }
         })
       }
