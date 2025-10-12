@@ -5,87 +5,14 @@
   width: 100%;
   min-height: 100vh;
   background: linear-gradient(180deg,
-    rgba(5, 5, 10, 0.9) 0%,
-    rgba(10, 5, 30, 0.85) 25%,
-    rgba(5, 10, 40, 0.85) 50%,
-    rgba(10, 5, 30, 0.85) 75%,
-    rgba(5, 5, 10, 0.9) 100%);
+    rgba(5, 5, 10, 0.4) 0%,
+    rgba(10, 5, 30, 0.4) 25%,
+    rgba(5, 10, 40, 0.4) 50%,
+    rgba(10, 5, 30, 0.4) 75%,
+    rgba(5, 5, 10, 0.4) 100%);
   overflow: hidden;
-  padding: 120px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* ニューラルネットワーク背景 */
-.neuralNetwork {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.15;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.neuralSvg {
-  width: 100%;
-  height: 100%;
-}
-
-.neuralConnection {
-  stroke: #00ffcc;
-  stroke-width: 0.5;
-  transition: opacity 0.3s ease;
-}
-
-.neuralNode {
-  fill: #8a2be2;
-  stroke: #00ffcc;
-  stroke-width: 1;
-  filter: drop-shadow(0 0 5px rgba(0, 255, 204, 0.8));
-}
-
-@keyframes nodePulse {
-  0%, 100% {
-    r: 3;
-    opacity: 0.8;
-  }
-  50% {
-    r: 5;
-    opacity: 1;
-  }
-}
-
-/* ホログラフィックグリッド */
-.holographicGrid {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.gridLines {
-  width: 100%;
-  height: 100%;
-  background-image: 
-    linear-gradient(0deg, rgba(0, 255, 204, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 204, 0.05) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: gridScroll 20s linear infinite;
-}
-
-@keyframes gridScroll {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(50px, 50px);
-  }
+  padding: 120px 0 80px;
+  z-index: 2;
 }
 
 /* コンテナ */
@@ -220,709 +147,654 @@
   text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
 }
 
-/* エージェントグリッド */
-.agentsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  margin-bottom: 80px;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 1s ease-out;
-  transition-delay: 0.4s;
+/* エージェントコンテナ */
+.agentsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
 }
 
-.agentsVisible {
+/* エージェントセクション */
+.agentSection {
+  position: relative;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease-out;
+}
+
+.sectionVisible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* エージェントカード */
-.agentCard {
-  position: relative;
-  background: linear-gradient(135deg,
-    rgba(10, 10, 20, 0.9) 0%,
-    rgba(20, 10, 40, 0.9) 100%);
-  border: 1px solid rgba(0, 255, 204, 0.2);
-  border-radius: 20px;
-  padding: 30px;
-  transition: all 0.4s ease;
-  overflow: hidden;
-  min-height: 600px;
+.agentSectionAlt {
+  background: rgba(10, 5, 30, 0.2);
+  padding: 60px 0;
+  margin: 0 -40px;
 }
 
-.cardInner {
-  position: relative;
-  z-index: 2;
-  text-align: center;
+.agentContent {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 60px;
+  align-items: center;
 }
 
-.cardHologram {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 200px;
-  height: 200px;
-  pointer-events: none;
-  opacity: 0.3;
+.agentSectionAlt .agentContent {
+  grid-template-columns: 1.5fr 1fr;
 }
 
-.hologramRing1,
-.hologramRing2,
-.hologramRing3 {
-  position: absolute;
-  border: 1px solid rgba(0, 255, 204, 0.3);
-  border-radius: 50%;
-  animation: hologramRotate 10s linear infinite;
+.agentSectionAlt .agentInfo {
+  order: 2;
 }
 
-.hologramRing1 {
-  width: 100%;
-  height: 100%;
-  animation-duration: 10s;
+.agentSectionAlt .agentVisual {
+  order: 1;
 }
 
-.hologramRing2 {
-  width: 80%;
-  height: 80%;
-  top: 10%;
-  left: 10%;
-  animation-duration: 8s;
-  animation-direction: reverse;
+/* エージェント情報 */
+.agentInfo {
+  padding: 0 20px;
 }
 
-.hologramRing3 {
-  width: 60%;
-  height: 60%;
-  top: 20%;
-  left: 20%;
-  animation-duration: 6s;
-}
-
-@keyframes hologramRotate {
-  from {
-    transform: rotateX(60deg) rotateZ(0deg);
-  }
-  to {
-    transform: rotateX(60deg) rotateZ(360deg);
-  }
-}
-
-.cardIcon {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 30px;
-  position: relative;
-  perspective: 1000px;
-}
-
-.iconCube {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  animation: cubeRotate 6s linear infinite;
-}
-
-.cubeFace {
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  top: 10px;
-  left: 10px;
-  background: linear-gradient(135deg, #00ffcc 0%, #8a2be2 100%);
-  border: 1px solid #00ffcc;
-  opacity: 0.7;
-}
-
-.cubeFace:nth-child(1) {
-  transform: translateZ(30px);
-}
-
-.cubeFace:nth-child(2) {
-  transform: rotateY(90deg) translateZ(30px);
-}
-
-.cubeFace:nth-child(3) {
-  transform: rotateY(180deg) translateZ(30px);
-}
-
-.cubeFace:nth-child(4) {
-  transform: rotateY(-90deg) translateZ(30px);
-}
-
-@keyframes cubeRotate {
-  from {
-    transform: rotateX(0) rotateY(0);
-  }
-  to {
-    transform: rotateX(360deg) rotateY(360deg);
-  }
-}
-
-.agentName {
-  font-size: 24px;
-  font-weight: 600;
+.agentTitle {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
   color: #00ffcc;
   margin-bottom: 15px;
-  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.agentNumber {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(0, 255, 204, 0.1) 0%, rgba(138, 43, 226, 0.1) 100%);
+  border: 2px solid #00ffcc;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.agentSubtitle {
+  font-size: clamp(18px, 2.5vw, 24px);
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 20px;
+  font-weight: 300;
 }
 
 .agentDescription {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.7);
-  font-weight: 300;
-  margin-bottom: 15px;
-}
-
-.agentDetail {
-  font-size: 14px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 30px;
-  text-align: left;
-}
-
-/* Interview Agent ビジュアル */
-.interviewVisual {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(0, 255, 204, 0.1);
-  border-radius: 10px;
-  padding: 15px;
-  font-family: 'Courier New', monospace;
-  font-size: 12px;
-}
-
-.chatLog {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.chatEntry {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.chatLabel {
-  color: #00ffcc;
-  font-weight: bold;
-  min-width: 40px;
-}
-
-.chatText {
-  color: rgba(255, 255, 255, 0.8);
-  flex: 1;
-}
-
-.analysisBox {
-  margin-left: 50px;
-  padding: 10px;
-  background: rgba(138, 43, 226, 0.1);
-  border-left: 2px solid #8a2be2;
-  border-radius: 5px;
-}
-
-.sentimentBar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
-  font-size: 11px;
+  font-size: clamp(14px, 1.5vw, 16px);
+  line-height: 1.8;
   color: rgba(255, 255, 255, 0.7);
 }
 
-.barContainer {
+/* エージェントビジュアル */
+.agentVisual {
+  position: relative;
+  min-height: 600px;
+}
+
+/* Interview Agent Styles */
+.interviewContainer {
+  display: flex;
+  gap: 40px;
+  height: 100%;
+}
+
+.chatInterface {
   flex: 1;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
+  background: rgba(10, 10, 20, 0.8);
+  border: 1px solid rgba(0, 255, 204, 0.2);
+  border-radius: 15px;
   overflow: hidden;
 }
 
-.barFill {
-  height: 100%;
-  transition: width 0.5s ease;
-  border-radius: 3px;
-}
-
-.tags {
+.chatHeader {
+  padding: 15px 20px;
+  background: rgba(0, 255, 204, 0.1);
+  border-bottom: 1px solid rgba(0, 255, 204, 0.2);
   display: flex;
-  gap: 5px;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
 }
 
-.tag {
-  padding: 2px 8px;
-  background: rgba(0, 255, 204, 0.2);
-  color: #00ffcc;
-  border-radius: 3px;
-  font-size: 10px;
+.statusDot {
+  width: 8px;
+  height: 8px;
+  background: #00ff88;
+  border-radius: 50%;
+  animation: statusPulse 2s ease-in-out infinite;
 }
 
-.emotionTag {
-  padding: 2px 8px;
-  background: rgba(255, 100, 100, 0.2);
-  color: #ff9999;
-  border-radius: 3px;
-  font-size: 10px;
+@keyframes statusPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
 }
 
-/* SNS Agent ビジュアル */
-.snsVisual {
+.chatMessages {
+  padding: 20px;
+  height: 500px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.statsGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-.statBox {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(0, 255, 204, 0.1);
-  border-radius: 8px;
-  padding: 15px;
-  text-align: center;
-}
-
-.statValue {
-  font-size: 24px;
-  font-weight: bold;
-  color: #00ffcc;
-  margin-bottom: 5px;
-}
-
-.statLabel {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.6);
-  text-transform: uppercase;
-}
-
-.statSub {
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.4);
-  margin-top: 3px;
-}
-
-.trendChart {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(0, 255, 204, 0.1);
-  border-radius: 8px;
-  padding: 15px;
-}
-
-.chartTitle {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 10px;
-  text-transform: uppercase;
-}
-
-.chartSvg {
-  width: 100%;
-  height: 60px;
-}
-
-/* Review Agent ビジュアル */
-.reviewVisual {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(0, 255, 204, 0.1);
-  border-radius: 10px;
-  padding: 15px;
-}
-
-.productMatrix {
+.messageUser {
   display: flex;
-  flex-direction: column;
   gap: 12px;
+  align-items: flex-start;
 }
 
-.matrixHeader {
-  font-size: 14px;
-  font-weight: bold;
-  color: #00ffcc;
-  margin-bottom: 5px;
-}
-
-.matrixRow {
-  display: grid;
-  grid-template-columns: 80px 1fr auto;
+.messageAvatar {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #8a2be2, #00ffcc);
+  border-radius: 50%;
+  display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  flex-shrink: 0;
 }
 
-.matrixLabel {
+.messageContent {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+
+.messageContent p {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 5px;
+  line-height: 1.5;
+}
+
+.messageTime {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.analysisPanel {
+  background: rgba(138, 43, 226, 0.1);
+  border-left: 3px solid #8a2be2;
+  border-radius: 8px;
+  padding: 15px;
+  margin-left: 48px;
+}
+
+.sentimentMeter {
+  margin-bottom: 15px;
+}
+
+.sentimentMeter span:first-child {
+  display: block;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.matrixBar {
+.meterBar {
   height: 8px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   overflow: hidden;
+  margin-bottom: 8px;
 }
 
-.matrixFill {
+.meterFill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.meterLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.score {
+  font-weight: 600;
+  color: #00ffcc;
+}
+
+.keywordsExtracted {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.keywordTag,
+.emotionTag,
+.contextTag {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.keywordTag {
+  background: rgba(0, 255, 204, 0.2);
+  color: #00ffcc;
+}
+
+.emotionTag {
+  background: rgba(255, 100, 100, 0.2);
+  color: #ff9999;
+}
+
+.contextTag {
+  background: rgba(138, 43, 226, 0.2);
+  color: #bb86fc;
+}
+
+/* Neural Network Visualization */
+.neuralVisual {
+  flex: 0.8;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 255, 204, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.neuralSvg {
+  width: 100%;
+  height: 400px;
+}
+
+.neuralLine {
+  stroke: #00ffcc;
+  stroke-width: 1;
+  transition: opacity 0.3s ease;
+}
+
+.neuralNode {
+  fill: #8a2be2;
+  stroke: #00ffcc;
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 5px rgba(0, 255, 204, 0.8));
+}
+
+.neuralLabel {
+  margin-top: 20px;
+  font-size: 14px;
+  color: rgba(0, 255, 204, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+/* SNS Agent Styles */
+.snsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.metricCard {
+  background: rgba(10, 10, 20, 0.8);
+  border: 1px solid rgba(0, 255, 204, 0.2);
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.metricCard:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0, 255, 204, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 255, 204, 0.2);
+}
+
+.metricIcon {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.metricValue {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.metricLabel {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 5px;
+}
+
+.metricChange {
+  font-size: 14px;
+  font-weight: 600;
+  color: #00ff88;
+}
+
+/* Trend Graph */
+.trendGraph {
+  background: rgba(10, 10, 20, 0.8);
+  border: 1px solid rgba(0, 255, 204, 0.2);
+  border-radius: 12px;
+  padding: 25px;
+}
+
+.graphHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.graphHeader h4 {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.graphLegend {
+  display: flex;
+  gap: 15px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.graphLegend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.graphLegend i {
+  width: 12px;
+  height: 3px;
+  display: block;
+  border-radius: 1px;
+}
+
+.graphSvg {
+  width: 100%;
+  height: 200px;
+}
+
+/* Word Cloud */
+.wordCloud {
+  background: rgba(10, 10, 20, 0.8);
+  border: 1px solid rgba(0, 255, 204, 0.2);
+  border-radius: 12px;
+  padding: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.word {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  animation: wordFloat 3s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.2s);
+  cursor: default;
+  transition: all 0.3s ease;
+}
+
+.word:hover {
+  transform: scale(1.2);
+  filter: brightness(1.3);
+}
+
+@keyframes wordFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Review Agent Styles */
+.reviewContainer {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 40px;
+}
+
+/* Radar Chart */
+.radarChart {
+  background: rgba(10, 10, 20, 0.8);
+  border: 1px solid rgba(0, 255, 204, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radarSvg {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+}
+
+/* Analysis Matrix */
+.analysisMatrix {
+  background: rgba(10, 10, 20, 0.8);
+  border: 1px solid rgba(0, 255, 204, 0.2);
+  border-radius: 12px;
+  padding: 25px;
+}
+
+.analysisMatrix h4 {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.matrixItem {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.matrixItem:last-of-type {
+  border-bottom: none;
+}
+
+.matrixCategory {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.matrixBarContainer {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.matrixBarFill {
   height: 100%;
   background: linear-gradient(90deg, #8a2be2, #00ffcc);
   border-radius: 4px;
   transition: width 0.5s ease;
 }
 
-.matrixTags {
-  display: flex;
-  gap: 5px;
-}
-
-.posTag {
-  padding: 2px 6px;
-  background: rgba(0, 255, 136, 0.2);
-  color: #00ff88;
-  border-radius: 3px;
-  font-size: 10px;
-}
-
-.negTag {
-  padding: 2px 6px;
-  background: rgba(255, 102, 0, 0.2);
-  color: #ff6600;
-  border-radius: 3px;
-  font-size: 10px;
-}
-
-.cardGlow {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle,
-    rgba(0, 255, 204, 0.1) 0%,
-    transparent 60%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.agentCard:hover {
-  transform: translateY(-10px);
-  border-color: rgba(0, 255, 204, 0.6);
-  box-shadow: 0 20px 40px rgba(0, 255, 204, 0.3);
-}
-
-.agentCard:hover .cardGlow {
-  opacity: 1;
-}
-
-/* プレースホルダーカード */
-.agentCardPlaceholder {
-  position: relative;
-  background: linear-gradient(135deg,
-    rgba(10, 10, 20, 0.5) 0%,
-    rgba(20, 10, 40, 0.5) 100%);
-  border: 1px solid rgba(0, 255, 204, 0.1);
-  border-radius: 20px;
-  padding: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-}
-
-.placeholderContent {
-  position: relative;
-  text-align: center;
-}
-
-.comingSoon {
-  font-size: 18px;
-  font-weight: 600;
-  color: rgba(0, 255, 204, 0.4);
-  letter-spacing: 0.2em;
-  margin-bottom: 20px;
-}
-
-.placeholderPulse {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto;
-  border: 2px solid rgba(0, 255, 204, 0.2);
-  border-radius: 50%;
-  animation: placeholderPulse 3s ease-in-out infinite;
-}
-
-@keyframes placeholderPulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.3;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 0.6;
-  }
-}
-
-/* テクノロジーインジケーター */
-.techIndicators {
-  display: flex;
-  justify-content: center;
-  gap: 60px;
-  margin-bottom: 60px;
-}
-
-.indicator {
-  width: 200px;
-  position: relative;
-}
-
-.indicatorBar {
-  width: 100%;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
-  overflow: hidden;
-  margin-bottom: 10px;
-}
-
-.indicatorFill {
-  height: 100%;
-  background: linear-gradient(90deg, #8a2be2 0%, #00ffcc 100%);
-  border-radius: 2px;
-  transition: width 1.5s ease-out;
-  box-shadow: 0 0 10px rgba(0, 255, 204, 0.6);
-}
-
-.indicatorLabel {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.6);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.indicatorValue {
-  position: absolute;
-  right: 0;
-  top: 12px;
+.matrixScore {
   font-size: 16px;
   font-weight: 600;
   color: #00ffcc;
+  margin-bottom: 8px;
 }
 
-/* コアビジュアル */
-.coreVisual {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  height: 400px;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.3;
+.matrixTags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.coreContainer {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  animation: coreRotate 20s linear infinite;
+.posTag,
+.negTag {
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 500;
 }
 
-@keyframes coreRotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.posTag {
+  background: rgba(0, 255, 136, 0.2);
+  color: #00ff88;
 }
 
-.coreSphere {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 120px;
-  height: 120px;
+.negTag {
+  background: rgba(255, 102, 0, 0.2);
+  color: #ff6600;
 }
 
-.sphereInner,
-.sphereMiddle,
-.sphereOuter {
-  position: absolute;
-  border-radius: 50%;
-  border: 2px solid rgba(0, 255, 204, 0.3);
+/* Insight Box */
+.insightBox {
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.15) 0%, rgba(0, 255, 204, 0.15) 100%);
+  border: 1px solid rgba(0, 255, 204, 0.3);
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
 }
 
-.sphereInner {
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(138, 43, 226, 0.3) 0%, transparent 70%);
-  animation: spherePulse 3s ease-in-out infinite;
+.insightHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #00ffcc;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.sphereMiddle {
-  width: 140%;
-  height: 140%;
-  top: -20%;
-  left: -20%;
-  animation: spherePulse 3s ease-in-out infinite;
-  animation-delay: 0.5s;
+.insightIcon {
+  font-size: 20px;
 }
 
-.sphereOuter {
-  width: 180%;
-  height: 180%;
-  top: -40%;
-  left: -40%;
-  animation: spherePulse 3s ease-in-out infinite;
-  animation-delay: 1s;
-}
-
-@keyframes spherePulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.5;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
-}
-
-.coreParticles {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-.coreParticle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: #00ffcc;
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  margin: -2px 0 0 -2px;
-  box-shadow: 0 0 10px rgba(0, 255, 204, 0.8);
-  animation: particleOrbit 4s linear infinite;
-}
-
-@keyframes particleOrbit {
-  0% {
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-/* データストリーム */
-.dataStreams {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 200px;
-  pointer-events: none;
-  overflow: hidden;
-  opacity: 0.3;
-}
-
-.streamLine {
-  position: absolute;
-  width: 2px;
-  height: 100%;
-  background: linear-gradient(to top,
-    transparent 0%,
-    #00ffcc 50%,
-    transparent 100%);
-  animation: streamFlow 3s linear infinite;
-}
-
-@keyframes streamFlow {
-  0% {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
+.insightText {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 /* レスポンシブ対応 */
 @media (max-width: 1024px) {
-  .agentsGrid {
+  .agentContent {
     grid-template-columns: 1fr;
-    max-width: 600px;
-    margin: 0 auto 60px;
+    gap: 40px;
   }
 
-  .techIndicators {
+  .agentSectionAlt .agentContent {
+    grid-template-columns: 1fr;
+  }
+
+  .agentSectionAlt .agentInfo {
+    order: 1;
+  }
+
+  .agentSectionAlt .agentVisual {
+    order: 2;
+  }
+
+  .interviewContainer {
     flex-direction: column;
-    align-items: center;
-    gap: 30px;
   }
 
-  .coreVisual {
-    display: none;
+  .reviewContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .metricsGrid {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 768px) {
   .coreTechSection {
-    padding: 80px 0;
+    padding: 80px 0 60px;
   }
 
   .container {
     padding: 0 20px;
   }
 
-  .mainTitle {
-    font-size: 36px;
+  .agentsContainer {
+    gap: 80px;
   }
 
-  .subtitle {
+  .agentTitle {
+    font-size: 28px;
+  }
+
+  .agentNumber {
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
     font-size: 20px;
   }
 
-  .agentCard,
-  .agentCardPlaceholder {
-    padding: 30px;
+  .agentSubtitle {
+    font-size: 18px;
   }
 
-  .cardIcon {
-    width: 60px;
-    height: 60px;
+  .agentDescription {
+    font-size: 14px;
   }
 
-  .techIndicators {
-    width: 100%;
-    padding: 0 20px;
+  .chatMessages {
+    height: 400px;
   }
 
-  .indicator {
-    width: 100%;
+  .neuralSvg {
+    height: 300px;
+  }
+
+  .metricValue {
+    font-size: 28px;
+  }
+
+  .wordCloud {
+    padding: 20px;
   }
 }
