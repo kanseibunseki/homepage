@@ -33,9 +33,11 @@ const CoreTechSection = () => {
         if (layer < layers - 1) {
           const nextLayerStart = nodeId + layerNodeCount
           const nextLayerCount = nodesPerLayer[layer + 1]
-          for (let j = 0; j < Math.min(2, nextLayerCount); j++) {
-            connections.push(nextLayerStart + Math.floor(Math.random() * nextLayerCount))
+          const uniqueTargets = new Set<number>()
+          while (uniqueTargets.size < Math.min(2, nextLayerCount)) {
+            uniqueTargets.add(nextLayerStart + Math.floor(Math.random() * nextLayerCount))
           }
+          connections.push(...uniqueTargets)
         }
         
         nodes.push({ id: nodeId++, x, y, connections })
