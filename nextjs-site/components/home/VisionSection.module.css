@@ -5,11 +5,11 @@
   width: 100%;
   min-height: auto;
   background: linear-gradient(135deg, 
-    #1a1a2e 0%,
-    #2d1b4e 25%,
-    #1f2a4e 50%,
-    #2d1b4e 75%,
-    #1a1a2e 100%);
+    rgba(26, 26, 46, 0.4) 0%,
+    rgba(45, 27, 78, 0.4) 25%,
+    rgba(31, 42, 78, 0.4) 50%,
+    rgba(45, 27, 78, 0.4) 75%,
+    rgba(26, 26, 46, 0.4) 100%);
   overflow: hidden;
   display: flex;
   align-items: flex-start;
@@ -215,7 +215,11 @@
 /* ブロック共通スタイル */
 .block1,
 .block2,
-.block3 {
+.block3,
+.block4,
+.block5,
+.block6,
+.block7 {
   position: relative;
   z-index: 2;
   display: flex;
@@ -348,6 +352,21 @@
   margin: 15px 0;
   letter-spacing: 3px;
   text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+}
+
+/* ブロックヘッダー（新規ブロック用） */
+.blockHeader {
+  width: 100%;
+  margin-bottom: 30px;
+  animation: fadeInUp 1s ease-out forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+.blockHeader h3 {
+  margin: 0;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(0, 255, 204, 0.2);
 }
 
 @keyframes iconFloat {
@@ -589,7 +608,11 @@
 
   .block1,
   .block2,
-  .block3 {
+  .block3,
+  .block4,
+  .block5,
+  .block6,
+  .block7 {
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
@@ -628,7 +651,11 @@
 
   .block1,
   .block2,
-  .block3 {
+  .block3,
+  .block4,
+  .block5,
+  .block6,
+  .block7 {
     width: 100%;
     max-width: none;
   }

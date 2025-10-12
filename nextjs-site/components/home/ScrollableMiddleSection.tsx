@@ -3,6 +3,8 @@
 import { useEffect, useRef } from 'react'
 import styles from './ScrollableMiddleSection.module.css'
 import VisionSection from './VisionSection'
+import ChaosSection from './ChaosSection'
+import CoreTechSection from './CoreTechSection'
 import ProblemSection from './ProblemSection'
 import SolutionSection from './SolutionSection'
 import LectureSection from './LectureSection'
@@ -13,6 +15,8 @@ import PriceSection from './PriceSection'
 export default function ScrollableMiddleSection() {
   const sectionRefs = {
     vision: useRef<HTMLDivElement>(null),
+    chaos: useRef<HTMLDivElement>(null),
+    coreTech: useRef<HTMLDivElement>(null),
     problem: useRef<HTMLDivElement>(null),
     solution: useRef<HTMLDivElement>(null),
     lecture: useRef<HTMLDivElement>(null),
@@ -58,6 +62,16 @@ export default function ScrollableMiddleSection() {
       {/* Vision Section */}
       <div ref={sectionRefs.vision} className={styles.section}>
         <VisionSection />
+      </div>
+      
+      {/* Chaos Section - 混沌から、答えを。 */}
+      <div ref={sectionRefs.chaos} className={styles.section}>
+        <ChaosSection />
+      </div>
+      
+      {/* Core Technology Section - テクノロジーの核心 */}
+      <div ref={sectionRefs.coreTech} className={styles.section}>
+        <CoreTechSection />
       </div>
       
       {/* Problem Section */}

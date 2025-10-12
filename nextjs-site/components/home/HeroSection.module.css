@@ -147,7 +147,7 @@
 /* コンテンツラッパー */
 .contentWrapper {
   position: relative;
-  z-index: 10;
+  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -186,7 +186,7 @@
 /* メインコンテンツ */
 .mainContent {
   position: relative;
-  z-index: 11;
+  z-index: 6;
   display: flex;
   align-items: center;
   justify-content: space-between;

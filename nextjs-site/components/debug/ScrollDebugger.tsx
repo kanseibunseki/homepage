@@ -34,6 +34,10 @@ const ScrollDebugger = () => {
             currentSection = 'Hero Section'
           } else if (text.includes('OUR VISION')) {
             currentSection = 'Vision Section'
+          } else if (text.includes('混沌から、答えを')) {
+            currentSection = 'Chaos Section'
+          } else if (text.includes('CORE TECHNOLOGY')) {
+            currentSection = 'Core Tech Section'
           } else if (text.includes('Problem')) {
             currentSection = 'Problem Section'
           } else if (text.includes('Solution')) {
