@@ -17,13 +17,15 @@ const CoreTechSection = () => {
   const [pulseAnimation, setPulseAnimation] = useState(0)
   const [typingIndex, setTypingIndex] = useState(0)
   const [sentimentValue, setSentimentValue] = useState(0)
-  const [snsMetrics, setSnsMetrics] = useState({ positive: 1280, negative: 450, neutral: 890 })
+  const [snsMetrics, setSnsMetrics] = useState({ positive: 3842, negative: 287, neutral: 1156 })
   const [reviewScores, setReviewScores] = useState([85, 70, 90, 65, 88])
 
-  // タイピングアニメーション
+  // チャットメッセージのパターン
   const chatMessages = [
-    { text: "デザインは良いですね", sentiment: 0.8, type: 'positive' },
-    { text: "でも、少し重いかな...", sentiment: -0.6, type: 'negative' }
+    { text: "新しい検索機能、すごく便利になりましたね！以前より格段に使いやすいです", sentiment: 0.9, type: 'positive' },
+    { text: "AIの提案精度が想像以上に高くて驚きました。業務効率が大幅に改善されています", sentiment: 0.85, type: 'positive' },
+    { text: "UIがとても洗練されていて、直感的に操作できるのが素晴らしい", sentiment: 0.8, type: 'positive' },
+    { text: "初期設定が少し複雑でした。もう少しガイドがあると嬉しいです", sentiment: -0.3, type: 'negative' }
   ]
 
   useEffect(() => {
@@ -135,156 +137,155 @@ const CoreTechSection = () => {
           
           {/* Interview Agent */}
           <div className={`${styles.agentSection} ${isVisible ? styles.sectionVisible : ''}`}>
-            <div className={styles.agentContent}>
-              <div className={styles.agentInfo}>
-                <h3 className={styles.agentTitle}>
-                  <span className={styles.agentNumber}>01</span>
-                  Interview Agent
-                </h3>
-                <p className={styles.agentSubtitle}>
-                  AIによる深層心理の探求者
-                </p>
-                <p className={styles.agentDescription}>
-                  AIが、生身のインタビュアーのように、ユーザーとの対話から本音のさらに奥にある無意識のインサイトを抽出。
-                  発話の一つひとつが、リアルタイムで構造化され、感性の地図を描き出します。
-                </p>
+            <div className={styles.interviewAgentGrid}>
+              {/* 左側：タイトルとニューラルネットワーク */}
+              <div className={styles.leftColumn}>
+                <div className={styles.agentHeader}>
+                  <h3 className={styles.agentTitle}>
+                    <span className={styles.agentNumber}>01</span>
+                    Interview Agent
+                  </h3>
+                  <p className={styles.agentSubtitle}>
+                    AIによる深層心理の探求者
+                  </p>
+                  <p className={styles.agentDescription}>
+                    AIが、生身のインタビュアーのように、ユーザーとの対話から本音のさらに奥にある無意識のインサイトを抽出。
+                    発話の一つひとつが、リアルタイムで構造化され、感性の地図を描き出します。
+                  </p>
+                </div>
+                
+                {/* ニューラルネットワークビジュアル */}
+                <div className={styles.neuralVisual}>
+                  <svg className={styles.neuralSvg}>
+                    {neuralNodes.map(node => 
+                      node.connections.map(targetId => {
+                        const targetNode = neuralNodes.find(n => n.id === targetId)
+                        if (!targetNode) return null
+                        return (
+                          <line
+                            key={`${node.id}-${targetId}`}
+                            x1={`${node.x}%`}
+                            y1={`${node.y}%`}
+                            x2={`${targetNode.x}%`}
+                            y2={`${targetNode.y}%`}
+                            className={styles.neuralLine}
+                            style={{
+                              opacity: pulseAnimation > node.id * 5 && pulseAnimation < node.id * 5 + 30 ? 0.8 : 0.1
+                            }}
+                          />
+                        )
+                      })
+                    )}
+                    {neuralNodes.map(node => (
+                      <circle
+                        key={node.id}
+                        cx={`${node.x}%`}
+                        cy={`${node.y}%`}
+                        r="3"
+                        className={styles.neuralNode}
+                      />
+                    ))}
+                  </svg>
+                  <div className={styles.neuralLabel}>感情パターン認識システム</div>
+                </div>
               </div>
 
-              <div className={styles.agentVisual}>
-                <div className={styles.interviewContainer}>
-                  {/* チャットインターフェース */}
-                  <div className={styles.chatInterface}>
+              {/* 右側：チャットインターフェース */}
+              <div className={styles.chatInterface}>
                     <div className={styles.chatHeader}>
                       <span className={styles.statusDot}></span>
-                      <span>Live Interview Session</span>
+                      <span>リアルタイムインタビューセッション</span>
                     </div>
                     <div className={styles.chatMessages}>
                       <div className={styles.messageUser}>
                         <span className={styles.messageAvatar}>U</span>
                         <div className={styles.messageContent}>
-                          <p>デザインは良いですね</p>
+                          <p>新しい検索機能、すごく便利になりましたね！<br />以前より格段に使いやすいです</p>
                           <span className={styles.messageTime}>10:24</span>
                         </div>
                       </div>
                       
                       <div className={styles.analysisPanel}>
                         <div className={styles.sentimentMeter}>
-                          <span>Sentiment Analysis</span>
+                          <span>感情分析</span>
                           <div className={styles.meterBar}>
-                            <div className={styles.meterFill} style={{width: '80%', background: 'linear-gradient(90deg, #00ff88, #00ffcc)'}}></div>
+                            <div className={styles.meterFill} style={{width: '90%', background: 'linear-gradient(90deg, #00ff88, #00ffcc)'}}></div>
                           </div>
                           <div className={styles.meterLabels}>
-                            <span>Negative</span>
-                            <span className={styles.score}>+0.8</span>
-                            <span>Positive</span>
+                            <span>ネガティブ</span>
+                            <span className={styles.score}>+0.9</span>
+                            <span>ポジティブ</span>
                           </div>
                         </div>
                         
                         <div className={styles.keywordsExtracted}>
-                          <span className={styles.keywordTag}>デザイン</span>
-                          <span className={styles.emotionTag}>好意</span>
-                          <span className={styles.contextTag}>UI/UX</span>
+                          <span className={styles.keywordTag}>検索機能</span>
+                          <span className={styles.emotionTag}>満足</span>
+                          <span className={styles.contextTag}>使いやすさ</span>
                         </div>
                       </div>
 
                       <div className={styles.messageUser}>
                         <span className={styles.messageAvatar}>U</span>
                         <div className={styles.messageContent}>
-                          <p>でも、少し重いかな...特に起動が...</p>
+                          <p>初期設定が少し複雑でした。<br />もう少しガイドがあると嬉しいです</p>
                           <span className={styles.messageTime}>10:25</span>
                         </div>
                       </div>
 
                       <div className={styles.analysisPanel}>
                         <div className={styles.sentimentMeter}>
-                          <span>Sentiment Analysis</span>
+                          <span>感情分析</span>
                           <div className={styles.meterBar}>
                             <div className={styles.meterFill} style={{width: '35%', background: 'linear-gradient(90deg, #ff6600, #ff9933)'}}></div>
                           </div>
                           <div className={styles.meterLabels}>
-                            <span>Negative</span>
-                            <span className={styles.score}>-0.6</span>
-                            <span>Positive</span>
+                            <span>ネガティブ</span>
+                            <span className={styles.score}>-0.3</span>
+                            <span>ポジティブ</span>
                           </div>
                         </div>
                         
                         <div className={styles.keywordsExtracted}>
-                          <span className={styles.keywordTag}>パフォーマンス</span>
-                          <span className={styles.emotionTag}>不満</span>
-                          <span className={styles.keywordTag}>起動速度</span>
+                          <span className={styles.keywordTag}>初期設定</span>
+                          <span className={styles.emotionTag}>改善希望</span>
+                          <span className={styles.keywordTag}>ガイダンス</span>
                         </div>
                       </div>
                     </div>
-                  </div>
-
-                  {/* ニューラルネットワークビジュアル */}
-                  <div className={styles.neuralVisual}>
-                    <svg className={styles.neuralSvg}>
-                      {neuralNodes.map(node => 
-                        node.connections.map(targetId => {
-                          const targetNode = neuralNodes.find(n => n.id === targetId)
-                          if (!targetNode) return null
-                          return (
-                            <line
-                              key={`${node.id}-${targetId}`}
-                              x1={`${node.x}%`}
-                              y1={`${node.y}%`}
-                              x2={`${targetNode.x}%`}
-                              y2={`${targetNode.y}%`}
-                              className={styles.neuralLine}
-                              style={{
-                                opacity: pulseAnimation > node.id * 5 && pulseAnimation < node.id * 5 + 30 ? 0.8 : 0.1
-                              }}
-                            />
-                          )
-                        })
-                      )}
-                      {neuralNodes.map(node => (
-                        <circle
-                          key={node.id}
-                          cx={`${node.x}%`}
-                          cy={`${node.y}%`}
-                          r="3"
-                          className={styles.neuralNode}
-                        />
-                      ))}
-                    </svg>
-                    <div className={styles.neuralLabel}>Emotional Pattern Recognition</div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
 
           {/* SNS Agent */}
           <div className={`${styles.agentSection} ${styles.agentSectionAlt} ${isVisible ? styles.sectionVisible : ''}`}>
-            <div className={styles.agentContent}>
-              <div className={styles.agentInfo}>
-                <h3 className={styles.agentTitle}>
-                  <span className={styles.agentNumber}>02</span>
-                  SNS Agent
-                </h3>
-                <p className={styles.agentSubtitle}>
-                  雑音から真意を掴む分析官
-                </p>
-                <p className={styles.agentDescription}>
-                  ポジティブか、ネガティブか。そんな表層的な分析では意味がない。
-                  私たちのエージェントは、SNSの膨大なノイズの中から、感情の根本原因を特定。
-                  インタラクティブなダッシュボードで、市場のリアルな脈動をその手に。
-                </p>
-              </div>
+            <div className={styles.snsAgentGrid}>
+              {/* 上段：タイトルとメトリクス */}
+              <div className={styles.topRow}>
+                <div className={styles.agentHeader}>
+                  <h3 className={styles.agentTitle}>
+                    <span className={styles.agentNumber}>02</span>
+                    SNS Agent
+                  </h3>
+                  <p className={styles.agentSubtitle}>
+                    雑音から真意を掴む分析官
+                  </p>
+                  <p className={styles.agentDescription}>
+                    ポジティブか、ネガティブか。そんな表層的な分析では意味がない。
+                    私たちのエージェントは、SNSの膨大なノイズの中から、感情の根本原因を特定。
+                    インタラクティブなダッシュボードで、市場のリアルな脈動をその手に。
+                  </p>
+                </div>
 
-              <div className={styles.agentVisual}>
-                <div className={styles.snsContainer}>
-                  {/* リアルタイムメトリクス */}
-                  <div className={styles.metricsGrid}>
+                {/* リアルタイムメトリクス */}
+                <div className={styles.metricsContainer}>
                     <div className={styles.metricCard}>
                       <div className={styles.metricIcon}>📈</div>
                       <div className={styles.metricValue} style={{color: '#00ff88'}}>
                         {snsMetrics.positive.toLocaleString()}
                       </div>
-                      <div className={styles.metricLabel}>Positive Mentions</div>
-                      <div className={styles.metricChange}>+12.3%</div>
+                      <div className={styles.metricLabel}>ポジティブな言及</div>
+                      <div className={styles.metricChange}>+24.5%</div>
                     </div>
                     
                     <div className={styles.metricCard}>
@@ -292,8 +293,8 @@ const CoreTechSection = () => {
                       <div className={styles.metricValue} style={{color: '#ff6600'}}>
                         {snsMetrics.negative.toLocaleString()}
                       </div>
-                      <div className={styles.metricLabel}>Negative Spike</div>
-                      <div className={styles.metricChange} style={{color: '#ff6600'}}>+35%</div>
+                      <div className={styles.metricLabel}>ネガティブ検出</div>
+                      <div className={styles.metricChange} style={{color: '#00ff88'}}>-18.2%</div>
                     </div>
                     
                     <div className={styles.metricCard}>
@@ -301,19 +302,22 @@ const CoreTechSection = () => {
                       <div className={styles.metricValue}>
                         {snsMetrics.neutral.toLocaleString()}
                       </div>
-                      <div className={styles.metricLabel}>Neutral Mentions</div>
-                      <div className={styles.metricChange}>-2.1%</div>
+                      <div className={styles.metricLabel}>中立的な言及</div>
+                      <div className={styles.metricChange}>+5.7%</div>
                     </div>
-                  </div>
+                </div>
+              </div>
 
-                  {/* トレンドグラフ */}
-                  <div className={styles.trendGraph}>
+              {/* 下段：グラフとワードクラウド */}
+              <div className={styles.bottomRow}>
+                {/* トレンドグラフ */}
+                <div className={styles.trendGraph}>
                     <div className={styles.graphHeader}>
-                      <h4>Real-time Sentiment Flow</h4>
+                      <h4>リアルタイム感情フロー分析</h4>
                       <div className={styles.graphLegend}>
-                        <span><i style={{background: '#00ff88'}}></i> Positive</span>
-                        <span><i style={{background: '#ff6600'}}></i> Negative</span>
-                        <span><i style={{background: '#8a2be2'}}></i> Neutral</span>
+                        <span><i style={{background: '#00ff88'}}></i> ポジティブ</span>
+                        <span><i style={{background: '#ff6600'}}></i> ネガティブ</span>
+                        <span><i style={{background: '#8a2be2'}}></i> ニュートラル</span>
                       </div>
                     </div>
                     <svg className={styles.graphSvg} viewBox="0 0 400 200">
@@ -352,19 +356,22 @@ const CoreTechSection = () => {
                         </linearGradient>
                       </defs>
                     </svg>
-                  </div>
+                </div>
 
-                  {/* ワードクラウド */}
-                  <div className={styles.wordCloud}>
-                    <span className={styles.word} style={{fontSize: '24px', color: '#00ff88'}}>革新的</span>
-                    <span className={styles.word} style={{fontSize: '18px', color: '#00ffcc'}}>使いやすい</span>
-                    <span className={styles.word} style={{fontSize: '20px', color: '#ff6600'}}>高い</span>
-                    <span className={styles.word} style={{fontSize: '16px', color: '#8a2be2'}}>デザイン</span>
-                    <span className={styles.word} style={{fontSize: '22px', color: '#00ff88'}}>満足</span>
-                    <span className={styles.word} style={{fontSize: '14px', color: '#ff6600'}}>遅い</span>
-                    <span className={styles.word} style={{fontSize: '19px', color: '#00ffcc'}}>便利</span>
-                    <span className={styles.word} style={{fontSize: '17px', color: '#8a2be2'}}>期待</span>
-                  </div>
+                {/* ワードクラウド */}
+                <div className={styles.wordCloud}>
+                    <span className={styles.word} style={{fontSize: '26px', color: '#00ff88'}}>使いやすさ向上</span>
+                    <span className={styles.word} style={{fontSize: '20px', color: '#00ffcc'}}>コスパ最高</span>
+                    <span className={styles.word} style={{fontSize: '18px', color: '#ff6600'}}>設定が複雑</span>
+                    <span className={styles.word} style={{fontSize: '22px', color: '#8a2be2'}}>サポート充実</span>
+                    <span className={styles.word} style={{fontSize: '24px', color: '#00ff88'}}>機能豊富</span>
+                    <span className={styles.word} style={{fontSize: '16px', color: '#ff6600'}}>料金が高い</span>
+                    <span className={styles.word} style={{fontSize: '21px', color: '#00ffcc'}}>直感的</span>
+                    <span className={styles.word} style={{fontSize: '19px', color: '#8a2be2'}}>安定性</span>
+                    <span className={styles.word} style={{fontSize: '17px', color: '#00ff88'}}>カスタマイズ性</span>
+                    <span className={styles.word} style={{fontSize: '23px', color: '#00ffcc'}}>アップデート期待</span>
+                    <span className={styles.word} style={{fontSize: '15px', color: '#8a2be2'}}>レスポンス良好</span>
+                    <span className={styles.word} style={{fontSize: '20px', color: '#00ff88'}}>高品質</span>
                 </div>
               </div>
             </div>
@@ -372,24 +379,25 @@ const CoreTechSection = () => {
 
           {/* Review Agent */}
           <div className={`${styles.agentSection} ${isVisible ? styles.sectionVisible : ''}`}>
-            <div className={styles.agentContent}>
-              <div className={styles.agentInfo}>
-                <h3 className={styles.agentTitle}>
-                  <span className={styles.agentNumber}>03</span>
-                  Review Agent
-                </h3>
-                <p className={styles.agentSubtitle}>
-                  無数の声から価値を再構築する建築家
-                </p>
-                <p className={styles.agentDescription}>
-                  Webに散らばる無数のレビュー。それは不満と満足の混沌。
-                  エージェントは、その一つひとつの声を構造的に解析し、
-                  製品やサービスが持つべき「真の価値構造」を可視化します。
-                </p>
-              </div>
-
-              <div className={styles.agentVisual}>
-                <div className={styles.reviewContainer}>
+            <div className={styles.reviewAgentGrid}>
+              {/* メインコンテンツエリア */}
+              <div className={styles.reviewMainContent}>
+                {/* 左側：タイトル、レーダーチャート、サマリー */}
+                <div className={styles.reviewLeftPanel}>
+                  <div className={styles.agentHeader}>
+                    <h3 className={styles.agentTitle}>
+                      <span className={styles.agentNumber}>03</span>
+                      Review Agent
+                    </h3>
+                    <p className={styles.agentSubtitle}>
+                      無数の声から価値を再構築する建築家
+                    </p>
+                    <p className={styles.agentDescription}>
+                      Webに散らばる無数のレビュー。それは不満と満足の混沌。
+                      エージェントは、その一つひとつの声を構造的に解析し、
+                      製品やサービスが持つべき「真の価値構造」を可視化します。
+                    </p>
+                  </div>
                   {/* レーダーチャート */}
                   <div className={styles.radarChart}>
                     <svg className={styles.radarSvg} viewBox="0 0 300 300">
@@ -425,63 +433,87 @@ const CoreTechSection = () => {
                       />
                       
                       {/* ラベル */}
-                      <text x="150" y="30" textAnchor="middle" fill="#00ffcc" fontSize="12">Design</text>
-                      <text x="270" y="120" textAnchor="start" fill="#00ffcc" fontSize="12">Performance</text>
-                      <text x="210" y="270" textAnchor="middle" fill="#00ffcc" fontSize="12">Price</text>
-                      <text x="90" y="270" textAnchor="middle" fill="#00ffcc" fontSize="12">Support</text>
-                      <text x="30" y="120" textAnchor="end" fill="#00ffcc" fontSize="12">Quality</text>
+                      <text x="150" y="30" textAnchor="middle" fill="#00ffcc" fontSize="12">デザイン性</text>
+                      <text x="270" y="120" textAnchor="start" fill="#00ffcc" fontSize="12">パフォーマンス</text>
+                      <text x="210" y="270" textAnchor="middle" fill="#00ffcc" fontSize="12">価格満足度</text>
+                      <text x="90" y="270" textAnchor="middle" fill="#00ffcc" fontSize="12">サポート品質</text>
+                      <text x="30" y="120" textAnchor="end" fill="#00ffcc" fontSize="12">総合品質</text>
                     </svg>
                   </div>
+                  
+                  {/* サマリー統計 */}
+                  <div className={styles.reviewSummaryBar}>
+                    <div className={styles.summaryMetric}>
+                      <span className={styles.metricValue}>4.5</span>
+                      <span className={styles.metricLabel}>総合評価</span>
+                    </div>
+                    <div className={styles.summaryMetric}>
+                      <span className={styles.metricValue}>89%</span>
+                      <span className={styles.metricLabel}>満足度</span>
+                    </div>
+                    <div className={styles.summaryMetric}>
+                      <span className={styles.metricValue}>2.8k</span>
+                      <span className={styles.metricLabel}>レビュー数</span>
+                    </div>
+                    <div className={styles.summaryMetric}>
+                      <span className={styles.metricValue} style={{color: '#00ff88'}}>+15%</span>
+                      <span className={styles.metricLabel}>成長率</span>
+                    </div>
+                  </div>
+                </div>
 
+                {/* 右側：詳細分析 */}
+                <div className={styles.reviewRightPanel}>
                   {/* 詳細分析マトリックス */}
                   <div className={styles.analysisMatrix}>
-                    <h4>Structured Review Analysis</h4>
+                    <h4>構造化レビュー解析</h4>
                     
                     <div className={styles.matrixItem}>
-                      <div className={styles.matrixCategory}>Design</div>
+                      <div className={styles.matrixCategory}>デザイン性</div>
                       <div className={styles.matrixBarContainer}>
                         <div className={styles.matrixBarFill} style={{width: `${reviewScores[0]}%`}}></div>
                       </div>
                       <div className={styles.matrixScore}>{reviewScores[0].toFixed(1)}%</div>
                       <div className={styles.matrixTags}>
-                        <span className={styles.posTag}>+ Modern</span>
-                        <span className={styles.posTag}>+ Intuitive</span>
-                        <span className={styles.negTag}>- Complex</span>
+                        <span className={styles.posTag}>+ 洗練された</span>
+                        <span className={styles.posTag}>+ わかりやすい</span>
+                        <span className={styles.negTag}>- 初期設定が難しい</span>
                       </div>
                     </div>
 
                     <div className={styles.matrixItem}>
-                      <div className={styles.matrixCategory}>Performance</div>
+                      <div className={styles.matrixCategory}>パフォーマンス</div>
                       <div className={styles.matrixBarContainer}>
                         <div className={styles.matrixBarFill} style={{width: `${reviewScores[1]}%`}}></div>
                       </div>
                       <div className={styles.matrixScore}>{reviewScores[1].toFixed(1)}%</div>
                       <div className={styles.matrixTags}>
-                        <span className={styles.posTag}>+ Fast</span>
-                        <span className={styles.negTag}>- Memory</span>
+                        <span className={styles.posTag}>+ 高速処理</span>
+                        <span className={styles.negTag}>- メモリ消費</span>
                       </div>
                     </div>
 
                     <div className={styles.matrixItem}>
-                      <div className={styles.matrixCategory}>Value</div>
+                      <div className={styles.matrixCategory}>コストパフォーマンス</div>
                       <div className={styles.matrixBarContainer}>
                         <div className={styles.matrixBarFill} style={{width: `${reviewScores[2]}%`}}></div>
                       </div>
                       <div className={styles.matrixScore}>{reviewScores[2].toFixed(1)}%</div>
                       <div className={styles.matrixTags}>
-                        <span className={styles.posTag}>+ Worth it</span>
-                        <span className={styles.posTag}>+ Affordable</span>
+                        <span className={styles.posTag}>+ 投資価値あり</span>
+                        <span className={styles.posTag}>+ 適正価格</span>
                       </div>
                     </div>
 
                     <div className={styles.insightBox}>
                       <div className={styles.insightHeader}>
                         <span className={styles.insightIcon}>💡</span>
-                        Key Insight
+                        重要な発見
                       </div>
                       <p className={styles.insightText}>
-                        ユーザーは機能性を高く評価しているが、初期設定の複雑さが導入障壁となっている。
-                        オンボーディング体験の改善により、満足度の大幅な向上が見込まれる。
+                        「機能の富裕さ」と「パフォーマンス」は特に高評価を得ています。
+                        一方で、オンボーディングプロセスの簡素化がユーザー獲得の鍵となりそうです。
+                        チュートリアル動画やFAQの充実が推奨されます。
                       </p>
                     </div>
                   </div>
