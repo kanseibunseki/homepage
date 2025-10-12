@@ -132,6 +132,7 @@ const VisionSection = () => {
                   </p>
                 </div>
               </div>
+              <div className={styles.blockDivider}></div>
             </div>
 
             {/* ブロック2: データと心 */}
@@ -151,6 +152,7 @@ const VisionSection = () => {
                   </p>
                 </div>
               </div>
+              <div className={styles.blockDivider}></div>
             </div>
 
             {/* ブロック3: 左下に配置（タイトルなし） */}

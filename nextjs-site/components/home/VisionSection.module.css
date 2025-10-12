@@ -240,6 +240,48 @@
   transition: transform 0.3s ease-out;
 }
 
+/* ブロック下の横線 */
+.blockDivider {
+  width: 70%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(138, 43, 226, 0.2) 15%,
+    rgba(0, 255, 204, 0.4) 50%,
+    rgba(138, 43, 226, 0.2) 85%,
+    transparent 100%
+  );
+  margin: 35px auto 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.blockDivider::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 204, 0.6),
+    transparent
+  );
+  animation: dividerShimmer 4s ease-in-out infinite;
+}
+
+@keyframes dividerShimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
 .paragraphLeft {
   margin-bottom: 0;
   animation: fadeIn 1s ease-out forwards;
@@ -303,6 +345,7 @@
   min-height: auto;
   box-shadow: none;
 }
+
 
 .paragraphInner::before,
 .paragraphInnerLeft::before {
@@ -403,6 +446,10 @@
   font-weight: 300;
   letter-spacing: 0.5px;
   max-width: none;
+}
+
+.block2 {
+  animation-delay: 0.8s;
 }
 
 /* ビジュアル要素 */
@@ -623,6 +670,7 @@
     min-height: auto;
     padding: 30px 20px;
   }
+  
 }
 
 @media (max-width: 860px) {
@@ -666,6 +714,7 @@
     text-align: center;
     padding: 20px;
   }
+  
 
   .paragraphIcon {
     margin: 0 auto;
