@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import EmotionParticleSystemFiber from '../three/EmotionParticleSystemFiber'
 import CursorRipple from '../effects/CursorRipple'
 import ScrollDebugger from '../debug/ScrollDebugger'
@@ -18,6 +18,8 @@ const HeroSection = () => {
     creativity: 78,
     empathy: 65
   })
+  const animationFrameRef = useRef<number | null>(null)
+  const lastScrollProgressRef = useRef(0)
   
   useEffect(() => {
     setMounted(true)
@@ -40,12 +42,25 @@ const HeroSection = () => {
       }))
     }, 500)
     
-    // スクロール位置の監視
+    // スクロール位置の監視（requestAnimationFrameで最適化）
     const handleScroll = () => {
-      const winScroll = document.body.scrollTop || document.documentElement.scrollTop
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight
-      const scrolled = (winScroll / height) * 100
-      setScrollProgress(scrolled)
+      // 既存のアニメーションフレームをキャンセル
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current)
+      }
+      
+      // 新しいアニメーションフレームをリクエスト
+      animationFrameRef.current = requestAnimationFrame(() => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight
+        const scrolled = (winScroll / height) * 100
+        
+        // 値が変わった時のみ更新（無駄な再レンダリング防止）
+        if (Math.abs(scrolled - lastScrollProgressRef.current) > 0.1) {
+          setScrollProgress(scrolled)
+          lastScrollProgressRef.current = scrolled
+        }
+      })
     }
     
     // リサイズ時にドキュメント高さを再計算
@@ -53,7 +68,7 @@ const HeroSection = () => {
       updateDocumentHeight()
     }
     
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     window.addEventListener('resize', handleResize)
     
     // MutationObserverでコンテンツの変更を監視
@@ -64,6 +79,9 @@ const HeroSection = () => {
     
     return () => {
       clearInterval(interval)
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current)
+      }
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('resize', handleResize)
       observer.disconnect()

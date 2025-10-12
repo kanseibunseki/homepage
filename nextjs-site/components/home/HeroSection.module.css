@@ -41,9 +41,12 @@
     0 0 20px currentColor,
     0 0 30px currentColor,
     0 0 40px currentColor;
-  transition: width 0.1s ease-out;
+  transition: width 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   animation: rainbowShift 3s linear infinite;
+  will-change: width;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @keyframes rainbowShift {
