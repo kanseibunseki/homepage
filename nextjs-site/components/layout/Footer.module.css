@@ -1,193 +1,483 @@
 .footer {
   position: relative;
-  background: linear-gradient(to bottom, #f9f9f9, #fff);
-  padding: 80px 0 40px;
+  background: linear-gradient(180deg, transparent 0%, #000000 100px);
+  padding-top: 200px;
+  margin-top: 150px;
   overflow: hidden;
+}
+
+.footerContent {
+  position: relative;
+  background: linear-gradient(180deg, #000000 0%, #0a0a0f 100%);
+  padding: 100px 0 0;
+  position: relative;
+}
+
+.footerContent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(147, 51, 234, 0.3) 25%,
+    rgba(59, 130, 246, 0.5) 50%,
+    rgba(147, 51, 234, 0.3) 75%,
+    transparent 100%
+  );
+  animation: shimmerLine 3s ease-in-out infinite;
+}
+
+@keyframes shimmerLine {
+  0%, 100% {
+    opacity: 0.5;
+    transform: translateX(-100%);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(100%);
+  }
 }
 
 .footerInner {
   position: relative;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 60px;
 }
 
-.footerLogo {
+/* Minimal grid background */
+.gridPattern {
   position: absolute;
-  top: -100px;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+  background-size: 100px 100px;
+  background-position: -1px -1px;
+  opacity: 0.5;
+}
+
+/* Large background text with gradient animation */
+.bgText {
+  position: absolute;
+  top: 280px;
   left: 50%;
   transform: translateX(-50%);
-  width: 362px;
-  height: 429px;
-  opacity: 0.1;
-  z-index: 1;
+  font-size: 200px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  background: linear-gradient(270deg, 
+    rgba(147, 51, 234, 0.05) 0%,
+    rgba(59, 130, 246, 0.05) 25%,
+    rgba(147, 51, 234, 0.05) 50%,
+    rgba(59, 130, 246, 0.05) 75%,
+    rgba(147, 51, 234, 0.05) 100%
+  );
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+  animation: gradientShift 15s ease infinite;
 }
 
-.logoKirakirasmall {
-  position: absolute;
-  top: 20px;
-  right: 100px;
-  width: 60px;
-  height: 60px;
-  animation: float 3s ease-in-out infinite;
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.logoExclamation {
-  position: absolute;
-  bottom: 100px;
-  left: 80px;
-  width: 50px;
-  height: 50px;
-  animation: float 3s ease-in-out infinite 0.5s;
-}
-
-.logoHeartbreak {
-  position: absolute;
-  top: 150px;
-  left: 200px;
-  width: 70px;
-  height: 70px;
-  animation: float 3s ease-in-out infinite 1s;
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.footerContainer {
-  position: relative;
-  z-index: 2;
-}
-
-.footerMenu {
+/* Main footer content - contact button and logo side by side */
+.footerMainContent {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 40px;
+  padding: 60px 0;
+  margin-bottom: 60px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.menuList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+/* Clean navigation */
+.navSection {
+  padding-bottom: 60px;
+}
+
+.navGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 80px;
   flex: 1;
 }
 
-.menuItem {
-  
+.navColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.menuLink {
-  color: #333;
-  text-decoration: none;
+.navTitle {
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin: 0 0 4px 0;
+  position: relative;
+  padding-bottom: 12px;
 }
 
-.menuTitle {
-  font-size: 16px;
-  font-weight: normal;
+.navTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    rgba(147, 51, 234, 0.6) 0%, 
+    transparent 100%
+  );
+}
+
+.navLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  list-style: none;
   margin: 0;
+  padding: 0;
 }
 
-.menuContact {
-  text-align: center;
-  flex-shrink: 0;
-  margin-left: 60px;
-}
-
-.contactSentence {
-  display: block;
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 15px;
-}
-
-.contactBtn {
+.navLink {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
   display: inline-block;
-  max-width: 250px;
+  padding-left: 0;
 }
 
-.contactBtn img {
-  width: 100%;
-  height: auto;
+.navLink::before {
+  content: '–';
+  position: absolute;
+  left: -20px;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: rgba(147, 51, 234, 0.6);
 }
 
-.copyright {
-  display: block;
+.navLink:hover {
+  color: rgba(255, 255, 255, 0.95);
+  transform: translateX(8px);
+  padding-left: 8px;
+}
+
+.navLink:hover::before {
+  opacity: 1;
+  left: -12px;
+}
+
+/* Logo section */
+.logoSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+}
+
+.footerMainLogo {
+  width: 260px;
+  height: 308px;
+  opacity: 0.95;
+  transition: all 0.5s ease;
+  filter: drop-shadow(0 15px 40px rgba(147, 51, 234, 0.15));
+}
+
+.logoSection:hover .footerMainLogo {
+  transform: translateY(-5px) scale(1.02);
+  filter: drop-shadow(0 15px 40px rgba(147, 51, 234, 0.2));
+}
+
+.logoWrapper .copyright {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.1em;
+  font-weight: 300;
   text-align: center;
-  font-size: 12px;
-  color: #999;
-  margin-top: 40px;
-  padding-top: 40px;
-  border-top: 1px solid #eee;
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px 20px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
 }
 
-/* Mobile Styles */
+/* Contact button area */
+.contactButtonArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contactButtonLarge {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  padding: 35px 100px;
+  background: linear-gradient(135deg,
+    rgba(147, 51, 234, 0.15) 0%,
+    rgba(59, 130, 246, 0.15) 100%
+  );
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 90px;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.contactButtonLarge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  transition: left 0.6s ease;
+}
+
+.contactButtonLarge:hover::before {
+  left: 100%;
+}
+
+.contactButtonTextLarge {
+  font-size: 26px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.12em;
+  z-index: 1;
+}
+
+.contactButtonArrowLarge {
+  font-size: 32px;
+  color: rgba(147, 51, 234, 0.9);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.contactButtonLarge:hover {
+  background: linear-gradient(135deg,
+    rgba(147, 51, 234, 0.25) 0%,
+    rgba(59, 130, 246, 0.25) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(147, 51, 234, 0.3);
+}
+
+.contactButtonLarge:hover .contactButtonArrowLarge {
+  transform: translateX(8px);
+  color: rgba(59, 130, 246, 1);
+}
+
+/* Removed bottom section - copyright is now in logoWrapper */
+
+/* Remove unnecessary animations */
+.logoLines,
+.logoLine,
+.logoLine1,
+.logoLine2 {
+  display: none;
+}
+
+.brandTextContainer {
+  display: none;
+}
+
+.brandName {
+  display: none;
+}
+
+.brandTagline {
+  display: none;
+}
+
+/* Minimal floating elements with color */
+.floatingAccent {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+  opacity: 0.3;
+}
+
+.floatingAccent1 {
+  top: -200px;
+  right: -200px;
+  background: radial-gradient(circle at center, 
+    rgba(147, 51, 234, 0.3) 0%, 
+    transparent 70%
+  );
+  animation: float1 20s ease-in-out infinite;
+}
+
+.floatingAccent2 {
+  bottom: -200px;
+  left: -200px;
+  background: radial-gradient(circle at center, 
+    rgba(59, 130, 246, 0.3) 0%, 
+    transparent 70%
+  );
+  animation: float2 25s ease-in-out infinite;
+}
+
+@keyframes float1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-30px, 30px) scale(1.1);
+  }
+}
+
+@keyframes float2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, -30px) scale(0.9);
+  }
+}
+
+/* Hidden elements for cleaner design */
+.footerLogo,
+.logoKirakirasmall,
+.logoExclamation,
+.logoHeartbreak,
+.meshBackground,
+.waveSection,
+.particles,
+.floatingElements {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .navGrid {
+    grid-template-columns: repeat(2, 2fr);
+    gap: 60px 80px;
+  }
+
+  .contactSection {
+    margin-left: 80px;
+    padding-left: 60px;
+  }
+}
+
 @media (max-width: 860px) {
   .footer {
-    padding: 60px 0 30px;
+    padding-top: 100px;
+    margin-top: 80px;
+  }
+
+  .footerContent {
+    padding: 60px 0 0;
   }
 
   .footerInner {
     padding: 0 20px;
   }
 
-  .footerLogo {
-    width: 200px;
-    height: 237px;
-    top: -50px;
+  .bgText {
+    font-size: 100px;
+    top: 150px;
   }
 
-  .logoKirakirasmall,
-  .logoExclamation,
-  .logoHeartbreak {
-    width: 40px;
-    height: 40px;
-  }
-
-  .logoKirakirasmall {
-    right: 20px;
-  }
-
-  .logoExclamation {
-    left: 20px;
-    bottom: 60px;
-  }
-
-  .logoHeartbreak {
-    left: auto;
-    right: 40px;
-    top: 100px;
-  }
-
-  .footerMenu {
+  .footerMainContent {
     flex-direction: column;
-    gap: 30px;
+    gap: 40px;
+    padding: 40px 0;
+    margin-bottom: 40px;
   }
 
-  .menuList {
-    flex-direction: column;
-    gap: 20px;
+  .navSection {
+    padding-bottom: 40px;
   }
 
-  .menuContact {
-    margin-left: 0;
+  .navGrid {
+    grid-template-columns: 1fr;
+    gap: 40px;
     width: 100%;
   }
 
-  .menuTitle {
-    font-size: 14px;
+  .logoSection {
+    width: 100%;
+  }
+
+  .footerMainLogo {
+    width: 160px;
+    height: 189px;
+  }
+
+  .contactButtonArea {
+    width: 100%;
+  }
+
+  .contactButtonLarge {
+    padding: 24px 60px;
+    gap: 20px;
+  }
+
+  .contactButtonTextLarge {
+    font-size: 20px;
+  }
+
+  .contactButtonArrowLarge {
+    font-size: 26px;
+  }
+
+
+  .brandTextContainer {
+    padding-left: 8px;
+  }
+
+  .brandName {
+    font-size: 18px;
+  }
+
+  .brandTagline {
+    font-size: 9px;
   }
 
   .copyright {
-    margin-top: 30px;
-    padding-top: 30px;
+    font-size: 11px;
   }
+}
+
+/* Ultra minimal hover states */
+.navLink:focus,
+.contactEmail:focus {
+  outline: 1px solid rgba(255, 255, 255, 0.1);
+  outline-offset: 2px;
 }
