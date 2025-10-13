@@ -316,11 +316,6 @@ function EmotionParticles({
             
             console.log(`Block2: Right=${(self.progress * 100).toFixed(1)}%, Left=${((1-self.progress) * 100).toFixed(1)}%`)
           },
-          onComplete: () => {
-            // 下スクロールで最後まで行った時
-            console.log('Block2 completed')
-            // ハート形成は維持
-          },
           onEnterBack: () => {
             // 上スクロールで下から戻る
             console.log('Entering back to Block2 (upward)')
@@ -669,42 +664,49 @@ function EmotionParticles({
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
+            args={[positions, 3]}
             count={totalParticleCount}
             array={positions}
             itemSize={3}
           />
           <bufferAttribute
             attach="attributes-uvOffset"
+            args={[uvOffsets, 2]}
             count={totalParticleCount}
             array={uvOffsets}
             itemSize={2}
           />
           <bufferAttribute
             attach="attributes-scale"
+            args={[scales, 1]}
             count={totalParticleCount}
             array={scales}
             itemSize={1}
           />
           <bufferAttribute
             attach="attributes-rotation"
+            args={[rotations, 1]}
             count={totalParticleCount}
             array={rotations}
             itemSize={1}
           />
           <bufferAttribute
             attach="attributes-color"
+            args={[colors, 3]}
             count={totalParticleCount}
             array={colors}
             itemSize={3}
           />
           <bufferAttribute
             attach="attributes-randomOffset"
+            args={[randomOffsets, 1]}
             count={totalParticleCount}
             array={randomOffsets}
             itemSize={1}
           />
           <bufferAttribute
             attach="attributes-iconIndex"
+            args={[iconIndices, 1]}
             count={totalParticleCount}
             array={iconIndices}
             itemSize={1}
@@ -717,12 +719,14 @@ function EmotionParticles({
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
+            args={[linePositions, 3]}
             count={totalParticleCount * totalParticleCount * 2}
             array={linePositions}
             itemSize={3}
           />
           <bufferAttribute
             attach="attributes-color"
+            args={[lineColors, 3]}
             count={totalParticleCount * totalParticleCount * 2}
             array={lineColors}
             itemSize={3}

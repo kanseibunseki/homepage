@@ -7,7 +7,7 @@ export default function CursorRipple() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const contextRef = useRef<CanvasRenderingContext2D | null>(null)
   const mouseRef = useRef({ x: 0, y: 0 })
-  const animationIdRef = useRef<number>()
+  const animationIdRef = useRef<number | undefined>(undefined)
   const ripplesRef = useRef<Array<{
     x: number
     y: number

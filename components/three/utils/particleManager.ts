@@ -7,7 +7,7 @@ export class ParticleManager {
   private geometry: THREE.BufferGeometry
   private material: THREE.ShaderMaterial
   public particles: THREE.Points
-  private velocities: Float32Array
+  private velocities!: Float32Array
   private time: number = 0
   
   constructor(texture: THREE.Texture) {

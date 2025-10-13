@@ -7,8 +7,8 @@ const DifferenceSection = () => {
   useEffect(() => {
     // Swiperの初期化をクライアントサイドで実行
     const loadSwiper = async () => {
-      if (typeof window !== 'undefined' && window.Swiper) {
-        const swiper = new window.Swiper('.swiper-container', {
+      if (typeof window !== 'undefined' && (window as any).Swiper) {
+        const swiper = new (window as any).Swiper('.swiper-container', {
           scrollbar: {
             el: '.swiper-scrollbar',
             draggable: true

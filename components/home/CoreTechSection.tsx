@@ -49,7 +49,7 @@ const CoreTechSection = () => {
           while (uniqueTargets.size < Math.min(2, nextLayerCount)) {
             uniqueTargets.add(nextLayerStart + Math.floor(Math.random() * nextLayerCount))
           }
-          connections.push(...uniqueTargets)
+          connections.push(...Array.from(uniqueTargets))
         }
         
         nodes.push({ id: nodeId++, x, y, connections })
