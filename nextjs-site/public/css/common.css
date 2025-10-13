@@ -718,7 +718,7 @@ select ::placeholder {
 }
 .l-footer__menu__list__item__link__title {
   font-size: clamp(10px, 4.1860465116vw, 9999px);
-  color: #111936;
+  color: #ffffff;
   letter-spacing: 0.08em;
 }
 @media screen and (min-width: calc(860px + 1px)) {
@@ -728,7 +728,7 @@ select ::placeholder {
 }
 .l-footer__menu__contact__sentence {
   font-size: clamp(10px, 3.8372093023vw, 9999px);
-  color: #111936;
+  color: #ffffff;
   letter-spacing: 0.08em;
 }
 @media screen and (min-width: calc(860px + 1px)) {
@@ -740,6 +740,7 @@ select ::placeholder {
   display: block;
   width: clamp(0px, 75.2325581395vw, 9999px);
   margin-top: clamp(0px, 3.488372093vw, 9999px);
+  filter: brightness(3.5) contrast(2) saturate(1.5);
 }
 @media screen and (min-width: calc(860px + 1px)) {
   .l-footer__menu__contact__btn {
@@ -752,6 +753,7 @@ select ::placeholder {
   margin-top: clamp(0px, 21.511627907vw, 9999px);
   font-size: clamp(10px, 2.0930232558vw, 9999px);
   text-align: right;
+  color: #ffffff;
 }
 @media screen and (min-width: calc(860px + 1px)) {
   .l-footer__copyright {

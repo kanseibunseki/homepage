@@ -38,6 +38,8 @@ const ScrollDebugger = () => {
             currentSection = 'Chaos Section'
           } else if (text.includes('CORE TECHNOLOGY')) {
             currentSection = 'Core Tech Section'
+          } else if (text.includes('BUSINESS DOMAIN')) {
+            currentSection = 'Business Domain Section'
           } else if (text.includes('Problem')) {
             currentSection = 'Problem Section'
           } else if (text.includes('Solution')) {

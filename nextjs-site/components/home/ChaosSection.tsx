@@ -146,17 +146,6 @@ const ChaosSection = () => {
           </div>
         </div>
 
-        {/* 中央のビジュアルエフェクト */}
-        <div className={styles.centerVisual}>
-          <div className={styles.dataVortex}>
-            <div className={styles.vortexRing1} />
-            <div className={styles.vortexRing2} />
-            <div className={styles.vortexRing3} />
-            <div className={styles.vortexCore}>
-              <img src="/wordpress-img/logo/fire.png" alt="" />
-            </div>
-          </div>
-        </div>
 
         {/* フローティングデータライン */}
         <div className={styles.floatingLines}>

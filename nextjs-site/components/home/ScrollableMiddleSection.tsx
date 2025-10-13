@@ -5,24 +5,14 @@ import styles from './ScrollableMiddleSection.module.css'
 import VisionSection from './VisionSection'
 import ChaosSection from './ChaosSection'
 import CoreTechSection from './CoreTechSection'
-import ProblemSection from './ProblemSection'
-import SolutionSection from './SolutionSection'
-import LectureSection from './LectureSection'
-import DifferenceSection from './DifferenceSection'
-import IntroductionSection from './IntroductionSection'
-import PriceSection from './PriceSection'
+import BusinessDomainSection from './BusinessDomainSection'
 
 export default function ScrollableMiddleSection() {
   const sectionRefs = {
     vision: useRef<HTMLDivElement>(null),
     chaos: useRef<HTMLDivElement>(null),
     coreTech: useRef<HTMLDivElement>(null),
-    problem: useRef<HTMLDivElement>(null),
-    solution: useRef<HTMLDivElement>(null),
-    lecture: useRef<HTMLDivElement>(null),
-    difference: useRef<HTMLDivElement>(null),
-    introduction: useRef<HTMLDivElement>(null),
-    price: useRef<HTMLDivElement>(null)
+    businessDomain: useRef<HTMLDivElement>(null)
   }
 
   useEffect(() => {
@@ -74,34 +64,9 @@ export default function ScrollableMiddleSection() {
         <CoreTechSection />
       </div>
       
-      {/* Problem Section */}
-      <div ref={sectionRefs.problem} className={styles.section}>
-        <ProblemSection />
-      </div>
-      
-      {/* Solution Section */}
-      <div ref={sectionRefs.solution} className={styles.section}>
-        <SolutionSection />
-      </div>
-      
-      {/* Lecture Section */}
-      <div ref={sectionRefs.lecture} className={styles.section}>
-        <LectureSection />
-      </div>
-      
-      {/* Difference Section */}
-      <div ref={sectionRefs.difference} className={styles.section}>
-        <DifferenceSection />
-      </div>
-      
-      {/* Introduction Section */}
-      <div ref={sectionRefs.introduction} className={styles.section}>
-        <IntroductionSection />
-      </div>
-      
-      {/* Price Section */}
-      <div ref={sectionRefs.price} className={styles.section}>
-        <PriceSection />
+      {/* Business Domain Section - 事業領域 */}
+      <div ref={sectionRefs.businessDomain} className={styles.section}>
+        <BusinessDomainSection />
       </div>
     </div>
   )
