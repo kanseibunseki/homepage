@@ -1,13 +1,19 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+  const hamburgerRef = useRef<HTMLDivElement>(null)
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
+  }
+
+  const closeMenu = () => {
+    setIsMenuOpen(false)
   }
 
   useEffect(() => {
@@ -22,9 +28,31 @@ const Header = () => {
     }
   }, [isMenuOpen])
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isMenuOpen &&
+        menuRef.current &&
+        hamburgerRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        !hamburgerRef.current.contains(event.target as Node)
+      ) {
+        closeMenu()
+      }
+    }
+
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isMenuOpen])
+
   return (
     <header className="l-header">
-      <div className={`c-hamburger js-hamburger ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+      <div ref={hamburgerRef} className={`c-hamburger js-hamburger ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
         <div className="c-hamburger__menubtn">
           <picture>
             <source srcSet="/wordpress-img/common/sp/menu.png" media="(max-width: 860px)" />
@@ -36,7 +64,7 @@ const Header = () => {
       </div>
       
       <div className="l-header__inner">
-        <div className={`l-header__container js-menu ${isMenuOpen ? 'active' : ''}`}>
+        <div ref={menuRef} className={`l-header__container js-menu ${isMenuOpen ? 'active' : ''}`}>
           <nav className="l-header__menu">
             <ul className="l-header__menu__list">
               <li className="l-header__menu__list__item">

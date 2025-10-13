@@ -485,7 +485,7 @@ select ::placeholder {
   left: 0;
   margin: 0 auto;
 }
-.l-header__container.active {
+.l-header__container {
   position: fixed;
   top: 0;
   left: 0;
@@ -494,11 +494,37 @@ select ::placeholder {
   overflow-y: scroll;
   background: url(/wordpress-img/common/sp/menu-bg.jpg) no-repeat center center;
   background-size: cover;
+  opacity: 0;
+  visibility: hidden;
+  transition: 
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+.l-header__container.active {
+  opacity: 1;
+  visibility: visible;
+}
+.l-header__container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(10, 10, 20, 0.3) 0%,
+    rgba(20, 10, 35, 0.2) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.l-header__container.active::before {
+  opacity: 1;
 }
 @media screen and (min-width: calc(860px + 1px)) {
-  .l-header__container.active {
+  .l-header__container {
     left: auto;
-    right: 0;
+    right: -100%;
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
@@ -508,6 +534,12 @@ select ::placeholder {
     background: url(/wordpress-img/common/menu-bg.jpg) no-repeat center center;
     background-size: cover;
     border-radius: 0 0 0 clamp(0px, 8.5714285714vw, 9999px);
+    opacity: 1;
+    visibility: visible;
+    transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .l-header__container.active {
+    right: 0;
   }
 }
 .l-header__container.active .l-header__menu {
@@ -546,6 +578,23 @@ select ::placeholder {
           align-items: flex-start;
   gap: clamp(0px, 11.6279069767vw, 9999px);
 }
+.l-header__menu__list__item {
+  position: relative;
+}
+.l-header__menu__list__item__link {
+  display: inline-block;
+  padding-right: 20px;
+}
+.l-header__menu__list__item__link__title {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+}
+.l-header__menu__list__item:hover .l-header__menu__list__item__link__title {
+  transform: translateX(8px);
+  color: #00ffcc;
+  opacity: 0.9;
+}
 @media screen and (min-width: calc(860px + 1px)) {
   .l-header__menu__list {
     gap: clamp(0px, 3.2142857143vw, 9999px);
@@ -562,19 +611,50 @@ select ::placeholder {
   }
 }
 .l-header__menu__contact__sentence {
-  font-size: clamp(10px, 3.8372093023vw, 9999px);
-  color: #fff;
-  letter-spacing: 0.08em;
+  font-size: clamp(14px, 4.5vw, 20px);
+  color: #ffffff;
+  letter-spacing: 0.1em;
+  text-shadow: 
+    0 0 30px rgba(0, 0, 0, 0.8),
+    0 2px 4px rgba(0, 0, 0, 1),
+    0 4px 8px rgba(0, 0, 0, 0.5);
+  font-weight: 700;
+  display: inline-block;
+  position: relative;
+  z-index: 10;
 }
 @media screen and (min-width: calc(860px + 1px)) {
   .l-header__menu__contact__sentence {
-    font-size: clamp(10px, 1.3571428571vw, 9999px);
+    font-size: clamp(14px, 1.8vw, 18px);
   }
 }
 .l-header__menu__contact__btn {
   display: block;
   width: 100%;
   margin-top: clamp(0px, 3.488372093vw, 9999px);
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+.l-header__menu__contact__btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%);
+  transition: left 0.5s ease;
+}
+.l-header__menu__contact__btn:hover {
+  transform: translateY(-2px);
+}
+.l-header__menu__contact__btn:hover::before {
+  left: 100%;
 }
 @media screen and (min-width: calc(860px + 1px)) {
   .l-header__menu__contact__btn {
@@ -798,18 +878,20 @@ select ::placeholder {
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 .c-hamburger__menubtn > span {
   display: none;
   width: clamp(0px, 9.8837209302vw, 9999px);
-  height: 3px;
+  height: 2px;
   background-color: #fff;
-  border-radius: 9999px;
+  border-radius: 1px;
   position: absolute;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+  transition: all 0.2s ease;
 }
 @media screen and (min-width: calc(860px + 1px)) {
   .c-hamburger__menubtn > span {
@@ -817,18 +899,33 @@ select ::placeholder {
   }
 }
 .c-hamburger__menubtn span:nth-of-type(1) {
-  -webkit-transform: translate(-50%, -50%) rotate(-405deg);
-          transform: translate(-50%, -50%) rotate(-405deg);
+  -webkit-transform: translate(-50%, -50%) rotate(0deg);
+          transform: translate(-50%, -50%) rotate(0deg);
+  transition-delay: 0s;
 }
 .c-hamburger__menubtn span:nth-of-type(2) {
-  -webkit-transform: translate(-50%, -50%) rotate(405deg);
-          transform: translate(-50%, -50%) rotate(405deg);
+  -webkit-transform: translate(-50%, -50%) rotate(0deg);
+          transform: translate(-50%, -50%) rotate(0deg);
+  transition-delay: 0s;
 }
-.c-hamburger.active img {
-  display: none;
+.c-hamburger.active .c-hamburger__menubtn img {
+  opacity: 0;
+  -webkit-transform: translate(-50%, -50%) rotate(90deg);
+          transform: translate(-50%, -50%) rotate(90deg);
 }
-.c-hamburger.active span {
+.c-hamburger.active .c-hamburger__menubtn span {
   display: block;
+  opacity: 1;
+}
+.c-hamburger.active .c-hamburger__menubtn span:nth-of-type(1) {
+  -webkit-transform: translate(-50%, -50%) rotate(-45deg);
+          transform: translate(-50%, -50%) rotate(-45deg);
+  transition-delay: 0.1s;
+}
+.c-hamburger.active .c-hamburger__menubtn span:nth-of-type(2) {
+  -webkit-transform: translate(-50%, -50%) rotate(45deg);
+          transform: translate(-50%, -50%) rotate(45deg);
+  transition-delay: 0.1s;
 }
 
 .c-section-title {
