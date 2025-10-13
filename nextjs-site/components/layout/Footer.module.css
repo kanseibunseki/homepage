@@ -2,7 +2,7 @@
   position: relative;
   background: linear-gradient(180deg, transparent 0%, #000000 100px);
   padding-top: 200px;
-  margin-top: 150px;
+  margin-top: 0;
   overflow: hidden;
 }
 
@@ -92,43 +92,54 @@
   100% { background-position: 0% 50%; }
 }
 
-/* Main footer content - contact button and logo side by side */
+/* Main footer content */
 .footerMainContent {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 80px;
   padding: 60px 0;
-  margin-bottom: 60px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Left section - Contact button and navigation */
+.leftSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  align-items: flex-start;
 }
 
 /* Clean navigation */
 .navSection {
-  padding-bottom: 60px;
+  padding: 0;
+  width: 100%;
 }
 
 .navGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 80px;
-  flex: 1;
+  grid-template-columns: repeat(4, minmax(140px, 1fr));
+  gap: 60px;
+  width: 100%;
+  max-width: 700px;
 }
 
 .navColumn {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
+  min-width: 0;
 }
 
 .navTitle {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.4);
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.15em;
   margin: 0 0 4px 0;
   position: relative;
-  padding-bottom: 12px;
+  padding-bottom: 10px;
 }
 
 .navTitle::after {
@@ -147,7 +158,7 @@
 .navLinks {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -156,13 +167,14 @@
 .navLink {
   color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 300;
   letter-spacing: 0.02em;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   display: inline-block;
   padding-left: 0;
+  white-space: nowrap;
 }
 
 .navLink::before {
@@ -188,8 +200,9 @@
 /* Logo section */
 .logoSection {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding-top: 40px;
 }
 
 .logoWrapper {
@@ -200,8 +213,8 @@
 }
 
 .footerMainLogo {
-  width: 260px;
-  height: 308px;
+  width: 280px;
+  height: 331px;
   opacity: 0.95;
   transition: all 0.5s ease;
   filter: drop-shadow(0 15px 40px rgba(147, 51, 234, 0.15));
@@ -228,8 +241,9 @@
 /* Contact button area */
 .contactButtonArea {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  width: 100%;
 }
 
 .contactButtonLarge {

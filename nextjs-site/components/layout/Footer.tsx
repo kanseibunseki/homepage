@@ -18,32 +18,19 @@ const Footer = () => {
           
           {/* Main footer content */}
           <div className={styles.footerMainContent}>
-            {/* Contact button */}
-            <div className={styles.contactButtonArea}>
-              <Link href="/contact" className={styles.contactButtonLarge}>
-                <span className={styles.contactButtonTextLarge}>お問い合わせはこちら</span>
-                <span className={styles.contactButtonArrowLarge}>→</span>
-              </Link>
-            </div>
-
-            {/* Logo section - same height as contact button */}
-            <div className={styles.logoSection}>
-              <div className={styles.logoWrapper}>
-                <img 
-                  src="/wordpress-img/common/footer_logo.png" 
-                  alt="Kanseibunseki" 
-                  className={styles.footerMainLogo}
-                />
-                <span className={styles.copyright}>
-                  © 2024 Kanseibunseki Inc. All rights reserved.
-                </span>
+            {/* Left side - Contact button and Navigation */}
+            <div className={styles.leftSection}>
+              {/* Contact button */}
+              <div className={styles.contactButtonArea}>
+                <Link href="/contact" className={styles.contactButtonLarge}>
+                  <span className={styles.contactButtonTextLarge}>お問い合わせはこちら</span>
+                  <span className={styles.contactButtonArrowLarge}>→</span>
+                </Link>
               </div>
-            </div>
-          </div>
 
-          {/* Navigation section - below */}
-          <div className={styles.navSection}>
-            <div className={styles.navGrid}>
+              {/* Navigation section */}
+              <div className={styles.navSection}>
+                <div className={styles.navGrid}>
               <div className={styles.navColumn}>
                 <h3 className={styles.navTitle}>Navigation</h3>
                 <ul className={styles.navLinks}>
@@ -111,6 +98,22 @@ const Footer = () => {
                     </Link>
                   </li>
                 </ul>
+              </div>
+            </div>
+              </div>
+            </div>
+
+            {/* Right side - Logo section */}
+            <div className={styles.logoSection}>
+              <div className={styles.logoWrapper}>
+                <img 
+                  src="/wordpress-img/common/footer_logo.png" 
+                  alt="Kanseibunseki" 
+                  className={styles.footerMainLogo}
+                />
+                <span className={styles.copyright}>
+                  © 2024 Kanseibunseki Inc. All rights reserved.
+                </span>
               </div>
             </div>
           </div>
