@@ -1,111 +1,288 @@
+/* 会社概要セクション - トップ画面と統一したダークデザイン */
+.companySection {
+  min-height: 100vh;
+  background: transparent;
+  padding: 120px 20px 80px;
+  position: relative;
+}
+
 .container {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 60px 40px;
+}
+
+/* タイトルセクション */
+.titleSection {
+  text-align: center;
+  margin-bottom: 80px;
+  animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .title {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 50px;
-  color: #333;
-}
-
-.section {
-  margin-bottom: 50px;
-}
-
-.sectionTitle {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #e0e0e0;
-  color: #444;
-}
-
-.content {
-  line-height: 1.8;
-  color: #666;
-}
-
-.companyInfo {
-  background: #f9f9f9;
-  padding: 30px;
-  border-radius: 8px;
-  margin: 30px 0;
-}
-
-.infoTable {
-  width: 100%;
-}
-
-.infoRow {
   display: flex;
-  padding: 15px 0;
-  border-bottom: 1px solid #e0e0e0;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
-.infoRow:last-child {
-  border-bottom: none;
+.titleJa {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, #00ffcc, #8a2be2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.05em;
 }
 
-.infoLabel {
-  width: 150px;
-  font-weight: bold;
-  color: #555;
+.titleEn {
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  font-weight: 300;
+  color: rgba(0, 255, 204, 0.7);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
 }
 
-.infoValue {
+.titleDivider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.dividerLine {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #00ffcc, transparent);
+}
+
+.dividerDot {
+  width: 8px;
+  height: 8px;
+  background: #00ffcc;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #00ffcc;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 10px #00ffcc;
+  }
+  50% {
+    box-shadow: 0 0 20px #00ffcc, 0 0 30px rgba(0, 255, 204, 0.5);
+  }
+}
+
+/* 会社情報リスト */
+.companyList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (min-width: 861px) {
+  .companyList {
+    gap: 40px;
+  }
+}
+
+/* 会社情報アイテム */
+.companyItem {
+  animation: fadeIn 1s ease-out;
+  animation-fill-mode: both;
+}
+
+.companyItem:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.companyItem:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.companyItem:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.companyItem:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.companyItemInner {
+  background: rgba(26, 15, 46, 0.3);
+  border: 1px solid rgba(0, 255, 204, 0.2);
+  border-radius: 20px;
+  padding: 0;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 861px) {
+  .companyItemInner {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.companyItemInner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg,
+    rgba(138, 43, 226, 0.05) 0%,
+    rgba(0, 255, 204, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.companyItemInner:hover {
+  border-color: rgba(0, 255, 204, 0.5);
+  box-shadow:
+    0 10px 40px rgba(0, 255, 204, 0.2),
+    0 0 60px rgba(138, 43, 226, 0.1);
+  transform: translateY(-5px);
+}
+
+.companyItemInner:hover::before {
+  opacity: 1;
+}
+
+/* ラベル部分 */
+.companyLabel {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 861px) {
+  .companyLabel {
+    min-width: 200px;
+    width: 200px;
+    padding: 32px;
+  }
+}
+
+.companyLabelTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-align: center;
+}
+
+@media (min-width: 861px) {
+  .companyLabelTitle {
+    font-size: 18px;
+  }
+}
+
+/* コンテンツ部分 */
+.companyContent {
+  padding: 24px;
   flex: 1;
-  color: #666;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
-.missionSection {
-  background: white;
-  padding: 40px;
-  border-left: 4px solid #4a90e2;
-  margin: 40px 0;
+@media (min-width: 861px) {
+  .companyContent {
+    padding: 32px 40px;
+  }
 }
 
-.missionText {
-  font-size: 1.2rem;
+.companyDetail {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1.8;
-  color: #444;
-  font-style: italic;
+  letter-spacing: 0.04em;
+  margin: 0;
 }
 
-@media (max-width: 860px) {
-  .container {
-    padding: 40px 20px;
+@media (min-width: 861px) {
+  .companyDetail {
+    font-size: 16px;
   }
-  
-  .title {
-    font-size: 2rem;
-    margin-bottom: 30px;
+}
+
+.companyDetail span {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.companyDetail span:last-child {
+  margin-bottom: 0;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 640px) {
+  .companySection {
+    padding: 80px 15px 50px;
   }
-  
-  .sectionTitle {
-    font-size: 1.5rem;
+
+  .titleSection {
+    margin-bottom: 60px;
   }
-  
-  .companyInfo {
+
+  .companyItemInner {
+    padding: 0;
+  }
+
+  .companyLabel {
+    padding: 16px 20px;
+  }
+
+  .companyContent {
     padding: 20px;
   }
-  
-  .infoRow {
-    flex-direction: column;
+
+  .titleDivider {
+    gap: 10px;
   }
-  
-  .infoLabel {
-    width: 100%;
-    margin-bottom: 5px;
-  }
-  
-  .missionSection {
-    padding: 25px;
-  }
-  
-  .missionText {
-    font-size: 1.1rem;
+
+  .dividerLine {
+    width: 40px;
   }
 }

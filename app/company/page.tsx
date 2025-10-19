@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import styles from './company.module.css'
 
 export const metadata: Metadata = {
   title: '会社概要 - 株式会社感性分析｜ＡＩをフル活用し、企業のデータ活用を支援します',
@@ -7,134 +8,73 @@ export const metadata: Metadata = {
 
 export default function CompanyPage() {
   return (
-    <>
-      <link rel="stylesheet" href="/css/company.css" />
-      
-      <section className="company">
-        <div className="company__inner">
-          <h1 className="c-page__title">
-            <span className="c-page__title__ja">
-              会社概要
-            </span>
-            <span className="c-page__title__en">
-              company
-            </span>
+    <section className={styles.companySection}>
+      <div className={styles.container}>
+        {/* タイトルセクション */}
+        <div className={styles.titleSection}>
+          <h1 className={styles.title}>
+            <span className={styles.titleJa}>会社概要</span>
+            <span className={styles.titleEn}>Company</span>
           </h1>
+          <div className={styles.titleDivider}>
+            <div className={styles.dividerLine}></div>
+            <div className={styles.dividerDot}></div>
+            <div className={styles.dividerLine}></div>
+          </div>
+        </div>
 
-          <ul className="company__list">
-            <li className="company__listitem">
-              <div className="company__listitem__head">
-                <picture>
-                  <source srcSet="/wordpress-img/company/sp/title.png" media="(max-width: 860px)" />
-                  <img src="/wordpress-img/company/title.png" alt="" width={448} height={99} decoding="async" loading="lazy" />
-                </picture>
-                <h2 className="company__listitem__title">
-                  企業名
-                </h2>
+        {/* 会社情報リスト */}
+        <ul className={styles.companyList}>
+          <li className={styles.companyItem}>
+            <div className={styles.companyItemInner}>
+              <div className={styles.companyLabel}>
+                <h2 className={styles.companyLabelTitle}>企業名</h2>
               </div>
-              <div className="company__listitem__body">
-                <picture>
-                  <source srcSet="/wordpress-img/company/sp/detail.png" media="(max-width: 860px)" />
-                  <img src="/wordpress-img/company/detail.png" alt="" width={606} height={115} decoding="async" loading="lazy" />
-                </picture>
-                <p className="company__listitem__detail">
-                  株式会社感性分析
-                </p>
+              <div className={styles.companyContent}>
+                <p className={styles.companyDetail}>株式会社感性分析</p>
               </div>
-            </li>
+            </div>
+          </li>
 
-            <li className="company__listitem">
-              <div className="company__listitem__head">
-                <picture>
-                  <source srcSet="/wordpress-img/company/sp/title.png" media="(max-width: 860px)" />
-                  <img src="/wordpress-img/company/title.png" alt="" width={448} height={99} decoding="async" loading="lazy" />
-                </picture>
-                <h2 className="company__listitem__title">
-                  代表者
-                </h2>
+          <li className={styles.companyItem}>
+            <div className={styles.companyItemInner}>
+              <div className={styles.companyLabel}>
+                <h2 className={styles.companyLabelTitle}>代表者</h2>
               </div>
-              <div className="company__listitem__body m-name">
-                <picture>
-                  <source srcSet="/wordpress-img/company/sp/detail.png" media="(max-width: 860px)" />
-                  <img src="/wordpress-img/company/detail.png" alt="" width={606} height={115} decoding="async" loading="lazy" />
-                </picture>
-                <p className="company__listitem__detail m-name">
-                  <span>宮嶋大輔</span>
+              <div className={styles.companyContent}>
+                <p className={styles.companyDetail}>
                   <span>田中丈士</span>
+                  <span>宮嶋大輔</span>
                 </p>
               </div>
-            </li>
+            </div>
+          </li>
 
-            <li className="company__listitem">
-              <div className="company__listitem__head">
-                <picture>
-                  <source srcSet="/wordpress-img/company/sp/title.png" media="(max-width: 860px)" />
-                  <img src="/wordpress-img/company/title.png" alt="" width={448} height={99} decoding="async" loading="lazy" />
-                </picture>
-                <h2 className="company__listitem__title">
-                  所在地
-                </h2>
+          <li className={styles.companyItem}>
+            <div className={styles.companyItemInner}>
+              <div className={styles.companyLabel}>
+                <h2 className={styles.companyLabelTitle}>所在地</h2>
               </div>
-              <div className="company__listitem__body">
-                <picture>
-                  <source srcSet="/wordpress-img/company/sp/detail.png" media="(max-width: 860px)" />
-                  <img src="/wordpress-img/company/detail.png" alt="" width={606} height={115} decoding="async" loading="lazy" />
-                </picture>
-                <p className="company__listitem__detail m-address">
+              <div className={styles.companyContent}>
+                <p className={styles.companyDetail}>
                   大阪府大阪市淀川区西宮原1丁目5-33<br />新大阪飯田ビル1Ｆ
                 </p>
               </div>
-            </li>
+            </div>
+          </li>
 
-            <li className="company__listitem">
-              <div className="company__listitem__head">
-                <picture>
-                  <source srcSet="/wordpress-img/company/sp/title.png" media="(max-width: 860px)" />
-                  <img src="/wordpress-img/company/title.png" alt="" width={448} height={99} decoding="async" loading="lazy" />
-                </picture>
-                <h2 className="company__listitem__title">
-                  連絡先
-                </h2>
+          <li className={styles.companyItem}>
+            <div className={styles.companyItemInner}>
+              <div className={styles.companyLabel}>
+                <h2 className={styles.companyLabelTitle}>事業内容</h2>
               </div>
-              <div className="company__listitem__body">
-                <picture>
-                  <source srcSet="/wordpress-img/company/sp/detail.png" media="(max-width: 860px)" />
-                  <img src="/wordpress-img/company/detail.png" alt="" width={606} height={115} decoding="async" loading="lazy" />
-                </picture>
-                <p className="company__listitem__detail">
-                  08067582220
-                </p>
+              <div className={styles.companyContent}>
+                <p className={styles.companyDetail}>データ活用、AI活用、モデル開発等</p>
               </div>
-            </li>
-
-            <li className="company__listitem">
-              <div className="company__listitem__head">
-                <picture>
-                  <source srcSet="/wordpress-img/company/sp/title.png" media="(max-width: 860px)" />
-                  <img src="/wordpress-img/company/title.png" alt="" width={448} height={99} decoding="async" loading="lazy" />
-                </picture>
-                <h2 className="company__listitem__title">
-                  事業内容
-                </h2>
-              </div>
-              <div className="company__listitem__body">
-                <picture>
-                  <source srcSet="/wordpress-img/company/sp/detail.png" media="(max-width: 860px)" />
-                  <img src="/wordpress-img/company/detail.png" alt="" width={606} height={115} decoding="async" loading="lazy" />
-                </picture>
-                <p className="company__listitem__detail">
-                  データ活用全般
-                </p>
-              </div>
-            </li>
-          </ul>
-        </div>
-        
-        <picture>
-          <source srcSet="/wordpress-img/company/sp/company-bg.jpg" media="(max-width: 860px)" />
-          <img className="company-bg" src="/wordpress-img/company/company-bg.jpg" alt="" width={860} height={764} decoding="async" loading="lazy" />
-        </picture>
-      </section>
-    </>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
   )
 }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { MENU_NAVIGATION } from './navigation'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -67,31 +68,18 @@ const Header = () => {
         <div ref={menuRef} className={`l-header__container js-menu ${isMenuOpen ? 'active' : ''}`}>
           <nav className="l-header__menu">
             <ul className="l-header__menu__list">
-              <li className="l-header__menu__list__item">
-                <Link href="/" className="l-header__menu__list__item__link is-hover">
-                  <h2 className="l-header__menu__list__item__link__title">トップページ</h2>
-                </Link>
-              </li>
-              <li className="l-header__menu__list__item">
-                <Link href="/members" className="l-header__menu__list__item__link is-hover">
-                  <h2 className="l-header__menu__list__item__link__title">経営メンバー</h2>
-                </Link>
-              </li>
-              <li className="l-header__menu__list__item">
-                <Link href="/#price" className="l-header__menu__list__item__link is-hover">
-                  <h2 className="l-header__menu__list__item__link__title">金額</h2>
-                </Link>
-              </li>
-              <li className="l-header__menu__list__item">
-                <Link href="/company" className="l-header__menu__list__item__link is-hover">
-                  <h2 className="l-header__menu__list__item__link__title">会社概要</h2>
-                </Link>
-              </li>
+              {MENU_NAVIGATION.map((link) => (
+                <li key={link.href} className="l-header__menu__list__item">
+                  <Link href={link.href} className="l-header__menu__list__item__link is-hover" onClick={closeMenu}>
+                    <h2 className="l-header__menu__list__item__link__title">{link.title}</h2>
+                  </Link>
+                </li>
+              ))}
             </ul>
             
             <div className="l-header__menu__contact">
               <span className="l-header__menu__contact__sentence">お気軽にご相談ください。</span>
-              <Link href="/contact" className="l-header__menu__contact__btn is-hover">
+              <Link href="/contact" className="l-header__menu__contact__btn is-hover" onClick={closeMenu}>
                 <picture>
                   <source srcSet="/wordpress-img/common/sp/contact-btn.png" media="(max-width: 860px)" />
                   <img src="/wordpress-img/common/contact-btn.png" alt="お問い合わせへ" width={780} height={137} decoding="async" loading="lazy" />

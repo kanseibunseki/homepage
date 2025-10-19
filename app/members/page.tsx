@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import styles from './members.module.css'
 
 export const metadata: Metadata = {
   title: '経営メンバー - 株式会社感性分析｜ＡＩをフル活用し、企業のデータ活用を支援します',
@@ -8,73 +8,93 @@ export const metadata: Metadata = {
 
 export default function MembersPage() {
   return (
-    <>
-      <link rel="stylesheet" href="/css/members.css" />
-      
-      <section className="members">
-        <div className="members__head">
-          <picture>
-            <source srcSet="/wordpress-img/members/sp/members_1.jpg" media="(max-width: 860px)" />
-            <img src="/wordpress-img/members/members_1.jpg" alt="" width={860} height={1035} decoding="async" loading="lazy" />
-          </picture>
-          
-          <Link href="/members/#miyajima" className="members__head__anchor m-miyajima">
-            <picture>
-              <source srcSet="/wordpress-img/members/sp/anchor-miyajima.png" media="(max-width: 860px)" />
-              <img src="/wordpress-img/members/anchor-miyajima.png" alt="データサイエンティスト 担当：消費者分析の設計 宮嶋大輔" width={344} height={244} decoding="async" loading="lazy" />
-            </picture>
-          </Link>
-          
-          <Link href="/members/#tanaka" className="members__head__anchor m-tanaka">
-            <picture>
-              <source srcSet="/wordpress-img/members/sp/anchor-tanaka.png" media="(max-width: 860px)" />
-              <img src="/wordpress-img/members/anchor-tanaka.png" alt="システムエンジニア 担当：システム開発 田中丈士" width={344} height={244} decoding="async" loading="lazy" />
-            </picture>
-          </Link>
-          
-          <h1 className="c-page__title">
-            <span className="c-page__title__ja">
-              経営メンバー
-            </span>
-            <span className="c-page__title__en">
-              members
-            </span>
+    <section className={styles.membersSection}>
+      <div className={styles.container}>
+        {/* タイトルセクション */}
+        <div className={styles.titleSection}>
+          <h1 className={styles.title}>
+            <span className={styles.titleJa}>経営メンバー</span>
+            <span className={styles.titleEn}>Members</span>
           </h1>
-          
-          <div className="members__logo-kirakira">
-            <img src="/wordpress-img/logo/kirakira.png" alt="" width={100} height={100} decoding="async" loading="lazy" />
-          </div>
-          <div className="members__logo-fire">
-            <img src="/wordpress-img/logo/fire.png" alt="" width={100} height={100} decoding="async" loading="lazy" />
+          <div className={styles.titleDivider}>
+            <div className={styles.dividerLine}></div>
+            <div className={styles.dividerDot}></div>
+            <div className={styles.dividerLine}></div>
           </div>
         </div>
-        
-        <div className="members__contents" id="miyajima">
-          <picture>
-            <source srcSet="/wordpress-img/members/sp/members_2.jpg" media="(max-width: 860px)" />
-            <img src="/wordpress-img/members/members_2.jpg" alt="宮嶋大輔" width={860} height={689} decoding="async" loading="lazy" />
-          </picture>
-          <div className="members__logo-kirakira_2">
-            <img src="/wordpress-img/logo/kirakira.png" alt="" width={100} height={100} decoding="async" loading="lazy" />
-          </div>
-          <div className="members__logo-tereru">
-            <img src="/wordpress-img/logo/tereru.png" alt="" width={100} height={100} decoding="async" loading="lazy" />
+
+        {/* メンバー1: 宮嶋大輔 */}
+        <div className={styles.memberCard} id="miyajima">
+          <div className={styles.memberCardInner}>
+            <div className={styles.memberImageWrapper}>
+              <div className={styles.memberImageGlow}></div>
+              <img
+                src="/wordpress-img/members/members_2.png"
+                alt="宮嶋大輔"
+                className={styles.memberImage}
+                width={300}
+                height={300}
+              />
+            </div>
+
+            <div className={styles.memberInfo}>
+              <h2 className={styles.memberName}>宮嶋 大輔</h2>
+              <p className={styles.memberRole}>データサイエンティスト</p>
+              <p className={styles.memberDuty}>担当：消費者分析の設計</p>
+
+              <div className={styles.memberDetails}>
+                <h3 className={styles.detailsTitle}>受賞歴・実績</h3>
+                <ul className={styles.detailsList}>
+                  <li>優勝/2連続金賞 MUFG Data Science Champion Ship<br />
+                  Jリーグの観客動員数予測、クラウドファンの成功予測など</li>
+                  <li>デロイトアナリティクス 金賞</li>
+                  <li>電子情報通信学会MVE研究会での発表論文がMVE賞を受賞<br />
+                  （NTTも参画する日本最大級の学会）</li>
+                  <li>関西学院大学 首席卒業</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-        
-        <div className="members__contents" id="tanaka">
-          <picture>
-            <source srcSet="/wordpress-img/members/sp/members_3.jpg" media="(max-width: 860px)" />
-            <img src="/wordpress-img/members/members_3.jpg" alt="田中丈士" width={860} height={1000} decoding="async" loading="lazy" />
-          </picture>
-          <div className="members__logo-denkyu">
-            <img src="/wordpress-img/logo/denkyu.png" alt="" width={100} height={100} decoding="async" loading="lazy" />
-          </div>
-          <div className="members__logo-age">
-            <img src="/wordpress-img/logo/age.png" alt="" width={100} height={100} decoding="async" loading="lazy" />
+
+        {/* メンバー2: 田中文士 */}
+        <div className={styles.memberCard} id="tanaka">
+          <div className={styles.memberCardInner}>
+            <div className={styles.memberImageWrapper}>
+              <div className={styles.memberImageGlow}></div>
+              <img
+                src="/wordpress-img/members/members_3.png"
+                alt="田中文士"
+                className={styles.memberImage}
+                width={300}
+                height={300}
+              />
+            </div>
+
+            <div className={styles.memberInfo}>
+              <h2 className={styles.memberName}>田中 文士</h2>
+              <p className={styles.memberRole}>システムエンジニア</p>
+              <p className={styles.memberDuty}>担当：システム開発</p>
+
+              <div className={styles.memberDetails}>
+                <h3 className={styles.detailsTitle}>経歴</h3>
+                <ul className={styles.detailsList}>
+                  <li>学生時からWEBサイト制作事業を収益化</li>
+                  <li>完全オリジナルのゲーム開発<br />
+                  ゲームのルール設計からUI/UXデザインまで全て自ら設計、<br />
+                  アプリのリリース＆収益化を実現。</li>
+                  <li>音楽分野のSNS開発<br />
+                  ユーザー管理・データベース設計・セキュリティ向上、<br />
+                  UI最適化・リアルタイム通信機能など全て自ら実装。</li>
+                  <li>Salesforce プロジェクトマネージャー<br />
+                  10社以上のDXを推進。顧客管理システムの導入など、<br />
+                  業務プロセスの効率化を成功に導く。</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   )
 }

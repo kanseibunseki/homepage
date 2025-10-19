@@ -1,77 +1,348 @@
+/* 経営メンバーセクション - トップ画面と統一したダークデザイン */
+.membersSection {
+  min-height: 100vh;
+  background: transparent;
+  padding: 120px 20px 80px;
+  position: relative;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px;
+}
+
+/* タイトルセクション */
+.titleSection {
+  text-align: center;
+  margin-bottom: 80px;
+  animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .title {
-  text-align: center;
-  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
-.memberGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 40px;
-  margin-bottom: 60px;
+.titleJa {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, #00ffcc, #8a2be2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.05em;
 }
 
+.titleEn {
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  font-weight: 300;
+  color: rgba(0, 255, 204, 0.7);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.titleDivider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.dividerLine {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #00ffcc, transparent);
+}
+
+.dividerDot {
+  width: 8px;
+  height: 8px;
+  background: #00ffcc;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #00ffcc;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 10px #00ffcc;
+  }
+  50% {
+    box-shadow: 0 0 20px #00ffcc, 0 0 30px rgba(0, 255, 204, 0.5);
+  }
+}
+
+/* メンバーカード */
 .memberCard {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 60px;
+  animation: fadeIn 1s ease-out;
+  animation-fill-mode: both;
 }
 
-.memberCard:hover {
+.memberCard:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.memberCard:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.memberCardInner {
+  background: rgba(26, 15, 46, 0.3);
+  border: 1px solid rgba(0, 255, 204, 0.2);
+  border-radius: 20px;
+  padding: 40px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  gap: 50px;
+  align-items: flex-start;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.memberCardInner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg,
+    rgba(138, 43, 226, 0.05) 0%,
+    rgba(0, 255, 204, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.memberCardInner:hover {
+  border-color: rgba(0, 255, 204, 0.5);
+  box-shadow:
+    0 10px 40px rgba(0, 255, 204, 0.2),
+    0 0 60px rgba(138, 43, 226, 0.1);
   transform: translateY(-5px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.memberCardInner:hover::before {
+  opacity: 1;
+}
+
+/* メンバー画像 */
+.memberImageWrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.memberImageGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle,
+    rgba(0, 255, 204, 0.3) 0%,
+    rgba(138, 43, 226, 0.2) 50%,
+    transparent 70%);
+  filter: blur(40px);
+  opacity: 0.6;
+  transition: opacity 0.4s ease;
+}
+
+.memberCardInner:hover .memberImageGlow {
+  opacity: 1;
 }
 
 .memberImage {
-  width: 100%;
-  height: 300px;
+  width: 280px;
+  height: 280px;
+  border-radius: 20px;
   object-fit: cover;
+  border: 2px solid rgba(0, 255, 204, 0.3);
+  box-shadow:
+    0 0 30px rgba(0, 255, 204, 0.3),
+    0 0 60px rgba(138, 43, 226, 0.2);
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 1;
 }
 
+.memberCardInner:hover .memberImage {
+  border-color: rgba(0, 255, 204, 0.6);
+  box-shadow:
+    0 0 40px rgba(0, 255, 204, 0.5),
+    0 0 80px rgba(138, 43, 226, 0.3);
+}
+
+/* メンバー情報 */
 .memberInfo {
-  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .memberName {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
 }
 
-.memberTitle {
-  font-size: 1.1rem;
-  color: #666;
-  margin-bottom: 15px;
+.memberRole {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 500;
+  background: linear-gradient(135deg, #00ffcc, #8a2be2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+  letter-spacing: 0.05em;
 }
 
-.memberBio {
-  color: #777;
-  line-height: 1.6;
+.memberDuty {
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  color: rgba(0, 255, 204, 0.8);
+  margin: 0;
+  font-weight: 400;
 }
 
-@media (max-width: 860px) {
-  .container {
-    padding: 20px;
+/* メンバー詳細 */
+.memberDetails {
+  margin-top: 10px;
+}
+
+.detailsTitle {
+  font-size: clamp(1rem, 1.8vw, 1.3rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 15px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 255, 204, 0.2);
+  letter-spacing: 0.05em;
+}
+
+.detailsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.detailsList li {
+  font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.8);
+  padding-left: 25px;
+  position: relative;
+}
+
+.detailsList li::before {
+  content: '▹';
+  position: absolute;
+  left: 0;
+  color: #00ffcc;
+  font-size: 1.2em;
+  line-height: 1.5;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 968px) {
+  .membersSection {
+    padding: 100px 20px 60px;
   }
-  
-  .title {
-    margin-bottom: 40px;
+
+  .titleSection {
+    margin-bottom: 60px;
   }
-  
-  .memberGrid {
-    grid-template-columns: 1fr;
+
+  .memberCardInner {
+    flex-direction: column;
     gap: 30px;
+    padding: 30px 25px;
+    align-items: center;
+    text-align: center;
   }
-  
+
+  .memberImageWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .memberImageGlow {
+    width: 280px;
+    height: 280px;
+  }
+
   .memberImage {
-    height: 250px;
+    width: 240px;
+    height: 240px;
+  }
+
+  .memberInfo {
+    width: 100%;
+  }
+
+  .detailsList li {
+    text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .membersSection {
+    padding: 80px 15px 50px;
+  }
+
+  .memberCardInner {
+    padding: 25px 20px;
+  }
+
+  .memberImageGlow {
+    width: 220px;
+    height: 220px;
+  }
+
+  .memberImage {
+    width: 200px;
+    height: 200px;
+  }
+
+  .titleDivider {
+    gap: 10px;
+  }
+
+  .dividerLine {
+    width: 40px;
   }
 }

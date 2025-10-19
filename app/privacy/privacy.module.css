@@ -1,0 +1,280 @@
+/* プライバシーポリシーセクション - 会社概要と統一したダークデザイン */
+.privacySection {
+  min-height: 100vh;
+  background: transparent;
+  padding: 120px 20px 80px;
+  position: relative;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* タイトルセクション */
+.titleSection {
+  text-align: center;
+  margin-bottom: 80px;
+  animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.titleJa {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, #00ffcc, #8a2be2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.05em;
+}
+
+.titleEn {
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  font-weight: 300;
+  color: rgba(0, 255, 204, 0.7);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.titleDivider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.dividerLine {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #00ffcc, transparent);
+}
+
+.dividerDot {
+  width: 8px;
+  height: 8px;
+  background: #00ffcc;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #00ffcc;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 10px #00ffcc;
+  }
+  50% {
+    box-shadow: 0 0 20px #00ffcc, 0 0 30px rgba(0, 255, 204, 0.5);
+  }
+}
+
+/* コンテンツ */
+.content {
+  animation: fadeIn 1s ease-out 0.2s both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dateInfo {
+  background: rgba(26, 15, 46, 0.3);
+  border: 1px solid rgba(0, 255, 204, 0.2);
+  border-radius: 15px;
+  padding: 25px 30px;
+  margin-bottom: 40px;
+  backdrop-filter: blur(10px);
+}
+
+.dateInfo p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  line-height: 1.8;
+  margin: 0 0 8px 0;
+}
+
+.dateInfo p:last-child {
+  margin-bottom: 0;
+}
+
+.introduction {
+  background: rgba(26, 15, 46, 0.3);
+  border: 1px solid rgba(0, 255, 204, 0.2);
+  border-left: 4px solid #00ffcc;
+  border-radius: 15px;
+  padding: 30px;
+  margin-bottom: 50px;
+  backdrop-filter: blur(10px);
+}
+
+.introduction p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  line-height: 1.9;
+  margin: 0;
+}
+
+/* セクション */
+.section {
+  margin-bottom: 50px;
+}
+
+.sectionTitle {
+  font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+  font-weight: 600;
+  color: #00ffcc;
+  margin: 0 0 20px 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid rgba(0, 255, 204, 0.3);
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+}
+
+.sectionContent {
+  background: rgba(26, 15, 46, 0.2);
+  border: 1px solid rgba(0, 255, 204, 0.15);
+  border-radius: 12px;
+  padding: 25px 30px;
+  backdrop-filter: blur(5px);
+}
+
+.sectionContent p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 15px;
+  line-height: 1.9;
+  margin: 0 0 15px 0;
+}
+
+.sectionContent p:last-child {
+  margin-bottom: 0;
+}
+
+.subSection {
+  color: rgba(0, 255, 204, 0.9) !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  margin-top: 20px !important;
+  margin-bottom: 10px !important;
+}
+
+/* リスト */
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0 0 0;
+}
+
+.list li {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 15px;
+  line-height: 1.9;
+  padding-left: 25px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.list li:last-child {
+  margin-bottom: 0;
+}
+
+.list li::before {
+  content: '▹';
+  position: absolute;
+  left: 0;
+  color: #00ffcc;
+  font-size: 1.2em;
+}
+
+.list li strong {
+  color: rgba(0, 255, 204, 0.9);
+  font-weight: 600;
+}
+
+/* お問い合わせ情報 */
+.contactInfo {
+  background: rgba(138, 43, 226, 0.1);
+  border-left: 3px solid #8a2be2;
+  border-radius: 8px;
+  padding: 20px 25px;
+  margin-top: 15px;
+}
+
+.contactInfo p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  line-height: 1.8;
+  margin: 0 0 8px 0;
+}
+
+.contactInfo p:last-child {
+  margin-bottom: 0;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 860px) {
+  .privacySection {
+    padding: 100px 20px 60px;
+  }
+
+  .titleSection {
+    margin-bottom: 60px;
+  }
+
+  .dateInfo,
+  .introduction,
+  .sectionContent {
+    padding: 20px;
+  }
+
+  .contactInfo {
+    padding: 15px 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .privacySection {
+    padding: 80px 15px 50px;
+  }
+
+  .titleDivider {
+    gap: 10px;
+  }
+
+  .dividerLine {
+    width: 40px;
+  }
+
+  .section {
+    margin-bottom: 40px;
+  }
+
+  .sectionTitle {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+  }
+}

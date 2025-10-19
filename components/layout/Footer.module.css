@@ -52,7 +52,7 @@
 .gridPattern {
   position: absolute;
   inset: 0;
-  background-image: 
+  background-image:
     linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
   background-size: 100px 100px;
@@ -69,7 +69,7 @@
   font-size: 200px;
   font-weight: 900;
   letter-spacing: -0.05em;
-  background: linear-gradient(270deg, 
+  background: linear-gradient(270deg,
     rgba(147, 51, 234, 0.05) 0%,
     rgba(59, 130, 246, 0.05) 25%,
     rgba(147, 51, 234, 0.05) 50%,
@@ -349,8 +349,8 @@
 .floatingAccent1 {
   top: -200px;
   right: -200px;
-  background: radial-gradient(circle at center, 
-    rgba(147, 51, 234, 0.3) 0%, 
+  background: radial-gradient(circle at center,
+    rgba(147, 51, 234, 0.3) 0%,
     transparent 70%
   );
   animation: float1 20s ease-in-out infinite;
@@ -359,8 +359,8 @@
 .floatingAccent2 {
   bottom: -200px;
   left: -200px;
-  background: radial-gradient(circle at center, 
-    rgba(59, 130, 246, 0.3) 0%, 
+  background: radial-gradient(circle at center,
+    rgba(59, 130, 246, 0.3) 0%,
     transparent 70%
   );
   animation: float2 25s ease-in-out infinite;
