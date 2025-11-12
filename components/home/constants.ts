@@ -26,18 +26,18 @@ export const SECTION_HEIGHTS = {
 export const IMAGE_PATHS = {
   sections: {
     hero: {
-      desktop: '/wordpress-img/top/section_1.jpg',
-      mobile: '/wordpress-img/top/sp/section_1.jpg'
+      desktop: '/img/top/section_1.jpg',
+      mobile: '/img/top/sp/section_1.jpg'
     },
-    problem: '/wordpress-img/top/section_2.jpg',
-    solution: '/wordpress-img/top/section_3.jpg',
-    lecture: '/wordpress-img/top/section_4.jpg',
-    difference: '/wordpress-img/top/section_5.jpg',
-    introduction: '/wordpress-img/top/section_6.jpg',
-    price: '/wordpress-img/top/section_7.jpg'
+    problem: '/img/top/section_2.jpg',
+    solution: '/img/top/section_3.jpg',
+    lecture: '/img/top/section_4.jpg',
+    difference: '/img/top/section_5.jpg',
+    introduction: '/img/top/section_6.jpg',
+    price: '/img/top/section_7.jpg'
   },
   logos: {
-    base: '/wordpress-img/logo/',
+    base: '/img/logo/',
     decorative: [
       'age.png',
       'ase.png',

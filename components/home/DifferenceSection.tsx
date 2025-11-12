@@ -25,7 +25,7 @@ const DifferenceSection = () => {
   return (
     <section className="top-section_5" style={getSectionBackgroundStyle(
       '139.41vw',
-      '/wordpress-img/top/section_5.jpg'
+      '/img/top/section_5.jpg'
     )}>
       
       <h2 className="top-section_5__title c-section-title">
@@ -42,26 +42,26 @@ const DifferenceSection = () => {
           <div className="swiper-wrapper">
             <div className="swiper-slide" id="lecture_1">
               <picture>
-                <source srcSet="/wordpress-img/slider/sp/slider_1.png" media="(max-width: 860px)" />
-                <img src="/wordpress-img/slider/slider_1.png" alt="lecture_1" width={780} height={493} decoding="async" loading="lazy" />
+                <source srcSet="/img/slider/sp/slider_1.png" media="(max-width: 860px)" />
+                <img src="/img/slider/slider_1.png" alt="lecture_1" width={780} height={493} decoding="async" loading="lazy" />
               </picture>
             </div>
             <div className="swiper-slide" id="lecture_2">
               <picture>
-                <source srcSet="/wordpress-img/slider/sp/slider_2.png" media="(max-width: 860px)" />
-                <img src="/wordpress-img/slider/slider_2.png" alt="lecture_2" width={780} height={493} decoding="async" loading="lazy" />
+                <source srcSet="/img/slider/sp/slider_2.png" media="(max-width: 860px)" />
+                <img src="/img/slider/slider_2.png" alt="lecture_2" width={780} height={493} decoding="async" loading="lazy" />
               </picture>
             </div>
             <div className="swiper-slide" id="lecture_3">
               <picture>
-                <source srcSet="/wordpress-img/slider/sp/slider_3.png" media="(max-width: 860px)" />
-                <img src="/wordpress-img/slider/slider_3.png" alt="lecture_3" width={780} height={493} decoding="async" loading="lazy" />
+                <source srcSet="/img/slider/sp/slider_3.png" media="(max-width: 860px)" />
+                <img src="/img/slider/slider_3.png" alt="lecture_3" width={780} height={493} decoding="async" loading="lazy" />
               </picture>
             </div>
             <div className="swiper-slide" id="lecture_4">
               <picture>
-                <source srcSet="/wordpress-img/slider/sp/slider_4.png" media="(max-width: 860px)" />
-                <img src="/wordpress-img/slider/slider_4.png" alt="lecture_4" width={780} height={493} decoding="async" loading="lazy" />
+                <source srcSet="/img/slider/sp/slider_4.png" media="(max-width: 860px)" />
+                <img src="/img/slider/slider_4.png" alt="lecture_4" width={780} height={493} decoding="async" loading="lazy" />
               </picture>
             </div>
           </div>
@@ -70,7 +70,7 @@ const DifferenceSection = () => {
       </div>
       
       <div className="top-section_5__logo-age u-pc">
-        <img src="/wordpress-img/logo/age.png" alt="" width={100} height={100} decoding="async" loading="lazy" />
+        <img src="/img/logo/age.png" alt="" width={100} height={100} decoding="async" loading="lazy" />
       </div>
     </section>
   )

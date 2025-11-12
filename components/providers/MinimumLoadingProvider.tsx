@@ -44,7 +44,7 @@ export default function MinimumLoadingProvider({
 
         {/* 会社ロゴ */}
         <img
-          src="/wordpress-img/top/logo.png"
+          src="/img/top/logo.png"
           alt="Loading..."
           className={styles.logo}
         />

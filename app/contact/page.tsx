@@ -12,8 +12,8 @@ export default function ContactPage() {
       
       <section className="contact">
         <picture>
-          <source srcSet="/wordpress-img/contact/sp/contact-bg.jpg" media="(max-width: 860px)" />
-          <img className="contact-bg" src="/wordpress-img/contact/contact-bg.jpg" alt="" width={860} height={1295} decoding="async" loading="lazy" />
+          <source srcSet="/img/contact/sp/contact-bg.jpg" media="(max-width: 860px)" />
+          <img className="contact-bg" src="/img/contact/contact-bg.jpg" alt="" width={860} height={1295} decoding="async" loading="lazy" />
         </picture>
         
         <div className="contact__inner">

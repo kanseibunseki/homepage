@@ -122,7 +122,7 @@ const VisionSection = () => {
               <div className={styles.paragraph}>
                 <div className={styles.paragraphInner}>
                   <span className={styles.paragraphIcon}>
-                    <img src="/wordpress-img/logo/kirakirasmall.png" alt="" />
+                    <img src="/img/logo/kirakirasmall.png" alt="" />
                   </span>
                   <p>
                     私たちが目指すのは、テクノロジーが人の心を置き去りにする未来ではありません。
@@ -140,7 +140,7 @@ const VisionSection = () => {
               <div className={styles.paragraph}>
                 <div className={styles.paragraphInner}>
                   <span className={styles.paragraphIcon}>
-                    <img src="/wordpress-img/logo/heart.png" alt="" />
+                    <img src="/img/logo/heart.png" alt="" />
                   </span>
                   <p>
                     SNSの投稿、商品のレビュー、日々の会話。
@@ -160,7 +160,7 @@ const VisionSection = () => {
               <div className={styles.paragraphLeft}>
                 <div className={styles.paragraphInnerLeft}>
                   <span className={styles.paragraphIcon}>
-                    <img src="/wordpress-img/logo/denkyu.png" alt="" />
+                    <img src="/img/logo/denkyu.png" alt="" />
                   </span>
                   <p>
                     データと感性が交差する点に、
@@ -186,16 +186,16 @@ const VisionSection = () => {
             {/* 周回する感情アイコン */}
             <div className={styles.orbitingIcons}>
               <div className={styles.orbitIcon} style={{ animationDelay: '0s' }}>
-                <img src="/wordpress-img/logo/lol.png" alt="" />
+                <img src="/img/logo/lol.png" alt="" />
               </div>
               <div className={styles.orbitIcon} style={{ animationDelay: '2s' }}>
-                <img src="/wordpress-img/logo/onpu.png" alt="" />
+                <img src="/img/logo/onpu.png" alt="" />
               </div>
               <div className={styles.orbitIcon} style={{ animationDelay: '4s' }}>
-                <img src="/wordpress-img/logo/fire.png" alt="" />
+                <img src="/img/logo/fire.png" alt="" />
               </div>
               <div className={styles.orbitIcon} style={{ animationDelay: '6s' }}>
-                <img src="/wordpress-img/logo/good.png" alt="" />
+                <img src="/img/logo/good.png" alt="" />
               </div>
             </div>
           </div>

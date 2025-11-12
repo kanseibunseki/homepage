@@ -56,8 +56,8 @@ const Header = () => {
       <div ref={hamburgerRef} className={`c-hamburger js-hamburger ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
         <div className="c-hamburger__menubtn">
           <picture>
-            <source srcSet="/wordpress-img/common/sp/menu.png" media="(max-width: 860px)" />
-            <img src="/wordpress-img/common/menu.png" alt="menu" width={101} height={92} decoding="async" loading="lazy" />
+            <source srcSet="/img/common/sp/menu.png" media="(max-width: 860px)" />
+            <img src="/img/common/menu.png" alt="menu" width={101} height={92} decoding="async" loading="lazy" />
           </picture>
           <span></span>
           <span></span>
@@ -81,8 +81,8 @@ const Header = () => {
               <span className="l-header__menu__contact__sentence">お気軽にご相談ください。</span>
               <Link href="/contact" className="l-header__menu__contact__btn is-hover" onClick={closeMenu}>
                 <picture>
-                  <source srcSet="/wordpress-img/common/sp/contact-btn.png" media="(max-width: 860px)" />
-                  <img src="/wordpress-img/common/contact-btn.png" alt="お問い合わせへ" width={780} height={137} decoding="async" loading="lazy" />
+                  <source srcSet="/img/common/sp/contact-btn.png" media="(max-width: 860px)" />
+                  <img src="/img/common/contact-btn.png" alt="お問い合わせへ" width={780} height={137} decoding="async" loading="lazy" />
                 </picture>
               </Link>
             </div>

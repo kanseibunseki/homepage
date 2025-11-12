@@ -4,7 +4,7 @@ const ProblemSection = () => {
   return (
     <section className="top-section_2" style={getSectionBackgroundStyle(
       '120.34vw',
-      '/wordpress-img/top/section_2.jpg'
+      '/img/top/section_2.jpg'
     )}>
       
       <h2 className="top-section_2__title c-section-title">
@@ -17,10 +17,10 @@ const ProblemSection = () => {
       </h2>
       
       <div className="top-section_2__logo-skull">
-        <img src="/wordpress-img/logo/skull.png" alt="" width={100} height={100} decoding="async" loading="lazy" />
+        <img src="/img/logo/skull.png" alt="" width={100} height={100} decoding="async" loading="lazy" />
       </div>
       <div className="top-section_2__logo-oh">
-        <img src="/wordpress-img/logo/oh.png" alt="" width={100} height={100} decoding="async" loading="lazy" />
+        <img src="/img/logo/oh.png" alt="" width={100} height={100} decoding="async" loading="lazy" />
       </div>
     </section>
   )

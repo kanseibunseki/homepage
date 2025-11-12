@@ -492,7 +492,7 @@ select ::placeholder {
   width: 100%;
   height: 100%;
   overflow-y: scroll;
-  background: url(/wordpress-img/common/sp/menu-bg.jpg) no-repeat center center;
+  background: url(/img/common/sp/menu-bg.jpg) no-repeat center center;
   background-size: cover;
   opacity: 0;
   visibility: hidden;
@@ -531,7 +531,7 @@ select ::placeholder {
     height: -webkit-fit-content;
     height: -moz-fit-content;
     height: fit-content;
-    background: url(/wordpress-img/common/menu-bg.jpg) no-repeat center center;
+    background: url(/img/common/menu-bg.jpg) no-repeat center center;
     background-size: cover;
     border-radius: 0 0 0 clamp(0px, 8.5714285714vw, 9999px);
     opacity: 1;

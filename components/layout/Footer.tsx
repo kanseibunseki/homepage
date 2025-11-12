@@ -54,7 +54,7 @@ const Footer = () => {
             <div className={styles.logoSection}>
               <div className={styles.logoWrapper}>
                 <img
-                  src="/wordpress-img/common/footer_logo.png"
+                  src="/img/common/footer_logo.png"
                   alt="Kanseibunseki"
                   className={styles.footerMainLogo}
                 />

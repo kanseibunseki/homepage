@@ -135,16 +135,16 @@ const HeroSection = () => {
             <div className={styles.emotionAnalyzer}>
               <div className={styles.analyzerRing}>
                 <div className={styles.analyzerIcon} data-emotion="joy">
-                  <img src="/wordpress-img/logo/lol.png" alt="" />
+                  <img src="/img/logo/lol.png" alt="" />
                 </div>
                 <div className={styles.analyzerIcon} data-emotion="love">
-                  <img src="/wordpress-img/logo/heartarrow.png" alt="" />
+                  <img src="/img/logo/heartarrow.png" alt="" />
                 </div>
                 <div className={styles.analyzerIcon} data-emotion="surprise">
-                  <img src="/wordpress-img/logo/exclamation.png" alt="" />
+                  <img src="/img/logo/exclamation.png" alt="" />
                 </div>
                 <div className={styles.analyzerIcon} data-emotion="think">
-                  <img src="/wordpress-img/logo/oh.png" alt="" />
+                  <img src="/img/logo/oh.png" alt="" />
                 </div>
               </div>
             </div>
@@ -174,21 +174,21 @@ const HeroSection = () => {
             <div className={styles.statsContainer}>
               <div className={styles.statItem}>
                 <div className={styles.statIcon}>
-                  <img src="/wordpress-img/logo/good.png" alt="" />
+                  <img src="/img/logo/good.png" alt="" />
                 </div>
                 <span className={styles.statNumber}>98%</span>
                 <span className={styles.statLabel}>精度</span>
               </div>
               <div className={styles.statItem}>
                 <div className={styles.statIcon}>
-                  <img src="/wordpress-img/logo/kirakirasmall.png" alt="" />
+                  <img src="/img/logo/kirakirasmall.png" alt="" />
                 </div>
                 <span className={styles.statNumber}>500+</span>
                 <span className={styles.statLabel}>プロジェクト</span>
               </div>
               <div className={styles.statItem}>
                 <div className={styles.statIcon}>
-                  <img src="/wordpress-img/logo/heart.png" alt="" />
+                  <img src="/img/logo/heart.png" alt="" />
                 </div>
                 <span className={styles.statNumber}>24/7</span>
                 <span className={styles.statLabel}>サポート</span>
@@ -241,23 +241,23 @@ const HeroSection = () => {
                 {/* 感情アイコン（円周上に配置） */}
                 <div className={styles.radarIcons}>
                   <div className={styles.radarIcon} style={{ top: '0', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                    <img src="/wordpress-img/logo/lol.png" alt="" />
+                    <img src="/img/logo/lol.png" alt="" />
                     <span className={styles.radarValue}>{Math.round(emotionData.joy)}</span>
                   </div>
                   <div className={styles.radarIcon} style={{ top: '30%', right: '5%', transform: 'translate(50%, -50%)' }}>
-                    <img src="/wordpress-img/logo/exclamation.png" alt="" />
+                    <img src="/img/logo/exclamation.png" alt="" />
                     <span className={styles.radarValue}>{Math.round(emotionData.surprise)}</span>
                   </div>
                   <div className={styles.radarIcon} style={{ bottom: '20%', right: '15%', transform: 'translate(50%, 50%)' }}>
-                    <img src="/wordpress-img/logo/fire.png" alt="" />
+                    <img src="/img/logo/fire.png" alt="" />
                     <span className={styles.radarValue}>{Math.round(emotionData.excitement)}</span>
                   </div>
                   <div className={styles.radarIcon} style={{ bottom: '20%', left: '15%', transform: 'translate(-50%, 50%)' }}>
-                    <img src="/wordpress-img/logo/denkyu.png" alt="" />
+                    <img src="/img/logo/denkyu.png" alt="" />
                     <span className={styles.radarValue}>{Math.round(emotionData.creativity)}</span>
                   </div>
                   <div className={styles.radarIcon} style={{ top: '30%', left: '5%', transform: 'translate(-50%, -50%)' }}>
-                    <img src="/wordpress-img/logo/heart.png" alt="" />
+                    <img src="/img/logo/heart.png" alt="" />
                     <span className={styles.radarValue}>{Math.round(emotionData.empathy)}</span>
                   </div>
                 </div>
@@ -299,22 +299,22 @@ const HeroSection = () => {
       {/* 感情アイコンフローティング */}
       <div className={styles.emotionIcons}>
         <div className={`${styles.emotionIcon} ${styles.emotionIcon1}`}>
-          <img src="/wordpress-img/logo/heart.png" alt="" />
+          <img src="/img/logo/heart.png" alt="" />
         </div>
         <div className={`${styles.emotionIcon} ${styles.emotionIcon2}`}>
-          <img src="/wordpress-img/logo/kirakira.png" alt="" />
+          <img src="/img/logo/kirakira.png" alt="" />
         </div>
         <div className={`${styles.emotionIcon} ${styles.emotionIcon3}`}>
-          <img src="/wordpress-img/logo/onpu.png" alt="" />
+          <img src="/img/logo/onpu.png" alt="" />
         </div>
         <div className={`${styles.emotionIcon} ${styles.emotionIcon4}`}>
-          <img src="/wordpress-img/logo/denkyu.png" alt="" />
+          <img src="/img/logo/denkyu.png" alt="" />
         </div>
         <div className={`${styles.emotionIcon} ${styles.emotionIcon5}`}>
-          <img src="/wordpress-img/logo/fire.png" alt="" />
+          <img src="/img/logo/fire.png" alt="" />
         </div>
         <div className={`${styles.emotionIcon} ${styles.emotionIcon6}`}>
-          <img src="/wordpress-img/logo/good.png" alt="" />
+          <img src="/img/logo/good.png" alt="" />
         </div>
       </div>
     </section>

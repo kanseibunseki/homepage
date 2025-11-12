@@ -47,22 +47,22 @@ export const EMOTION_CONFIG = {
   } as ParticleConfig,
   
   emotions: [
-    { id: 'heart', path: '/wordpress-img/logo/heart.png', weight: 1, color: '#ff69b4' },
-    { id: 'kirakira', path: '/wordpress-img/logo/kirakira.png', weight: 0.9, color: '#ffd700' },
-    { id: 'onpu', path: '/wordpress-img/logo/onpu.png', weight: 0.8, color: '#00ced1' },
-    { id: 'denkyu', path: '/wordpress-img/logo/denkyu.png', weight: 0.9, color: '#ffff00' },
-    { id: 'fire', path: '/wordpress-img/logo/fire.png', weight: 0.7, color: '#ff4500' },
-    { id: 'good', path: '/wordpress-img/logo/good.png', weight: 1, color: '#00ff00' },
-    { id: 'lol', path: '/wordpress-img/logo/lol.png', weight: 0.8, color: '#ff1493' },
-    { id: 'heartarrow', path: '/wordpress-img/logo/heartarrow.png', weight: 0.7, color: '#ff69b4' },
-    { id: 'exclamation', path: '/wordpress-img/logo/exclamation.png', weight: 0.6, color: '#ffa500' },
-    { id: 'oh', path: '/wordpress-img/logo/oh.png', weight: 0.6, color: '#9370db' },
-    { id: 'kirakirasmall', path: '/wordpress-img/logo/kirakirasmall.png', weight: 0.7, color: '#ffd700' },
-    { id: 'www', path: '/wordpress-img/logo/www.png', weight: 0.5, color: '#00bfff' },
-    { id: 'age', path: '/wordpress-img/logo/age.png', weight: 0.5, color: '#ff69b4' },
-    { id: 'ase', path: '/wordpress-img/logo/ase.png', weight: 0.4, color: '#87ceeb' },
-    { id: 'tereru', path: '/wordpress-img/logo/tereru.png', weight: 0.6, color: '#ffb6c1' },
-    { id: 'zzz', path: '/wordpress-img/logo/zzz.png', weight: 0.3, color: '#4169e1' }
+    { id: 'heart', path: '/img/logo/heart.png', weight: 1, color: '#ff69b4' },
+    { id: 'kirakira', path: '/img/logo/kirakira.png', weight: 0.9, color: '#ffd700' },
+    { id: 'onpu', path: '/img/logo/onpu.png', weight: 0.8, color: '#00ced1' },
+    { id: 'denkyu', path: '/img/logo/denkyu.png', weight: 0.9, color: '#ffff00' },
+    { id: 'fire', path: '/img/logo/fire.png', weight: 0.7, color: '#ff4500' },
+    { id: 'good', path: '/img/logo/good.png', weight: 1, color: '#00ff00' },
+    { id: 'lol', path: '/img/logo/lol.png', weight: 0.8, color: '#ff1493' },
+    { id: 'heartarrow', path: '/img/logo/heartarrow.png', weight: 0.7, color: '#ff69b4' },
+    { id: 'exclamation', path: '/img/logo/exclamation.png', weight: 0.6, color: '#ffa500' },
+    { id: 'oh', path: '/img/logo/oh.png', weight: 0.6, color: '#9370db' },
+    { id: 'kirakirasmall', path: '/img/logo/kirakirasmall.png', weight: 0.7, color: '#ffd700' },
+    { id: 'www', path: '/img/logo/www.png', weight: 0.5, color: '#00bfff' },
+    { id: 'age', path: '/img/logo/age.png', weight: 0.5, color: '#ff69b4' },
+    { id: 'ase', path: '/img/logo/ase.png', weight: 0.4, color: '#87ceeb' },
+    { id: 'tereru', path: '/img/logo/tereru.png', weight: 0.6, color: '#ffb6c1' },
+    { id: 'zzz', path: '/img/logo/zzz.png', weight: 0.3, color: '#4169e1' }
   ] as EmotionIcon[],
   
   atlas: {

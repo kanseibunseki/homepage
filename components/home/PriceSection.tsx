@@ -4,7 +4,7 @@ const PriceSection = () => {
   return (
     <section className="top-section_7" id="price" style={getSectionBackgroundStyle(
       '165.46vw',
-      '/wordpress-img/top/section_7.jpg'
+      '/img/top/section_7.jpg'
     )}>
       
       <h2 className="top-section_7__title c-section-title">
@@ -17,10 +17,10 @@ const PriceSection = () => {
       </h2>
       
       <div className="top-section_7__logo-good">
-        <img src="/wordpress-img/logo/good.png" alt="" width={100} height={100} decoding="async" loading="lazy" />
+        <img src="/img/logo/good.png" alt="" width={100} height={100} decoding="async" loading="lazy" />
       </div>
       <div className="top-section_7__logo-ase u-pc">
-        <img src="/wordpress-img/logo/ase.png" alt="" width={100} height={100} decoding="async" loading="lazy" />
+        <img src="/img/logo/ase.png" alt="" width={100} height={100} decoding="async" loading="lazy" />
       </div>
     </section>
   )

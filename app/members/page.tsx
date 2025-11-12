@@ -29,7 +29,7 @@ export default function MembersPage() {
             <div className={styles.memberImageWrapper}>
               <div className={styles.memberImageGlow}></div>
               <img
-                src="/wordpress-img/members/members_2.png"
+                src="/img/members/members_2.png"
                 alt="宮嶋大輔"
                 className={styles.memberImage}
                 width={300}
@@ -63,7 +63,7 @@ export default function MembersPage() {
             <div className={styles.memberImageWrapper}>
               <div className={styles.memberImageGlow}></div>
               <img
-                src="/wordpress-img/members/members_3.png"
+                src="/img/members/members_3.png"
                 alt="田中文士"
                 className={styles.memberImage}
                 width={300}

@@ -98,7 +98,7 @@ const ChaosSection = () => {
           <div className={styles.card}>
             <div className={styles.cardInner}>
               <div className={styles.cardIcon}>
-                <img src="/wordpress-img/logo/onpu.png" alt="" />
+                <img src="/img/logo/onpu.png" alt="" />
               </div>
               <h3 className={styles.cardTitle}>
                 「リアルタイムで、市場の"空気"を読む」
@@ -115,7 +115,7 @@ const ChaosSection = () => {
           <div className={styles.card}>
             <div className={styles.cardInner}>
               <div className={styles.cardIcon}>
-                <img src="/wordpress-img/logo/good.png" alt="" />
+                <img src="/img/logo/good.png" alt="" />
               </div>
               <h3 className={styles.cardTitle}>
                 「データと感性の"翻訳家"になる」
@@ -132,7 +132,7 @@ const ChaosSection = () => {
           <div className={styles.card}>
             <div className={styles.cardInner}>
               <div className={styles.cardIcon}>
-                <img src="/wordpress-img/logo/exclamation.png" alt="" />
+                <img src="/img/logo/exclamation.png" alt="" />
               </div>
               <h3 className={styles.cardTitle}>
                 「貴社だけの"感性理解エンジン"を」
