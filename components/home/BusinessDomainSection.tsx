@@ -14,6 +14,7 @@ interface ServiceCard {
 const BusinessDomainSection = () => {
   const sectionRef = useRef<HTMLElement>(null)
   const [isVisible, setIsVisible] = useState(false)
+  const [activeTab, setActiveTab] = useState<string>('consulting')
 
   const services: ServiceCard[] = [
     {
@@ -98,40 +99,51 @@ const BusinessDomainSection = () => {
           </p>
         </div>
 
-        {/* サービスカードグリッド */}
-        <div className={`${styles.servicesGrid} ${isVisible ? styles.gridVisible : ''}`}>
-          {services.map((service, index) => (
-            <div 
-              key={service.id} 
-              className={styles.serviceCard}
-              style={{ animationDelay: `${index * 0.2}s` }}
+        {/* タブナビゲーション */}
+        <div className={`${styles.tabNavigation} ${isVisible ? styles.tabVisible : ''}`}>
+          {services.map((service) => (
+            <button
+              key={service.id}
+              className={`${styles.tabButton} ${activeTab === service.id ? styles.tabActive : ''}`}
+              onClick={() => setActiveTab(service.id)}
             >
-              <div className={styles.cardInner}>
-                <div className={styles.cardSymbol}>
-                  <div className={styles.cube}>
-                    <div className={styles.cubeFace + ' ' + styles.cubeFront}></div>
-                    <div className={styles.cubeFace + ' ' + styles.cubeBack}></div>
-                    <div className={styles.cubeFace + ' ' + styles.cubeRight}></div>
-                    <div className={styles.cubeFace + ' ' + styles.cubeLeft}></div>
-                    <div className={styles.cubeFace + ' ' + styles.cubeTop}></div>
-                    <div className={styles.cubeFace + ' ' + styles.cubeBottom}></div>
-                  </div>
-                </div>
-                <h3 className={styles.cardTitle}>
-                  {service.title}
-                </h3>
-                <p className={styles.cardSubtitle}>
-                  {service.subtitle}
-                </p>
-                <div className={styles.cardDivider} />
-                <p className={styles.cardDescription}>
-                  {service.description}
-                </p>
-                <div className={styles.cardGlow} />
-                <div className={styles.cardBorder} />
-              </div>
-            </div>
+              {service.title}
+            </button>
           ))}
+        </div>
+
+        {/* サービスカード表示（選択されたタブのみ） */}
+        <div className={`${styles.serviceDisplay} ${isVisible ? styles.displayVisible : ''}`}>
+          {services
+            .filter((service) => service.id === activeTab)
+            .map((service) => (
+              <div key={service.id} className={styles.serviceCard}>
+                <div className={styles.cardInner}>
+                  <div className={styles.cardSymbol}>
+                    <div className={styles.cube}>
+                      <div className={styles.cubeFace + ' ' + styles.cubeFront}></div>
+                      <div className={styles.cubeFace + ' ' + styles.cubeBack}></div>
+                      <div className={styles.cubeFace + ' ' + styles.cubeRight}></div>
+                      <div className={styles.cubeFace + ' ' + styles.cubeLeft}></div>
+                      <div className={styles.cubeFace + ' ' + styles.cubeTop}></div>
+                      <div className={styles.cubeFace + ' ' + styles.cubeBottom}></div>
+                    </div>
+                  </div>
+                  <h3 className={styles.cardTitle}>
+                    {service.title}
+                  </h3>
+                  <p className={styles.cardSubtitle}>
+                    {service.subtitle}
+                  </p>
+                  <div className={styles.cardDivider} />
+                  <p className={styles.cardDescription}>
+                    {service.description}
+                  </p>
+                  <div className={styles.cardGlow} />
+                  <div className={styles.cardBorder} />
+                </div>
+              </div>
+            ))}
         </div>
 
         {/* フローティングパーティクル */}
