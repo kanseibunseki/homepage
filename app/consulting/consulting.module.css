@@ -8,6 +8,60 @@
     rgba(15, 10, 25, 1) 75%,
     rgba(10, 10, 20, 1) 100%);
   color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 浮遊する感情アイコン */
+.floatingEmotions {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floatingEmotion {
+  position: absolute;
+  opacity: 0.2;
+  filter: drop-shadow(0 0 15px rgba(0, 255, 204, 0.4));
+  animation: floatEmotion 20s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes floatEmotion {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translate(20px, -30px) rotate(5deg) scale(1.1);
+  }
+  50% {
+    transform: translate(-15px, -60px) rotate(-3deg) scale(0.95);
+  }
+  75% {
+    transform: translate(25px, -40px) rotate(7deg) scale(1.05);
+  }
+}
+
+.floatingEmotion:nth-child(odd) {
+  animation-duration: 18s;
+}
+
+.floatingEmotion:nth-child(even) {
+  animation-duration: 22s;
+}
+
+.floatingEmotion:nth-child(3n) {
+  animation-direction: reverse;
+}
+
+@media (max-width: 768px) {
+  .floatingEmotion {
+    opacity: 0.12;
+  }
 }
 
 /* ヒーローセクション */
@@ -19,6 +73,7 @@
   justify-content: center;
   overflow: hidden;
   padding: 120px 20px 80px;
+  z-index: 2;
 }
 
 .heroBackground {
@@ -141,6 +196,8 @@
     rgba(20, 10, 35, 0.3) 0%,
     rgba(30, 15, 50, 0.3) 50%,
     rgba(20, 10, 35, 0.3) 100%);
+  position: relative;
+  z-index: 2;
 }
 
 .challengeGrid {
@@ -211,6 +268,8 @@
 /* 解決方法セクション */
 .solutionSection {
   padding: 100px 0;
+  position: relative;
+  z-index: 2;
 }
 
 .solutionContent {
@@ -323,6 +382,8 @@
     rgba(20, 10, 35, 0.3) 0%,
     rgba(30, 15, 50, 0.3) 50%,
     rgba(20, 10, 35, 0.3) 100%);
+  position: relative;
+  z-index: 2;
 }
 
 .differenceIntro {
@@ -485,6 +546,8 @@
 /* 事例セクション */
 .caseStudySection {
   padding: 100px 0;
+  position: relative;
+  z-index: 2;
 }
 
 .caseStudy {
@@ -671,6 +734,8 @@
     rgba(20, 10, 35, 0.3) 0%,
     rgba(30, 15, 50, 0.3) 50%,
     rgba(20, 10, 35, 0.3) 100%);
+  position: relative;
+  z-index: 2;
 }
 
 .pricingGrid {
@@ -760,6 +825,8 @@
 .ctaSection {
   padding: 100px 0;
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
 .ctaTitle {

@@ -7,8 +7,50 @@ export const metadata: Metadata = {
 }
 
 export default function ConsultingPage() {
+  const emotionIcons = [
+    { id: 1, icon: 'heart', top: '7%', left: '15%', delay: 0, size: 85 },
+    { id: 2, icon: 'kirakira', top: '3%', left: '72%', delay: 1, size: 90 },
+    { id: 3, icon: 'onpu', top: '18%', left: '48%', delay: 2, size: 70 },
+    { id: 4, icon: 'denkyu', top: '11%', left: '85%', delay: 0.5, size: 95 },
+    { id: 5, icon: 'fire', top: '26%', left: '8%', delay: 1.5, size: 75 },
+    { id: 6, icon: 'good', top: '23%', left: '62%', delay: 2.5, size: 80 },
+    { id: 7, icon: 'lol', top: '35%', left: '30%', delay: 1, size: 85 },
+    { id: 8, icon: 'heartarrow', top: '31%', left: '88%', delay: 2, size: 70 },
+    { id: 9, icon: 'exclamation', top: '44%', left: '18%', delay: 1.2, size: 75 },
+    { id: 10, icon: 'oh', top: '41%', left: '55%', delay: 0.8, size: 90 },
+    { id: 11, icon: 'kirakirasmall', top: '49%', left: '78%', delay: 1.8, size: 65 },
+    { id: 12, icon: 'www', top: '57%', left: '12%', delay: 0.3, size: 80 },
+    { id: 13, icon: 'age', top: '54%', left: '42%', delay: 1.6, size: 70 },
+    { id: 14, icon: 'ase', top: '63%', left: '68%', delay: 0.7, size: 85 },
+    { id: 15, icon: 'tereru', top: '69%', left: '25%', delay: 2.2, size: 75 },
+    { id: 16, icon: 'zzz', top: '74%', left: '82%', delay: 1.4, size: 70 },
+    { id: 17, icon: 'heart', top: '77%', left: '50%', delay: 0.9, size: 90 },
+    { id: 18, icon: 'kirakira', top: '85%', left: '10%', delay: 1.7, size: 80 },
+    { id: 19, icon: 'onpu', top: '89%', left: '38%', delay: 2.3, size: 75 },
+    { id: 20, icon: 'fire', top: '93%', left: '65%', delay: 0.4, size: 85 },
+  ]
+
   return (
     <div className={styles.consultingPage}>
+      {/* 浮遊する感情アイコン */}
+      <div className={styles.floatingEmotions}>
+        {emotionIcons.map((emotion) => (
+          <img
+            key={emotion.id}
+            src={`/img/logo/${emotion.icon}.png`}
+            alt=""
+            className={styles.floatingEmotion}
+            style={{
+              top: emotion.top,
+              left: emotion.left,
+              width: `${emotion.size}px`,
+              height: `${emotion.size}px`,
+              animationDelay: `${emotion.delay}s`,
+            }}
+          />
+        ))}
+      </div>
+
       {/* ヒーローセクション */}
       <section className={styles.heroSection}>
         <div className={styles.heroBackground}></div>
