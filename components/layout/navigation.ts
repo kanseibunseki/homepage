@@ -28,7 +28,7 @@ export const MAIN_NAVIGATION: NavigationLink[] = [
  */
 export const SERVICES_NAVIGATION: NavigationLink[] = [
   { title: 'コンサルティング', href: '/consulting' },
-  { title: 'N1インタビューサービス', href: '/#n1-interview' },
+  { title: 'N1インタビューサービス', href: '/n1-interview' },
 ]
 
 /**
