@@ -38,7 +38,7 @@ export default function ConsultingPage() {
 
           <div className={styles.challengeGrid}>
             <div className={styles.challengeCard}>
-              <div className={styles.challengeIcon}>📊</div>
+              <span className={`material-symbols-outlined ${styles.challengeIcon}`}>analytics</span>
               <h3 className={styles.challengeTitle}>DXを進めたい</h3>
               <p className={styles.challengeText}>
                 デジタルトランスフォーメーションの必要性は感じているが、何から始めればよいか分からない
@@ -46,7 +46,7 @@ export default function ConsultingPage() {
             </div>
 
             <div className={styles.challengeCard}>
-              <div className={styles.challengeIcon}>💡</div>
+              <span className={`material-symbols-outlined ${styles.challengeIcon}`}>lightbulb</span>
               <h3 className={styles.challengeTitle}>データの活用方法が分からない</h3>
               <p className={styles.challengeText}>
                 データ収集・分析・運用など、具体的にどう進めればよいか分からない
@@ -54,7 +54,7 @@ export default function ConsultingPage() {
             </div>
 
             <div className={styles.challengeCard}>
-              <div className={styles.challengeIcon}>👥</div>
+              <span className={`material-symbols-outlined ${styles.challengeIcon}`}>groups</span>
               <h3 className={styles.challengeTitle}>社内に専門家がいない</h3>
               <p className={styles.challengeText}>
                 データサイエンスの専門知識を持った人材が社内にいない
@@ -97,19 +97,19 @@ export default function ConsultingPage() {
               <h4 className={styles.solutionDetailTitle}>主なレクチャー内容</h4>
               <ul className={styles.solutionList}>
                 <li className={styles.solutionListItem}>
-                  <span className={styles.solutionListIcon}>📥</span>
+                  <span className={`material-symbols-outlined ${styles.solutionListIcon}`}>download</span>
                   <span className={styles.solutionListText}>データ収集</span>
                 </li>
                 <li className={styles.solutionListItem}>
-                  <span className={styles.solutionListIcon}>🔍</span>
+                  <span className={`material-symbols-outlined ${styles.solutionListIcon}`}>search</span>
                   <span className={styles.solutionListText}>データ分析</span>
                 </li>
                 <li className={styles.solutionListItem}>
-                  <span className={styles.solutionListIcon}>⚙️</span>
+                  <span className={`material-symbols-outlined ${styles.solutionListIcon}`}>settings</span>
                   <span className={styles.solutionListText}>データ運用</span>
                 </li>
                 <li className={styles.solutionListItem}>
-                  <span className={styles.solutionListIcon}>💻</span>
+                  <span className={`material-symbols-outlined ${styles.solutionListIcon}`}>computer</span>
                   <span className={styles.solutionListText}>システム化</span>
                 </li>
               </ul>
@@ -227,15 +227,15 @@ export default function ConsultingPage() {
               </ul>
               <div className={styles.expertiseCases}>
                 <div className={styles.expertiseCase}>
-                  <span className={styles.expertiseCaseIcon}>🚗</span>
+                  <span className={`material-symbols-outlined ${styles.expertiseCaseIcon}`}>directions_car</span>
                   <span>大手自動車メーカーのマーケティング自動化</span>
                 </div>
                 <div className={styles.expertiseCase}>
-                  <span className={styles.expertiseCaseIcon}>❄️</span>
+                  <span className={`material-symbols-outlined ${styles.expertiseCaseIcon}`}>ac_unit</span>
                   <span>大手電機メーカーの空調管理</span>
                 </div>
                 <div className={styles.expertiseCase}>
-                  <span className={styles.expertiseCaseIcon}>🎹</span>
+                  <span className={`material-symbols-outlined ${styles.expertiseCaseIcon}`}>piano</span>
                   <span>大手楽器メーカーの感性分析</span>
                 </div>
               </div>
@@ -301,7 +301,7 @@ export default function ConsultingPage() {
             </div>
 
             <div className={styles.caseStudyResult}>
-              <span className={styles.caseStudyResultIcon}>✨</span>
+              <span className={`material-symbols-outlined ${styles.caseStudyResultIcon}`}>auto_awesome</span>
               <span className={styles.caseStudyResultText}>96.3%のコスト削減を実現</span>
             </div>
           </div>
@@ -366,7 +366,7 @@ export default function ConsultingPage() {
             </div>
 
             <div className={styles.caseStudyResult}>
-              <span className={styles.caseStudyResultIcon}>✨</span>
+              <span className={`material-symbols-outlined ${styles.caseStudyResultIcon}`}>auto_awesome</span>
               <span className={styles.caseStudyResultText}>約99.9%のコスト削減を実現</span>
             </div>
           </div>

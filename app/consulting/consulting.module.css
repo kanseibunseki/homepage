@@ -171,6 +171,8 @@
 .challengeIcon {
   font-size: 48px;
   margin-bottom: 20px;
+  color: #00ffcc;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
 
 .challengeTitle {
@@ -283,6 +285,8 @@
 
 .solutionListIcon {
   font-size: 32px;
+  color: #00ffcc;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
 
 .solutionListText {
@@ -474,6 +478,8 @@
 
 .expertiseCaseIcon {
   font-size: 24px;
+  color: #00ffcc;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
 
 /* 事例セクション */
@@ -597,6 +603,8 @@
 
 .caseStudyResultIcon {
   font-size: 32px;
+  color: #00ffcc;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
 
 .caseStudyResultText {
