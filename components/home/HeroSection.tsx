@@ -164,43 +164,12 @@ const HeroSection = () => {
             </div>
             
             <p className={styles.subtitle}>
-              データに命を吹き込み、感情を可視化する
+              テクノロジーにこころを
               <br />
               <span className={styles.subtext}>
-                Transforming Data into Emotional Insights
+                Bringing Heart to Technology
               </span>
             </p>
-            
-            <div className={styles.statsContainer}>
-              <div className={styles.statItem}>
-                <div className={styles.statIcon}>
-                  <img src="/img/logo/good.png" alt="" />
-                </div>
-                <span className={styles.statNumber}>98%</span>
-                <span className={styles.statLabel}>精度</span>
-              </div>
-              <div className={styles.statItem}>
-                <div className={styles.statIcon}>
-                  <img src="/img/logo/kirakirasmall.png" alt="" />
-                </div>
-                <span className={styles.statNumber}>500+</span>
-                <span className={styles.statLabel}>プロジェクト</span>
-              </div>
-              <div className={styles.statItem}>
-                <div className={styles.statIcon}>
-                  <img src="/img/logo/heart.png" alt="" />
-                </div>
-                <span className={styles.statNumber}>24/7</span>
-                <span className={styles.statLabel}>サポート</span>
-              </div>
-            </div>
-            
-            {/* 現在のムード表示 */}
-            <div className={styles.moodIndicator}>
-              <div className={styles.moodPulse} />
-              <span className={styles.moodText}>Current Mood:</span>
-              <span className={styles.moodValue}>Innovative</span>
-            </div>
           </div>
           
           {/* 右側：感情分析ビジュアルとボタン */}
