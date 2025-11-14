@@ -165,8 +165,10 @@
 /* サービスグリッド */
 .servicesGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
   opacity: 0;
   transform: translateY(40px);
   transition: all 1s ease-out 0.4s;

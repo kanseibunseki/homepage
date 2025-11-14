@@ -19,23 +19,16 @@ const BusinessDomainSection = () => {
     {
       id: 'consulting',
       symbol: '',  // 3Dキューブで置き換え
-      title: 'Consulting',
+      title: 'コンサルティング',
       subtitle: '感性をビジネスの力に',
       description: '「KANSEI Agents」が暴き出すインサイトを、ビジネスの血肉へ。経験豊富なコンサルタントが、データと感性を繋ぎ、持続可能な成長戦略を共に描きます。'
     },
     {
-      id: 'ai-poc',
+      id: 'n1-interview',
       symbol: '',  // 3Dキューブで置き換え
-      title: 'AI PoC',
-      subtitle: '未知の可能性への伴走者',
-      description: '「こんなことはできないか？」そのアイディアを私たちに。最先端のAI技術で、構想から実装まで、前人未到のビジネス価値を創造する旅路に並走します。'
-    },
-    {
-      id: 'saas',
-      symbol: '',  // 3Dキューブで置き換え
-      title: 'SaaS',
-      subtitle: '感性理解を、組織のDNAへ',
-      description: '「KANSEI Agents」を貴社専用にカスタマイズし提供。マーケティングの内製化と、組織全体の"感性リテラシー"向上を実現します。'
+      title: 'N1インタビューサービス',
+      subtitle: '一人ひとりの声に、深く向き合う',
+      description: '顧客一人ひとりの声に徹底的に向き合い、表層的なデータでは見えない真の感性とニーズを引き出します。質的なインサイトから、ビジネスの核心的課題を発見します。'
     }
   ]
 
@@ -84,10 +77,10 @@ const BusinessDomainSection = () => {
         {/* ヘッダーセクション */}
         <div className={`${styles.header} ${isVisible ? styles.headerVisible : ''}`}>
           <h2 className={styles.mainTitle}>
-            BUSINESS DOMAIN
+            toB向けサービス
           </h2>
           <p className={styles.subtitle}>
-            事業領域
+            B2B Services
           </p>
           <div className={styles.titleDecoration}>
             <span className={styles.decorLine} />
