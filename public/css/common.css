@@ -585,6 +585,9 @@ select ::placeholder {
   display: inline-block;
   padding-right: 20px;
 }
+.l-header__menu__list__item__link--parent {
+  cursor: pointer;
+}
 .l-header__menu__list__item__link__title {
   position: relative;
   display: inline-block;
@@ -594,6 +597,53 @@ select ::placeholder {
   transform: translateX(8px);
   color: #00ffcc;
   opacity: 0.9;
+}
+.l-header__menu__list__item__arrow {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 0.7em;
+  transition: transform 0.3s ease;
+}
+.l-header__menu__list__item__arrow.open {
+  transform: rotate(180deg);
+}
+.l-header__menu__list__submenu {
+  margin-top: 15px;
+  margin-left: 25px;
+  padding-left: 20px;
+  border-left: 2px solid rgba(0, 255, 204, 0.3);
+  list-style: none;
+}
+.l-header__menu__list__submenu__item {
+  margin-bottom: 12px;
+}
+.l-header__menu__list__submenu__item__link {
+  display: inline-block;
+  font-size: clamp(10px, 4.8vw, 9999px);
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.08em;
+  transition: all 0.3s ease;
+  padding-left: 15px;
+  position: relative;
+}
+.l-header__menu__list__submenu__item__link::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.l-header__menu__list__submenu__item__link:hover {
+  color: #00ffcc;
+  transform: translateX(5px);
+}
+.l-header__menu__list__submenu__item__link:hover::before {
+  opacity: 1;
+}
+@media screen and (min-width: calc(860px + 1px)) {
+  .l-header__menu__list__submenu__item__link {
+    font-size: clamp(10px, 1.4vw, 9999px);
+  }
 }
 @media screen and (min-width: calc(860px + 1px)) {
   .l-header__menu__list {

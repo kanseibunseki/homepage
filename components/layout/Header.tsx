@@ -6,6 +6,7 @@ import { MENU_NAVIGATION } from './navigation'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [openSubMenus, setOpenSubMenus] = useState<{ [key: string]: boolean }>({})
   const menuRef = useRef<HTMLDivElement>(null)
   const hamburgerRef = useRef<HTMLDivElement>(null)
 
@@ -15,6 +16,14 @@ const Header = () => {
 
   const closeMenu = () => {
     setIsMenuOpen(false)
+    setOpenSubMenus({})
+  }
+
+  const toggleSubMenu = (title: string) => {
+    setOpenSubMenus((prev) => ({
+      ...prev,
+      [title]: !prev[title],
+    }))
   }
 
   useEffect(() => {
@@ -70,13 +79,42 @@ const Header = () => {
             <ul className="l-header__menu__list">
               {MENU_NAVIGATION.map((link) => (
                 <li key={link.href} className="l-header__menu__list__item">
-                  <Link href={link.href} className="l-header__menu__list__item__link is-hover" onClick={closeMenu}>
-                    <h2 className="l-header__menu__list__item__link__title">{link.title}</h2>
-                  </Link>
+                  {link.subLinks ? (
+                    <>
+                      <div
+                        className="l-header__menu__list__item__link is-hover l-header__menu__list__item__link--parent"
+                        onClick={() => toggleSubMenu(link.title)}
+                      >
+                        <h2 className="l-header__menu__list__item__link__title">
+                          {link.title}
+                          <span className={`l-header__menu__list__item__arrow ${openSubMenus[link.title] ? 'open' : ''}`}>▼</span>
+                        </h2>
+                      </div>
+                      {openSubMenus[link.title] && (
+                        <ul className="l-header__menu__list__submenu">
+                          {link.subLinks.map((subLink) => (
+                            <li key={subLink.href} className="l-header__menu__list__submenu__item">
+                              <Link
+                                href={subLink.href}
+                                className="l-header__menu__list__submenu__item__link is-hover"
+                                onClick={closeMenu}
+                              >
+                                {subLink.title}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </>
+                  ) : (
+                    <Link href={link.href} className="l-header__menu__list__item__link is-hover" onClick={closeMenu}>
+                      <h2 className="l-header__menu__list__item__link__title">{link.title}</h2>
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
-            
+
             <div className="l-header__menu__contact">
               <span className="l-header__menu__contact__sentence">お気軽にご相談ください。</span>
               <Link href="/contact" className="l-header__menu__contact__btn is-hover" onClick={closeMenu}>

@@ -6,6 +6,7 @@
 export interface NavigationLink {
   title: string
   href: string
+  subLinks?: NavigationLink[]
 }
 
 export interface NavigationSection {
@@ -57,9 +58,13 @@ export const FOOTER_NAVIGATION_SECTIONS: NavigationSection[] = [
 ]
 
 /**
- * メニュー用のナビゲーションリンク（MainとServicesを結合）
+ * メニュー用のナビゲーションリンク（MainとServicesを統合）
  */
 export const MENU_NAVIGATION: NavigationLink[] = [
   ...MAIN_NAVIGATION,
-  ...SERVICES_NAVIGATION,
+  {
+    title: 'toB向けサービス',
+    href: '/#business-domain',
+    subLinks: SERVICES_NAVIGATION,
+  },
 ]

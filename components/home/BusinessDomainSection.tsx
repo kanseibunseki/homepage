@@ -57,7 +57,7 @@ const BusinessDomainSection = () => {
   }, [])
 
   return (
-    <section ref={sectionRef} className={styles.businessDomainSection}>
+    <section id="business-domain" ref={sectionRef} className={styles.businessDomainSection}>
       {/* 背景エフェクト */}
       <div className={styles.backgroundEffects}>
         <div className={styles.gradientLayer1} />
