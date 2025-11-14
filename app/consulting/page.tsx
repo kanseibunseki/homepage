@@ -198,9 +198,9 @@ export default function ConsultingPage() {
             </div>
             <div className={styles.expertiseContent}>
               <ul className={styles.expertiseList}>
-                <li>AIによる自動化に精通</li>
-                <li>大規模かつ迅速なデータ収集</li>
-                <li>豊富なデータソースに精通</li>
+                <li><span className={styles.expertiseEmphasis}>AI</span>による自動化に精通</li>
+                <li><span className={styles.expertiseEmphasis}>大規模かつ迅速</span>なデータ収集</li>
+                <li><span className={styles.expertiseEmphasis}>豊富なデータソース</span>に精通</li>
               </ul>
               <div className={styles.expertiseTags}>
                 <span className={styles.expertiseTag}>レビュー</span>
@@ -222,9 +222,9 @@ export default function ConsultingPage() {
             </div>
             <div className={styles.expertiseContent}>
               <ul className={styles.expertiseList}>
-                <li>AI予測に精通</li>
-                <li>購買理由・思考回路・需要計測</li>
-                <li>感性工学に基づく感性分析に精通</li>
+                <li><span className={styles.expertiseEmphasis}>AI予測</span>に精通</li>
+                <li><span className={styles.expertiseEmphasis}>購買理由・思考回路・需要計測</span></li>
+                <li><span className={styles.expertiseEmphasis}>感性工学</span>に基づく感性分析に精通</li>
               </ul>
               <div className={styles.expertiseTags}>
                 <span className={styles.expertiseTag}>操作性</span>
@@ -245,14 +245,14 @@ export default function ConsultingPage() {
               <ul className={styles.expertiseList}>
                 <li>データに基づく戦略開発に精通</li>
                 <li className={styles.expertiseHighlight}>
-                  弊社開発のホテルが沖縄県で、口コミ1位を達成<br />
+                  弊社開発のホテルが<span className={styles.impactSuccess}>沖縄県で、口コミ1位</span>を達成<br />
                   <span className={styles.expertiseNote}>※一休.com・Google map</span>
                 </li>
                 <li className={styles.expertiseHighlight}>
-                  弊社開発の病院が日本全国で、口コミ1位を達成<br />
+                  弊社開発の病院が<span className={styles.impactSuccess}>日本全国で、口コミ1位</span>を達成<br />
                   <span className={styles.expertiseNote}>※Google map</span>
                 </li>
-                <li className={styles.expertiseHighlight}>150社以上の支援実績</li>
+                <li className={styles.expertiseHighlight}><span className={styles.impactSuccess}>150社以上</span>の支援実績</li>
               </ul>
             </div>
           </div>
@@ -264,21 +264,21 @@ export default function ConsultingPage() {
             </div>
             <div className={styles.expertiseContent}>
               <ul className={styles.expertiseList}>
-                <li>データ収集～分析～運用のDXに精通</li>
-                <li>システム化の実績多数（特許技術含む）</li>
+                <li>データ収集～分析～運用の<span className={styles.expertiseEmphasis}>DX</span>に精通</li>
+                <li>システム化の実績多数（<span className={styles.expertiseEmphasis}>特許技術</span>含む）</li>
               </ul>
               <div className={styles.expertiseCases}>
                 <div className={styles.expertiseCase}>
                   <span className={`material-symbols-outlined ${styles.expertiseCaseIcon}`}>directions_car</span>
-                  <span>大手自動車メーカーのマーケティング自動化</span>
+                  <span><span className={styles.expertiseEmphasis}>大手自動車メーカー</span>のマーケティング自動化</span>
                 </div>
                 <div className={styles.expertiseCase}>
                   <span className={`material-symbols-outlined ${styles.expertiseCaseIcon}`}>ac_unit</span>
-                  <span>大手電機メーカーの空調管理</span>
+                  <span><span className={styles.expertiseEmphasis}>大手電機メーカー</span>の空調管理</span>
                 </div>
                 <div className={styles.expertiseCase}>
                   <span className={`material-symbols-outlined ${styles.expertiseCaseIcon}`}>piano</span>
-                  <span>大手楽器メーカーの感性分析</span>
+                  <span><span className={styles.expertiseEmphasis}>大手楽器メーカー</span>の感性分析</span>
                 </div>
               </div>
             </div>
@@ -344,7 +344,7 @@ export default function ConsultingPage() {
 
             <div className={styles.caseStudyResult}>
               <span className={`material-symbols-outlined ${styles.caseStudyResultIcon}`}>auto_awesome</span>
-              <span className={styles.caseStudyResultText}>96.3%のコスト削減を実現</span>
+              <span className={styles.caseStudyResultText}><span className={styles.impactSuccess}>96.3%</span>のコスト削減を実現</span>
             </div>
           </div>
 
@@ -409,7 +409,7 @@ export default function ConsultingPage() {
 
             <div className={styles.caseStudyResult}>
               <span className={`material-symbols-outlined ${styles.caseStudyResultIcon}`}>auto_awesome</span>
-              <span className={styles.caseStudyResultText}>約99.9%のコスト削減を実現</span>
+              <span className={styles.caseStudyResultText}>約<span className={styles.impactSuccess}>99.9%</span>のコスト削減を実現</span>
             </div>
           </div>
         </div>

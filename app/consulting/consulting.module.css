@@ -202,16 +202,29 @@
 
 .challengeGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 30px;
-  margin-bottom: 60px;
+  max-width: 1100px;
+  margin: 0 auto 60px;
+}
+
+@media (max-width: 1024px) {
+  .challengeGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .challengeGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .challengeCard {
   background: linear-gradient(135deg,
     rgba(20, 10, 40, 0.8) 0%,
     rgba(10, 10, 30, 0.9) 100%);
-  border: 1px solid rgba(0, 255, 204, 0.2);
+  border: 2px solid rgba(0, 255, 204, 0.3);
   border-radius: 20px;
   padding: 40px 30px;
   text-align: center;
@@ -221,15 +234,16 @@
 
 .challengeCard:hover {
   transform: translateY(-5px);
-  border-color: rgba(0, 255, 204, 0.4);
-  box-shadow: 0 10px 40px rgba(0, 255, 204, 0.2);
+  border-color: rgba(0, 255, 204, 0.5);
+  box-shadow: 0 10px 40px rgba(0, 255, 204, 0.3);
 }
 
 .challengeIcon {
-  font-size: 48px;
-  margin-bottom: 20px;
+  font-size: 120px;
+  margin-bottom: 25px;
   color: #00ffcc;
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+  display: block;
 }
 
 .challengeTitle {
@@ -343,7 +357,7 @@
 }
 
 .solutionListIcon {
-  font-size: 32px;
+  font-size: 48px;
   color: #00ffcc;
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
@@ -369,10 +383,15 @@
 }
 
 .solutionMessageEmphasis {
-  font-size: clamp(18px, 3vw, 24px);
+  font-size: clamp(20px, 3.5vw, 28px);
   font-weight: 700;
   color: #00ffcc;
   text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+  background: linear-gradient(135deg, rgba(0, 255, 204, 0.2) 0%, rgba(138, 43, 226, 0.2) 100%);
+  padding: 4px 12px;
+  border-radius: 6px;
+  display: inline-block;
+  border: 1px solid rgba(0, 255, 204, 0.3);
 }
 
 /* 他社との違いセクション */
@@ -471,7 +490,7 @@
   letter-spacing: 0.03em;
 }
 
-.expertiseList li::before {
+.expertiseList li:not(.expertiseHighlight)::before {
   content: '✓';
   position: absolute;
   left: 0;
@@ -482,13 +501,24 @@
 
 .expertiseHighlight {
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
+  background: linear-gradient(135deg, rgba(0, 255, 204, 0.15) 0%, rgba(138, 43, 226, 0.15) 100%);
+  padding: 12px 20px;
+  padding-left: 20px !important;
+  border-radius: 8px;
+  border-left: 4px solid #00ffcc;
+  margin-bottom: 20px !important;
 }
 
 .expertiseNote {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.6);
   font-weight: 400;
+}
+
+.expertiseEmphasis {
+  color: #00ffcc;
+  font-weight: 700;
 }
 
 .expertiseTags {
@@ -538,7 +568,7 @@
 }
 
 .expertiseCaseIcon {
-  font-size: 24px;
+  font-size: 36px;
   color: #00ffcc;
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
@@ -630,7 +660,8 @@
 }
 
 .comparisonValue {
-  font-size: 16px;
+  font-size: 17px;
+  font-weight: 500;
   color: rgba(255, 255, 255, 0.9);
   text-align: right;
   line-height: 1.6;
@@ -665,7 +696,7 @@
 }
 
 .caseStudyResultIcon {
-  font-size: 32px;
+  font-size: 48px;
   color: #00ffcc;
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
@@ -704,7 +735,12 @@
 .impactHighlight {
   color: #ff6b6b;
   font-weight: 700;
+  font-size: 1.2em;
   text-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(255, 107, 107, 0.05) 100%);
+  padding: 0 8px;
+  border-radius: 6px;
+  display: inline-block;
 }
 
 .caseStudyImpactArrow {
@@ -724,7 +760,12 @@
 .impactSuccess {
   color: #00ffcc;
   font-weight: 700;
+  font-size: 1.2em;
   text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+  background: linear-gradient(135deg, rgba(0, 255, 204, 0.2) 0%, rgba(0, 255, 204, 0.05) 100%);
+  padding: 0 8px;
+  border-radius: 6px;
+  display: inline-block;
 }
 
 /* 価格比較セクション */
@@ -815,8 +856,9 @@
 }
 
 .pricingValue {
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: 19px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
   line-height: 1.8;
   letter-spacing: 0.03em;
 }

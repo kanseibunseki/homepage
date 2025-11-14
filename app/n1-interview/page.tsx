@@ -60,7 +60,7 @@ export default function N1InterviewPage() {
             <span className={styles.heroTitleSub}>AI-Powered N1 Interview System</span>
           </h1>
           <p className={styles.heroDescription}>
-            AI自動化で95%コスト削減、98%時間短縮<br />
+            AI自動化で<span className={styles.highlightSuccess}>95%コスト削減</span>、<span className={styles.highlightSuccess}>98%時間短縮</span><br />
             顧客の本音を引き出す、革新的なインタビューシステム
           </p>
         </div>
@@ -81,11 +81,11 @@ export default function N1InterviewPage() {
           <div className={styles.importanceContent}>
             <div className={styles.importanceCard}>
               <h3 className={styles.importanceTitle}>
-                顧客のニーズ・不満を聞き出すには、<br />
-                時間をかけたインタビューが不可欠
+                顧客の<span className={styles.highlight}>ニーズ・不満</span>を聞き出すには、<br />
+                <span className={styles.highlight}>時間をかけたインタビュー</span>が不可欠
               </h3>
               <p className={styles.importanceText}>
-                アンケート・数字で本音は見えない
+                <span className={styles.highlight}>アンケート・数字で本音は見えない</span>
               </p>
               <div className={styles.importanceIcon}>
                 <span className="material-symbols-outlined">record_voice_over</span>
@@ -211,8 +211,8 @@ export default function N1InterviewPage() {
             <div className={styles.comparisonAfter}>
               <h3 className={styles.comparisonLabel}>高精度</h3>
               <ul className={styles.comparisonList}>
-                <li>過去のデータを1000万以上学習</li>
-                <li>AIには本音で話せる</li>
+                <li>過去のデータを<span className={styles.highlightNumber}>1000万以上</span>学習</li>
+                <li><span className={styles.highlight}>AIには本音で話せる</span></li>
               </ul>
             </div>
           </div>
@@ -246,9 +246,9 @@ export default function N1InterviewPage() {
             <div className={styles.comparisonBefore}>
               <h3 className={styles.comparisonLabel}>長期間（調査会社など）</h3>
               <ul className={styles.comparisonList}>
-                <li>件数：30人が限界</li>
+                <li>件数：<span className={styles.highlightNumber}>30人が限界</span></li>
                 <li>労働：1人で2時間</li>
-                <li>　　　30人で60時間</li>
+                <li>　　　30人で<span className={styles.highlightNumber}>60時間</span></li>
               </ul>
             </div>
             <div className={styles.comparisonArrow}>
@@ -260,10 +260,10 @@ export default function N1InterviewPage() {
             <div className={styles.comparisonAfter}>
               <h3 className={styles.comparisonLabel}>短期間</h3>
               <ul className={styles.comparisonList}>
-                <li>件数：無制限</li>
-                <li>労働：URLを送るだけ</li>
+                <li>件数：<span className={styles.highlightSuccess}>無制限</span></li>
+                <li>労働：<span className={styles.highlight}>URLを送るだけ</span></li>
                 <li>　　　可視化・分析・報告まで</li>
-                <li>　　　最短1日</li>
+                <li>　　　<span className={styles.highlightSuccess}>最短1日</span></li>
               </ul>
             </div>
           </div>
@@ -287,7 +287,7 @@ export default function N1InterviewPage() {
               <div className={styles.achievementIcon}>
                 <span className="material-symbols-outlined">hotel</span>
               </div>
-              <h3 className={styles.achievementTitle}>沖縄県で口コミランキング1位</h3>
+              <h3 className={styles.achievementTitle}><span className={styles.highlightSuccess}>沖縄県で口コミランキング1位</span></h3>
               <p className={styles.achievementText}>
                 のホテルを開発
               </p>
@@ -301,7 +301,7 @@ export default function N1InterviewPage() {
               <div className={styles.achievementIcon}>
                 <span className="material-symbols-outlined">local_hospital</span>
               </div>
-              <h3 className={styles.achievementTitle}>日本全国で口コミランキング1位</h3>
+              <h3 className={styles.achievementTitle}><span className={styles.highlightSuccess}>日本全国で口コミランキング1位</span></h3>
               <p className={styles.achievementText}>
                 の病院を開発
               </p>

@@ -202,16 +202,23 @@
 
 .challengeGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 30px;
-  margin-bottom: 60px;
+  max-width: 1000px;
+  margin: 0 auto 60px;
+}
+
+@media (max-width: 768px) {
+  .challengeGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .challengeCard {
   background: linear-gradient(135deg,
     rgba(20, 10, 40, 0.8) 0%,
     rgba(10, 10, 30, 0.9) 100%);
-  border: 1px solid rgba(0, 255, 204, 0.2);
+  border: 2px solid rgba(0, 255, 204, 0.3);
   border-radius: 20px;
   padding: 40px 30px;
   text-align: center;
@@ -221,15 +228,16 @@
 
 .challengeCard:hover {
   transform: translateY(-5px);
-  border-color: rgba(0, 255, 204, 0.4);
-  box-shadow: 0 10px 40px rgba(0, 255, 204, 0.2);
+  border-color: rgba(0, 255, 204, 0.5);
+  box-shadow: 0 10px 40px rgba(0, 255, 204, 0.3);
 }
 
 .challengeIcon {
-  font-size: 48px;
-  margin-bottom: 20px;
+  font-size: 120px;
+  margin-bottom: 25px;
   color: #00ffcc;
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+  display: block;
 }
 
 .challengeTitle {
@@ -869,4 +877,366 @@
 
 .ctaButton:hover .ctaButtonArrow {
   transform: translateX(5px);
+}
+
+/* N1インタビュー固有のセクション */
+
+/* 重要性セクション */
+.importanceSection {
+  padding: 80px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.importanceContent {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.importanceCard {
+  background: linear-gradient(135deg,
+    rgba(0, 255, 204, 0.15) 0%,
+    rgba(138, 43, 226, 0.15) 100%);
+  border: 2px solid rgba(0, 255, 204, 0.5);
+  border-radius: 24px;
+  padding: 50px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 255, 204, 0.2);
+}
+
+.importanceTitle {
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  letter-spacing: 0.05em;
+}
+
+.importanceText {
+  font-size: clamp(16px, 2.5vw, 20px);
+  color: #00ffcc;
+  font-weight: 600;
+  margin-bottom: 30px;
+  letter-spacing: 0.03em;
+}
+
+.importanceIcon {
+  display: inline-block;
+}
+
+.importanceIcon .material-symbols-outlined {
+  font-size: 96px;
+  color: #00ffcc;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+
+/* 強みセクション */
+.strengthSection {
+  padding: 80px 0;
+  background: linear-gradient(180deg,
+    rgba(20, 10, 35, 0.3) 0%,
+    rgba(30, 15, 50, 0.3) 50%,
+    rgba(20, 10, 35, 0.3) 100%);
+  position: relative;
+  z-index: 2;
+}
+
+.strengthGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .strengthGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .strengthGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.strengthCard {
+  background: linear-gradient(135deg,
+    rgba(0, 255, 204, 0.2) 0%,
+    rgba(138, 43, 226, 0.2) 100%);
+  border: 2px solid rgba(0, 255, 204, 0.5);
+  border-radius: 16px;
+  padding: 35px 20px;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
+.strengthCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 40px rgba(0, 255, 204, 0.3);
+}
+
+.strengthIcon {
+  font-size: 80px;
+  color: #00ffcc;
+  margin-bottom: 20px;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+  display: block;
+}
+
+.strengthTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.05em;
+}
+
+/* 比較セクション */
+.comparisonSection {
+  padding: 80px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.comparisonBlock {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 30px;
+  align-items: start;
+  margin-bottom: 50px;
+  padding: 35px 30px;
+  background: linear-gradient(135deg,
+    rgba(20, 10, 40, 0.6) 0%,
+    rgba(10, 10, 30, 0.7) 100%);
+  border: 1px solid rgba(0, 255, 204, 0.2);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+@media (max-width: 768px) {
+  .comparisonBlock {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.comparisonBefore,
+.comparisonAfter {
+  padding: 20px;
+}
+
+.comparisonBefore {
+  border-right: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .comparisonBefore {
+    border-right: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+.comparisonAfter {
+  background: rgba(0, 255, 204, 0.05);
+  border-radius: 12px;
+}
+
+.comparisonLabel {
+  font-size: 18px;
+  font-weight: 700;
+  color: #00ffcc;
+  margin-bottom: 15px;
+  letter-spacing: 0.05em;
+}
+
+.comparisonList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.comparisonList li {
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 8px;
+  letter-spacing: 0.03em;
+}
+
+.comparisonArrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.comparisonArrow .material-symbols-outlined {
+  font-size: 48px;
+  color: #00ffcc;
+  animation: arrowPulse 2s ease-in-out infinite;
+}
+
+@keyframes arrowPulse {
+  0%, 100% { transform: translateX(0); opacity: 0.7; }
+  50% { transform: translateX(10px); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .comparisonArrow .material-symbols-outlined {
+    transform: rotate(90deg);
+  }
+}
+
+.reductionBadge {
+  background: linear-gradient(135deg, #ff4757 0%, #ff6348 100%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 20px;
+  margin-top: 15px;
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+  box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+}
+
+.priceBox {
+  background: rgba(0, 255, 204, 0.05);
+  border: 1px solid rgba(0, 255, 204, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 15px;
+}
+
+.priceLabel {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 10px;
+  letter-spacing: 0.03em;
+}
+
+.priceAmount {
+  font-size: 28px;
+  font-weight: 700;
+  color: #00ffcc;
+  margin: 0;
+  letter-spacing: 0.03em;
+}
+
+/* 実績セクション */
+.achievementSection {
+  padding: 80px 0;
+  background: linear-gradient(180deg,
+    rgba(20, 10, 35, 0.3) 0%,
+    rgba(30, 15, 50, 0.3) 50%,
+    rgba(20, 10, 35, 0.3) 100%);
+  position: relative;
+  z-index: 2;
+}
+
+.achievementGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 35px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .achievementGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.achievementCard {
+  background: linear-gradient(135deg,
+    rgba(20, 10, 40, 0.8) 0%,
+    rgba(10, 10, 30, 0.9) 100%);
+  border: 2px solid rgba(0, 255, 204, 0.3);
+  border-radius: 20px;
+  padding: 45px 35px;
+  text-align: center;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
+}
+
+.achievementCard:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0, 255, 204, 0.5);
+  box-shadow: 0 15px 50px rgba(0, 255, 204, 0.3);
+}
+
+.achievementIcon {
+  display: inline-block;
+  margin-bottom: 25px;
+}
+
+.achievementIcon .material-symbols-outlined {
+  font-size: 96px;
+  color: #00ffcc;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+
+.achievementTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 12px;
+  line-height: 1.6;
+  letter-spacing: 0.05em;
+}
+
+.achievementText {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 25px;
+  letter-spacing: 0.03em;
+}
+
+.achievementBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #000;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px 25px;
+  border-radius: 25px;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+  letter-spacing: 0.03em;
+}
+
+.achievementBadge .material-symbols-outlined {
+  font-size: 24px;
+  color: #000;
+  font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ハイライトスタイル */
+.highlight {
+  color: #00ffcc;
+  font-weight: 700;
+}
+
+.highlightSuccess {
+  color: #00ffcc;
+  font-weight: 700;
+  font-size: 1.15em;
+  text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+  background: linear-gradient(135deg, rgba(0, 255, 204, 0.2) 0%, rgba(0, 255, 204, 0.05) 100%);
+  padding: 0 8px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.highlightNumber {
+  color: #8a2be2;
+  font-weight: 700;
+  font-size: 1.15em;
 }

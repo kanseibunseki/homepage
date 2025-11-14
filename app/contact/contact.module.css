@@ -1,124 +1,392 @@
-.container {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 60px 40px;
+/* お問い合わせページ */
+.contactPage {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(180deg,
+    rgba(10, 10, 20, 1) 0%,
+    rgba(15, 10, 25, 1) 25%,
+    rgba(20, 15, 30, 1) 50%,
+    rgba(15, 10, 25, 1) 75%,
+    rgba(10, 10, 20, 1) 100%);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
 }
 
-.title {
+/* 浮遊する感情アイコン */
+.floatingEmotions {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floatingEmotion {
+  position: absolute;
+  opacity: 0.15;
+  filter: drop-shadow(0 0 15px rgba(0, 255, 204, 0.4));
+  animation: floatEmotion 20s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes floatEmotion {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translate(20px, -30px) rotate(5deg) scale(1.1);
+  }
+  50% {
+    transform: translate(-15px, -60px) rotate(-3deg) scale(0.95);
+  }
+  75% {
+    transform: translate(25px, -40px) rotate(7deg) scale(1.05);
+  }
+}
+
+.floatingEmotion:nth-child(odd) {
+  animation-duration: 18s;
+}
+
+.floatingEmotion:nth-child(even) {
+  animation-duration: 22s;
+}
+
+.floatingEmotion:nth-child(3n) {
+  animation-direction: reverse;
+}
+
+@media (max-width: 768px) {
+  .floatingEmotion {
+    opacity: 0.1;
+  }
+}
+
+/* ヒーローセクション */
+.heroSection {
+  position: relative;
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 120px 20px 60px;
+  z-index: 2;
+}
+
+.heroBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 255, 204, 0.1) 0%, transparent 70%);
+  animation: pulseGlow 8s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+.heroContainer {
+  position: relative;
+  z-index: 1;
   text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  color: #333;
+  max-width: 900px;
 }
 
-.subtitle {
-  text-align: center;
-  color: #666;
-  margin-bottom: 50px;
-  line-height: 1.6;
+.heroTitle {
+  margin-bottom: 30px;
 }
 
-.form {
-  background: white;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.formGroup {
-  margin-bottom: 25px;
-}
-
-.label {
+.heroTitleMain {
   display: block;
+  font-size: clamp(40px, 7vw, 64px);
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff 0%, #00ffcc 50%, #8a2be2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 15px;
+  letter-spacing: 0.05em;
+}
+
+.heroTitleSub {
+  display: block;
+  font-size: clamp(16px, 2.5vw, 20px);
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.heroDescription {
+  font-size: clamp(16px, 2.5vw, 20px);
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 300;
+  letter-spacing: 0.03em;
+}
+
+/* フォームセクション */
+.formSection {
+  padding: 80px 20px 120px;
+  position: relative;
+  z-index: 2;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.formContainer {
+  background: linear-gradient(135deg,
+    rgba(20, 10, 40, 0.9) 0%,
+    rgba(10, 10, 30, 0.95) 100%);
+  border: 2px solid rgba(0, 255, 204, 0.3);
+  border-radius: 20px;
+  padding: 50px 40px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 60px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .formContainer {
+    padding: 40px 25px;
+  }
+}
+
+.formIntro {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.formIntroText {
+  font-size: clamp(15px, 2.5vw, 18px);
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.03em;
+}
+
+/* フォーム */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.formLabel {
+  font-size: 16px;
   font-weight: 600;
-  margin-bottom: 8px;
-  color: #444;
+  color: #00ffcc;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .required {
-  color: #e74c3c;
-  margin-left: 5px;
+  color: #ff6b6b;
+  font-size: 14px;
+  font-weight: 700;
 }
 
-.input,
-.textarea {
+.formInput,
+.formTextarea {
   width: 100%;
-  padding: 12px 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 15px 20px;
   font-size: 16px;
-  transition: border-color 0.3s ease;
-}
-
-.input:focus,
-.textarea:focus {
-  outline: none;
-  border-color: #4a90e2;
-}
-
-.textarea {
-  resize: vertical;
-  min-height: 150px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(0, 255, 204, 0.2);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  letter-spacing: 0.03em;
   font-family: inherit;
 }
 
+.formInput:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: rgba(0, 255, 204, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+}
+
+.formInput::placeholder,
+.formTextarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.formTextarea {
+  min-height: 180px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.submitWrapper {
+  margin-top: 20px;
+  text-align: center;
+}
+
 .submitButton {
-  width: 100%;
-  padding: 15px;
-  background: #4a90e2;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  background: linear-gradient(135deg, #00ffcc 0%, #8a2be2 100%);
+  color: #fff;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 700;
+  padding: 18px 60px;
+  border: none;
+  border-radius: 50px;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 40px rgba(0, 255, 204, 0.4);
+  letter-spacing: 0.05em;
 }
 
 .submitButton:hover {
-  background: #357abd;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 50px rgba(0, 255, 204, 0.6);
 }
 
 .submitButton:active {
-  transform: translateY(0);
+  transform: translateY(-1px);
 }
 
-.errorMessage {
-  color: #e74c3c;
-  font-size: 14px;
-  margin-top: 5px;
+.submitIcon {
+  font-size: 24px;
+  transition: transform 0.3s ease;
+}
+
+.submitButton:hover .submitIcon {
+  transform: translateX(5px);
+}
+
+/* アイコン装飾 */
+.decorIcon {
+  position: absolute;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.decorIcon1 {
+  width: 120px;
+  top: 10%;
+  right: 10%;
+  transform: rotate(-15deg);
+}
+
+.decorIcon2 {
+  width: 100px;
+  bottom: 15%;
+  left: 8%;
+  transform: rotate(20deg);
+}
+
+.decorIcon3 {
+  width: 90px;
+  top: 50%;
+  right: 5%;
+  transform: rotate(-25deg);
+}
+
+@media (max-width: 768px) {
+  .decorIcon1,
+  .decorIcon2,
+  .decorIcon3 {
+    display: none;
+  }
+}
+
+/* ステータスメッセージ */
+.statusMessage {
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .successMessage {
-  background: #d4edda;
-  color: #155724;
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  border: 1px solid #c3e6cb;
+  background: linear-gradient(135deg, rgba(0, 255, 204, 0.2), rgba(0, 200, 150, 0.2));
+  border: 2px solid #00ffcc;
+  color: #00ffcc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
-@media (max-width: 860px) {
-  .container {
-    padding: 40px 20px;
-  }
-  
-  .title {
-    font-size: 2rem;
-  }
-  
-  .form {
-    padding: 25px;
-  }
-  
-  .input,
-  .textarea {
-    font-size: 16px;
-  }
-  
-  .submitButton {
-    font-size: 16px;
-  }
+.errorMessage {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(200, 0, 0, 0.2));
+  border: 2px solid #ff6b6b;
+  color: #ff6b6b;
+}
+
+/* フィールドエラー */
+.fieldError {
+  color: #ff6b6b;
+  font-size: 14px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.formInputError,
+.formTextareaError {
+  border-color: #ff6b6b !important;
+  background: rgba(255, 107, 107, 0.05) !important;
+}
+
+/* ローディング状態 */
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.submitButton:disabled:hover {
+  transform: none !important;
+  box-shadow: 0 10px 40px rgba(0, 255, 204, 0.4) !important;
+}
+
+.loadingSpinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
