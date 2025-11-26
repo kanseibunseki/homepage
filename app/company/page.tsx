@@ -73,7 +73,54 @@ export default function CompanyPage() {
               </div>
             </div>
           </li>
+
         </ul>
+
+        {/* 子会社セクション - 特別なカードデザイン */}
+        <div className={styles.subsidiarySection}>
+          <div className={styles.subsidiarySectionTitle}>
+            <h2 className={styles.subsidiarySectionTitleText}>子会社</h2>
+            <div className={styles.subsidiarySectionTitleLine}></div>
+          </div>
+
+          <div className={styles.subsidiaryCard}>
+            <div className={styles.subsidiaryCardGlow}></div>
+
+            <div className={styles.subsidiaryLogoArea}>
+              <img
+                src="/img/company/omnius-logo.png"
+                alt="Omnius株式会社"
+                className={styles.subsidiaryLogo}
+              />
+            </div>
+
+            <div className={styles.subsidiaryContent}>
+              <h3 className={styles.subsidiaryName}>Omnius株式会社</h3>
+              <div className={styles.subsidiaryDivider}></div>
+              <p className={styles.subsidiaryOwnership}>
+                <span className={styles.ownershipLabel}>出資比率</span>
+                <span className={styles.ownershipValue}>50%</span>
+              </p>
+              <a
+                href="https://www.omnius.jp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.subsidiaryLink}
+              >
+                <span>ウェブサイトを見る</span>
+                <span className="material-symbols-outlined">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.subsidiaryFloatingIcons}>
+        {[...Array(8)].map((_, i) => (
+          <span key={i} className={`material-symbols-outlined ${styles.floatingIcon}`}>
+            {['star', 'rocket_launch', 'psychology', 'groups', 'speed', 'trending_up', 'workspace_premium', 'emoji_events'][i]}
+          </span>
+        ))}
       </div>
     </section>
   )

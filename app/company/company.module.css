@@ -286,3 +286,307 @@
     width: 40px;
   }
 }
+
+/* 子会社セクション - 特別なデザイン */
+.subsidiarySection {
+  margin-top: 100px;
+  position: relative;
+}
+
+.subsidiarySectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 50px;
+}
+
+.subsidiarySectionTitleText {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, #00ffcc 0%, #8a2be2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.subsidiarySectionTitleLine {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(0, 255, 204, 0.6), transparent);
+}
+
+/* 子会社カード */
+.subsidiaryCard {
+  max-width: 650px;
+  margin: 0 auto;
+  background: linear-gradient(135deg,
+    rgba(10, 5, 20, 0.95) 0%,
+    rgba(5, 5, 15, 0.98) 100%);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 24px;
+  padding: 40px 35px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.subsidiaryCard::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, #00ffcc 0%, #8a2be2 100%);
+  border-radius: 24px;
+  z-index: -1;
+  opacity: 0.6;
+  transition: opacity 0.5s ease;
+}
+
+.subsidiaryCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0, 255, 204, 0.3);
+}
+
+.subsidiaryCard:hover::before {
+  opacity: 0.8;
+}
+
+.subsidiaryCardGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 255, 204, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  transition: all 0.5s ease;
+}
+
+.subsidiaryCard:hover .subsidiaryCardGlow {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(138, 43, 226, 0.2) 0%, transparent 70%);
+}
+
+/* ロゴエリア */
+.subsidiaryLogoArea {
+  background: #000;
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.5),
+    inset 0 2px 10px rgba(255, 255, 255, 0.05);
+  transition: all 0.4s ease;
+}
+
+.subsidiaryCard:hover .subsidiaryLogoArea {
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.7),
+    0 0 40px rgba(0, 255, 204, 0.2),
+    inset 0 2px 10px rgba(255, 255, 255, 0.1);
+}
+
+.subsidiaryLogo {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  display: block;
+  transition: all 0.4s ease;
+}
+
+.subsidiaryCard:hover .subsidiaryLogo {
+  transform: scale(1.03);
+}
+
+/* コンテンツエリア */
+.subsidiaryContent {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.subsidiaryName {
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 18px 0;
+  letter-spacing: 0.08em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.subsidiaryDivider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00ffcc, #8a2be2, transparent);
+  margin: 0 auto 20px;
+  border-radius: 10px;
+}
+
+.subsidiaryOwnership {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 25px 0;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+}
+
+.ownershipLabel {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.ownershipValue {
+  color: #00ffcc;
+  font-weight: 700;
+  font-size: 1.3em;
+  text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+}
+
+.subsidiaryLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  color: #1a0f2e;
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  font-weight: 600;
+  padding: 14px 35px;
+  border-radius: 60px;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 10px 30px rgba(255, 255, 255, 0.2),
+    0 0 40px rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.08em;
+  position: relative;
+  overflow: hidden;
+}
+
+.subsidiaryLink::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #00ffcc 0%, #8a2be2 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.subsidiaryLink:hover::before {
+  opacity: 1;
+}
+
+.subsidiaryLink:hover {
+  transform: translateY(-5px);
+  color: #fff;
+  box-shadow:
+    0 20px 50px rgba(0, 255, 204, 0.4),
+    0 0 60px rgba(138, 43, 226, 0.3);
+}
+
+.subsidiaryLink span {
+  position: relative;
+  z-index: 1;
+}
+
+.subsidiaryLink .material-symbols-outlined {
+  font-size: 24px;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.subsidiaryLink:hover .material-symbols-outlined {
+  transform: translateX(8px);
+}
+
+/* フローティングアイコン */
+.subsidiaryFloatingIcons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.15;
+}
+
+.floatingIcon {
+  position: absolute;
+  color: #00ffcc;
+  font-size: clamp(30px, 5vw, 50px);
+  animation: floatIcon 20s infinite ease-in-out;
+}
+
+.floatingIcon:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+.floatingIcon:nth-child(2) { top: 20%; right: 15%; animation-delay: -2s; }
+.floatingIcon:nth-child(3) { top: 60%; left: 5%; animation-delay: -4s; }
+.floatingIcon:nth-child(4) { top: 80%; right: 10%; animation-delay: -6s; }
+.floatingIcon:nth-child(5) { top: 40%; left: 20%; animation-delay: -8s; }
+.floatingIcon:nth-child(6) { top: 70%; right: 25%; animation-delay: -10s; }
+.floatingIcon:nth-child(7) { top: 30%; right: 5%; animation-delay: -12s; }
+.floatingIcon:nth-child(8) { top: 50%; left: 15%; animation-delay: -14s; }
+
+@keyframes floatIcon {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.1;
+  }
+  25% {
+    transform: translateY(-20px) rotate(5deg);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-10px) rotate(-3deg);
+    opacity: 0.15;
+  }
+  75% {
+    transform: translateY(-30px) rotate(3deg);
+    opacity: 0.18;
+  }
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .subsidiarySection {
+    margin-top: 70px;
+  }
+
+  .subsidiarySectionTitle {
+    gap: 15px;
+    margin-bottom: 35px;
+  }
+
+  .subsidiaryCard {
+    padding: 30px 25px;
+  }
+
+  .subsidiaryLogoArea {
+    padding: 25px;
+    margin-bottom: 25px;
+  }
+
+  .subsidiaryDivider {
+    margin-bottom: 18px;
+  }
+
+  .subsidiaryOwnership {
+    margin-bottom: 22px;
+  }
+
+  .subsidiaryLink {
+    padding: 12px 28px;
+  }
+}
