@@ -94,6 +94,44 @@ export default function MembersPage() {
             </div>
           </div>
         </div>
+
+        {/* グループ会社セクション */}
+        <div className={styles.groupCompanySection}>
+          <div className={styles.sectionTitleWrapper}>
+            <h2 className={styles.sectionTitle}>
+              <span className={styles.titleJa}>グループ会社</span>
+              <span className={styles.titleEn}>Group Company</span>
+            </h2>
+            <div className={styles.titleDivider}>
+              <div className={styles.dividerLine}></div>
+              <div className={styles.dividerDot}></div>
+              <div className={styles.dividerLine}></div>
+            </div>
+          </div>
+
+          <div className={styles.groupCompanyCard}>
+            <div className={styles.companyLogoWrapper}>
+              <img
+                src="/img/company/omnius-logo.png"
+                alt="Omnius株式会社"
+                className={styles.companyLogo}
+              />
+            </div>
+            <div className={styles.companyInfo}>
+              <h3 className={styles.companyName}>Omnius株式会社</h3>
+              <p className={styles.companyRelation}>出資比率：50%</p>
+              <a
+                href="https://www.omnius.jp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.companyLink}
+              >
+                <span>ウェブサイトを見る</span>
+                <span className="material-symbols-outlined">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )
