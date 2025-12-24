@@ -46,7 +46,7 @@
 .container {
   position: relative;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 40px;
   z-index: 2;
@@ -204,9 +204,9 @@
   grid-template-columns: 1fr 1.2fr;
   gap: 50px;
   align-items: stretch;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0;
 }
 
 /* 左カラム */
@@ -233,7 +233,6 @@
     linear-gradient(135deg, rgba(10, 5, 30, 0.3) 0%, rgba(20, 10, 40, 0.2) 100%),
     radial-gradient(ellipse at center, rgba(138, 43, 226, 0.05) 0%, transparent 70%);
   padding: 80px 0;
-  margin: 0 -60px;
   position: relative;
 }
 
@@ -262,9 +261,9 @@
   grid-template-columns: 1fr 1.5fr;
   gap: 80px;
   align-items: center;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0;
 }
 
 .agentSectionAlt .agentContent {
@@ -712,9 +711,9 @@
   display: flex;
   flex-direction: column;
   gap: 50px;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0;
 }
 
 /* 上段：タイトルとメトリクス */
@@ -1054,9 +1053,9 @@
 
 /* Review Agent Styles */
 .reviewAgentGrid {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0;
 }
 
 /* メインコンテンツ */
@@ -1589,6 +1588,36 @@
 
   .metricsGrid {
     grid-template-columns: 1fr;
+  }
+
+  /* Review Agent Mobile Fixes */
+  .matrixItem {
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+    /* スコア用のスペースを確保 */
+    position: relative;
+  }
+
+  .matrixScore {
+    top: 15px;
+    right: 15px;
+    font-size: 16px;
+    padding: 4px 10px;
+  }
+
+  .matrixCategory {
+    font-size: 14px;
+  }
+
+  .matrixTags {
+    gap: 6px;
+  }
+
+  .posTag,
+  .negTag {
+    font-size: 11px;
+    padding: 4px 10px;
   }
 }
 

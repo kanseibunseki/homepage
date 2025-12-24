@@ -1,0 +1,119 @@
+/* モバイル用背景（Main & Ghost Bokeh - Soft Focus） */
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+    /* コンテンツより後ろ、背景より前を目指す */
+    display: none;
+    background: transparent;
+    perspective: 1000px;
+    mix-blend-mode: screen;
+    /* 全体をスクリーン合成にして文字を隠さないようにする */
+}
+
+@media (max-width: 768px) {
+    .container {
+        display: block;
+    }
+}
+
+.filmGrain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    z-index: 2;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+.particleWrapper {
+    position: absolute;
+    bottom: -150px;
+    will-change: transform, opacity;
+    animation: floatingRise linear infinite;
+    mix-blend-mode: normal;
+    /* コンテナでScreenかけているのでここはNormalでOK（あるいはここもScreenでもよいが、色味が薄くなりすぎるのを防ぐためNormal） */
+}
+
+/* 共通アイコンスタイル */
+.iconLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    will-change: transform, filter, opacity;
+}
+
+/* メイン像（常時ソフトフォーカス） */
+.mainLayer {
+    transform: translate(0, 0);
+    opacity: 0.6;
+    /* 0.8 -> 0.6 に下げて文字を見やすく */
+    filter: blur(3px);
+    /* 初期値もボカす */
+    animation: mainPulse 6s ease-in-out infinite alternate;
+}
+
+/* ゴースト像（常時強いボケ） */
+.ghostLayer {
+    transform: translate(-15px, 15px);
+    opacity: 0.3;
+    /* 0.4 -> 0.3 に戻す */
+    filter: blur(5px);
+    animation: ghostPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes floatingRise {
+    0% {
+        transform: translateY(0) rotate(-5deg);
+        bottom: -150px;
+    }
+
+    100% {
+        transform: translateY(-130vh) rotate(5deg);
+        bottom: -150px;
+    }
+}
+
+/* メイン像の呼吸（ボケの強弱のみ） */
+@keyframes mainPulse {
+    0% {
+        /* 最も「ピントが合う」時でも3pxぼかす（はっきりさせない） */
+        filter: blur(3px);
+        transform: scale(1);
+    }
+
+    100% {
+        /* ボケる時はさらに強く */
+        filter: blur(6px);
+        transform: scale(1.02);
+    }
+}
+
+/* ゴースト像の呼吸 */
+@keyframes ghostPulse {
+    0% {
+        transform: translate(-5px, 5px) scale(1);
+        filter: blur(5px);
+        /* 最低でも5pxぼかす */
+        opacity: 0.2;
+        /* 濃くなりすぎないよう調整 */
+    }
+
+    100% {
+        transform: translate(-20px, 20px) scale(1.1);
+        filter: blur(10px);
+        opacity: 0.4;
+    }
+}

@@ -4,14 +4,16 @@ import { Particle } from './useVisionParticles'
 interface VisionBackgroundProps {
     particles: Particle[]
     mounted: boolean
+    isMobile: boolean
 }
 
-export const VisionBackground = ({ particles, mounted }: VisionBackgroundProps) => {
+export const VisionBackground = ({ particles, mounted, isMobile }: VisionBackgroundProps) => {
     return (
         <>
             {/* 背景のパーティクル効果 */}
             <div className={styles.particleBackground}>
-                {mounted && particles.map((particle) => (
+                {/* モバイル以外でのみパーティクル（点）を描画 */}
+                {!isMobile && mounted && particles.map((particle) => (
                     <div
                         key={particle.id}
                         className={styles.particle}

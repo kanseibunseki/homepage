@@ -117,44 +117,46 @@ const BusinessDomainSection = () => {
         </div>
 
         {/* サービスカード表示（選択されたタブのみ） */}
-        {services
-          .filter((service) => service.id === activeTab)
-          .map((service) => (
-            <div key={service.id} className={styles.serviceCard}>
-              <div className={styles.cardInner}>
-                <div className={styles.cardSymbol}>
-                  <div className={styles.cube}>
-                    <div className={styles.cubeFace + ' ' + styles.cubeFront}></div>
-                    <div className={styles.cubeFace + ' ' + styles.cubeBack}></div>
-                    <div className={styles.cubeFace + ' ' + styles.cubeRight}></div>
-                    <div className={styles.cubeFace + ' ' + styles.cubeLeft}></div>
-                    <div className={styles.cubeFace + ' ' + styles.cubeTop}></div>
-                    <div className={styles.cubeFace + ' ' + styles.cubeBottom}></div>
+        <div className={`${styles.serviceDisplay} ${isVisible ? styles.displayVisible : ''}`}>
+          {services
+            .filter((service) => service.id === activeTab)
+            .map((service) => (
+              <div key={service.id} className={styles.serviceCard}>
+                <div className={styles.cardInner}>
+                  <div className={styles.cardSymbol}>
+                    <div className={styles.cube}>
+                      <div className={styles.cubeFace + ' ' + styles.cubeFront}></div>
+                      <div className={styles.cubeFace + ' ' + styles.cubeBack}></div>
+                      <div className={styles.cubeFace + ' ' + styles.cubeRight}></div>
+                      <div className={styles.cubeFace + ' ' + styles.cubeLeft}></div>
+                      <div className={styles.cubeFace + ' ' + styles.cubeTop}></div>
+                      <div className={styles.cubeFace + ' ' + styles.cubeBottom}></div>
+                    </div>
                   </div>
-                </div>
-                <h3 className={styles.cardTitle}>
-                  {service.title}
-                </h3>
-                <p className={styles.cardSubtitle}>
-                  {service.subtitle}
-                </p>
-                <div className={styles.cardDivider} />
-                <p className={styles.cardDescription}>
-                  {service.description}
-                </p>
+                  <h3 className={styles.cardTitle}>
+                    {service.title}
+                  </h3>
+                  <p className={styles.cardSubtitle}>
+                    {service.subtitle}
+                  </p>
+                  <div className={styles.cardDivider} />
+                  <p className={styles.cardDescription}>
+                    {service.description}
+                  </p>
 
-                <div className={styles.buttonContainer}>
-                  <Link href={service.link} className={styles.detailButton}>
-                    <span className={styles.buttonText}>詳細を見る</span>
-                    <span className={styles.buttonIcon}>→</span>
-                  </Link>
-                </div>
+                  <div className={styles.buttonContainer}>
+                    <Link href={service.link} className={styles.detailButton}>
+                      <span className={styles.buttonText}>詳細を見る</span>
+                      <span className={styles.buttonIcon}>→</span>
+                    </Link>
+                  </div>
 
-                <div className={styles.cardGlow} />
-                <div className={styles.cardBorder} />
+                  <div className={styles.cardGlow} />
+                  <div className={styles.cardBorder} />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+        </div>
 
         {/* フローティングパーティクル */}
         <div className={styles.floatingParticles}>

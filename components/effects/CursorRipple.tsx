@@ -1,9 +1,21 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './CursorRipple.module.css'
 
 export default function CursorRipple() {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const contextRef = useRef<CanvasRenderingContext2D | null>(null)
   const mouseRef = useRef({ x: 0, y: 0 })
@@ -16,6 +28,8 @@ export default function CursorRipple() {
     opacity: number
     speed: number
   }>>([])
+
+
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -35,7 +49,7 @@ export default function CursorRipple() {
     // マウス移動ハンドラー
     const handleMouseMove = (event: MouseEvent) => {
       mouseRef.current = { x: event.clientX, y: event.clientY }
-      
+
       // マウス移動時に小さな波紋を生成
       if (Math.random() > 0.9) {
         ripplesRef.current.push({
@@ -135,6 +149,10 @@ export default function CursorRipple() {
       window.removeEventListener('click', handleClick)
     }
   }, [])
+
+  if (isMobile) {
+    return null
+  }
 
   return (
     <canvas

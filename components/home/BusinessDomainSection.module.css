@@ -78,8 +78,8 @@
 /* コンテナ */
 .container {
   position: relative;
-  z-index: 1;
-  max-width: 1400px;
+  z-index: 2;
+  max-width: 1200px;
   width: 100%;
   padding: 0 40px;
   margin: 0 auto;
@@ -604,9 +604,13 @@
 }
 
 /* レスポンシブ */
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
   .container {
     padding: 0 30px;
+  }
+
+  .floatingParticles {
+    display: none !important;
   }
 }
 

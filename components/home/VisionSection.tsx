@@ -1,5 +1,7 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+
 import styles from './VisionSection.module.css'
 import { useVisionParticles } from './vision/useVisionParticles'
 import { useVisionScroll } from './vision/useVisionScroll'
@@ -7,13 +9,31 @@ import { VisionBackground } from './vision/VisionBackground'
 import { VisionContent } from './vision/VisionContent'
 import { VisionVisuals } from './vision/VisionVisuals'
 
+
 const VisionSection = () => {
   const { particles, mounted } = useVisionParticles()
   const { sectionRef, isVisible } = useVisionScroll()
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+
+    // Initial check
+    checkMobile()
+
+    // Resize listener
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   return (
     <section ref={sectionRef} className={styles.visionSection}>
-      <VisionBackground particles={particles} mounted={mounted} />
+      {/* モバイル判定をプロップスとして渡す */}
+      <VisionBackground particles={particles} mounted={mounted} isMobile={isMobile} />
+
+
 
       {/* メインコンテンツ */}
       <div className={styles.container}>

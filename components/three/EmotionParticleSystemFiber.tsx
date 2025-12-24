@@ -625,6 +625,22 @@ function Scene() {
  * メインコンポーネント（React Three Fiber版）
  */
 export default function EmotionParticleSystemFiber() {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  if (isMobile) {
+    return null
+  }
+
   return (
     <Canvas
       dpr={[1, 1.5]}
