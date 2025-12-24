@@ -1,124 +1,55 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import EmotionParticleSystemFiber from '../three/EmotionParticleSystemFiber'
 import CursorRipple from '../effects/CursorRipple'
 import ScrollDebugger from '../debug/ScrollDebugger'
 import styles from './HeroSection.module.css'
-import type { EmotionData } from '@/types'
+import { useEmotionSimulation } from './hero/useEmotionSimulation'
+import { useScrollProgress } from './hero/useScrollProgress'
+import { EmotionRadar } from './hero/EmotionRadar'
+import { EmotionAnalyzer } from './hero/EmotionAnalyzer'
 
 const HeroSection = () => {
   const [mounted, setMounted] = useState(false)
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const [documentHeight, setDocumentHeight] = useState('100vh')
-  const [emotionData, setEmotionData] = useState<EmotionData>({
-    joy: 85,
-    surprise: 72,
-    excitement: 90,
-    creativity: 78,
-    empathy: 65
-  })
-  const animationFrameRef = useRef<number | null>(null)
-  const lastScrollProgressRef = useRef(0)
-  
+  const { scrollProgress, documentHeight } = useScrollProgress()
+  const emotionData = useEmotionSimulation()
+
   useEffect(() => {
     setMounted(true)
-    
-    // ドキュメント高さの計算
-    const updateDocumentHeight = () => {
-      const docHeight = document.documentElement.scrollHeight
-      setDocumentHeight(`${docHeight}px`)
-    }
-    updateDocumentHeight()
-    
-    // 感情データのリアルタイム変動シミュレーション
-    const interval = setInterval(() => {
-      setEmotionData(prev => ({
-        joy: Math.max(60, Math.min(95, prev.joy + (Math.random() - 0.5) * 5)),
-        surprise: Math.max(60, Math.min(95, prev.surprise + (Math.random() - 0.5) * 5)),
-        excitement: Math.max(60, Math.min(95, prev.excitement + (Math.random() - 0.5) * 5)),
-        creativity: Math.max(60, Math.min(95, prev.creativity + (Math.random() - 0.5) * 5)),
-        empathy: Math.max(60, Math.min(95, prev.empathy + (Math.random() - 0.5) * 5))
-      }))
-    }, 500)
-    
-    // スクロール位置の監視（requestAnimationFrameで最適化）
-    const handleScroll = () => {
-      // 既存のアニメーションフレームをキャンセル
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current)
-      }
-      
-      // 新しいアニメーションフレームをリクエスト
-      animationFrameRef.current = requestAnimationFrame(() => {
-        const winScroll = document.body.scrollTop || document.documentElement.scrollTop
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight
-        const scrolled = (winScroll / height) * 100
-        
-        // 値が変わった時のみ更新（無駄な再レンダリング防止）
-        if (Math.abs(scrolled - lastScrollProgressRef.current) > 0.1) {
-          setScrollProgress(scrolled)
-          lastScrollProgressRef.current = scrolled
-        }
-      })
-    }
-    
-    // リサイズ時にドキュメント高さを再計算
-    const handleResize = () => {
-      updateDocumentHeight()
-    }
-    
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    window.addEventListener('resize', handleResize)
-    
-    // MutationObserverでコンテンツの変更を監視
-    const observer = new MutationObserver(() => {
-      updateDocumentHeight()
-    })
-    observer.observe(document.body, { childList: true, subtree: true })
-    
-    return () => {
-      clearInterval(interval)
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current)
-      }
-      window.removeEventListener('scroll', handleScroll)
-      window.removeEventListener('resize', handleResize)
-      observer.disconnect()
-    }
   }, [])
-  
+
   return (
     <section className={`modern-hero-section ${styles.heroSection}`} style={{ minHeight: documentHeight }}>
       {/* スクロールデバッガー */}
       {mounted && <ScrollDebugger />}
-      
+
       {/* スクロールプログレスバー */}
       <div className={styles.scrollProgress}>
-        <div 
-          className={styles.scrollProgressBar} 
+        <div
+          className={styles.scrollProgressBar}
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
-      
+
       {mounted && <EmotionParticleSystemFiber />}
       {mounted && <CursorRipple />}
-      
-      
+
+
       {/* 波形アニメーション */}
       <div className={styles.waveContainer}>
         <svg className={styles.wave} viewBox="0 0 1200 200" preserveAspectRatio="none">
           <path className={styles.wavePath} d="M0,100 C150,50 300,150 450,100 C600,50 750,150 900,100 C1050,50 1200,100 1200,100 L1200,200 L0,200 Z" />
         </svg>
       </div>
-      
+
       {/* グラデーションオーバーレイ */}
       <div className={styles.gradientOverlay} />
-      
+
       {/* メインコンテンツ */}
       <div className={styles.contentWrapper}>
         <div className={styles.glowEffect} />
-        
+
         <div className={styles.mainContent}>
           {/* 左側：テキストコンテンツ */}
           <div className={styles.leftContent}>
@@ -130,25 +61,10 @@ const HeroSection = () => {
                 <div className={styles.orbitDot} />
               </div>
             </div>
-            
+
             {/* 感情分析ビジュアライザー */}
-            <div className={styles.emotionAnalyzer}>
-              <div className={styles.analyzerRing}>
-                <div className={styles.analyzerIcon} data-emotion="joy">
-                  <img src="/img/logo/lol.png" alt="" />
-                </div>
-                <div className={styles.analyzerIcon} data-emotion="love">
-                  <img src="/img/logo/heartarrow.png" alt="" />
-                </div>
-                <div className={styles.analyzerIcon} data-emotion="surprise">
-                  <img src="/img/logo/exclamation.png" alt="" />
-                </div>
-                <div className={styles.analyzerIcon} data-emotion="think">
-                  <img src="/img/logo/oh.png" alt="" />
-                </div>
-              </div>
-            </div>
-            
+            <EmotionAnalyzer />
+
             <h1 className={styles.title}>
               <picture className={styles.titleLogo}>
                 <source srcSet="/img/top/sp/logo.png" media="(max-width: 860px)" />
@@ -156,13 +72,13 @@ const HeroSection = () => {
               </picture>
               <span className={styles.titleEn}>EMOTIONAL INTELLIGENCE</span>
             </h1>
-            
+
             <div className={styles.divider}>
               <span className={styles.dividerLine} />
               <span className={styles.dividerDot} />
               <span className={styles.dividerLine} />
             </div>
-            
+
             <p className={styles.subtitle}>
               テクノロジーにこころを
               <br />
@@ -171,73 +87,12 @@ const HeroSection = () => {
               </span>
             </p>
           </div>
-          
+
           {/* 右側：感情分析ビジュアルとボタン */}
           <div className={styles.rightContent}>
             {/* 感情分析レーダー */}
-            <div className={styles.emotionRadar}>
-              <div className={styles.radarContainer}>
-                {/* スキャンライン */}
-                <div className={styles.scanLine} />
-                
-                {/* 円形グリッド */}
-                <svg className={styles.radarSvg} viewBox="0 0 300 300">
-                  {/* 背景の円 */}
-                  <circle cx="150" cy="150" r="140" className={styles.radarCircle} />
-                  <circle cx="150" cy="150" r="105" className={styles.radarCircle} />
-                  <circle cx="150" cy="150" r="70" className={styles.radarCircle} />
-                  <circle cx="150" cy="150" r="35" className={styles.radarCircle} />
-                  
-                  {/* 五角形のライン */}
-                  <line x1="150" y1="10" x2="150" y2="290" className={styles.radarAxis} />
-                  <line x1="10" y1="150" x2="290" y2="150" className={styles.radarAxis} />
-                  <line x1="50" y1="50" x2="250" y2="250" className={styles.radarAxis} />
-                  <line x1="250" y1="50" x2="50" y2="250" className={styles.radarAxis} />
-                  
-                  {/* データポリゴン */}
-                  <polygon
-                    points={`
-                      ${150 + emotionData.joy * 1.4 * Math.cos(-Math.PI/2)},${150 + emotionData.joy * 1.4 * Math.sin(-Math.PI/2)}
-                      ${150 + emotionData.surprise * 1.4 * Math.cos(-Math.PI/2 + 2*Math.PI/5)},${150 + emotionData.surprise * 1.4 * Math.sin(-Math.PI/2 + 2*Math.PI/5)}
-                      ${150 + emotionData.excitement * 1.4 * Math.cos(-Math.PI/2 + 4*Math.PI/5)},${150 + emotionData.excitement * 1.4 * Math.sin(-Math.PI/2 + 4*Math.PI/5)}
-                      ${150 + emotionData.creativity * 1.4 * Math.cos(-Math.PI/2 + 6*Math.PI/5)},${150 + emotionData.creativity * 1.4 * Math.sin(-Math.PI/2 + 6*Math.PI/5)}
-                      ${150 + emotionData.empathy * 1.4 * Math.cos(-Math.PI/2 + 8*Math.PI/5)},${150 + emotionData.empathy * 1.4 * Math.sin(-Math.PI/2 + 8*Math.PI/5)}
-                    `}
-                    className={styles.radarData}
-                  />
-                </svg>
-                
-                {/* 感情アイコン（円周上に配置） */}
-                <div className={styles.radarIcons}>
-                  <div className={styles.radarIcon} style={{ top: '0', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                    <img src="/img/logo/lol.png" alt="" />
-                    <span className={styles.radarValue}>{Math.round(emotionData.joy)}</span>
-                  </div>
-                  <div className={styles.radarIcon} style={{ top: '30%', right: '5%', transform: 'translate(50%, -50%)' }}>
-                    <img src="/img/logo/exclamation.png" alt="" />
-                    <span className={styles.radarValue}>{Math.round(emotionData.surprise)}</span>
-                  </div>
-                  <div className={styles.radarIcon} style={{ bottom: '20%', right: '15%', transform: 'translate(50%, 50%)' }}>
-                    <img src="/img/logo/fire.png" alt="" />
-                    <span className={styles.radarValue}>{Math.round(emotionData.excitement)}</span>
-                  </div>
-                  <div className={styles.radarIcon} style={{ bottom: '20%', left: '15%', transform: 'translate(-50%, 50%)' }}>
-                    <img src="/img/logo/denkyu.png" alt="" />
-                    <span className={styles.radarValue}>{Math.round(emotionData.creativity)}</span>
-                  </div>
-                  <div className={styles.radarIcon} style={{ top: '30%', left: '5%', transform: 'translate(-50%, -50%)' }}>
-                    <img src="/img/logo/heart.png" alt="" />
-                    <span className={styles.radarValue}>{Math.round(emotionData.empathy)}</span>
-                  </div>
-                </div>
-                
-                {/* 中央のパルス */}
-                <div className={styles.radarCenter}>
-                  <div className={styles.radarPulse} />
-                </div>
-              </div>
-            </div>
-            
+            <EmotionRadar emotionData={emotionData} />
+
             {/* ボタングループ */}
             <div className={styles.buttonGroup}>
               <button className={styles.primaryButton}>
@@ -251,12 +106,12 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-      
+
       {/* フローティングデータポイント */}
       <div className={styles.floatingData}>
         {[...Array(6)].map((_, i) => (
-          <div 
-            key={i} 
+          <div
+            key={i}
             className={`${styles.dataPoint} ${styles[`dataPoint${i + 1}`]}`}
           >
             <div className={styles.dataPointCore} />
@@ -264,7 +119,7 @@ const HeroSection = () => {
           </div>
         ))}
       </div>
-      
+
       {/* 感情アイコンフローティング */}
       <div className={styles.emotionIcons}>
         <div className={`${styles.emotionIcon} ${styles.emotionIcon1}`}>

@@ -1,0 +1,406 @@
+import { useRef, useState, useMemo, useEffect } from 'react'
+import { useFrame, useThree } from '@react-three/fiber'
+import * as THREE from 'three'
+import { EMOTION_CONFIG } from '../constants/emotionConfig'
+import { vertexShader, fragmentShader } from './shaders'
+import { createHeartPositions } from './geometryUtils'
+import { useEmotionScroll } from './useEmotionScroll'
+
+/**
+ * 感情パーティクルコンポーネント
+ */
+export function EmotionParticles({
+    texture,
+    onHeartFormationChange
+}: {
+    texture: THREE.Texture
+    onHeartFormationChange?: (forming: boolean) => void
+}) {
+    const meshRef = useRef<THREE.Points>(null)
+    const linesRef = useRef<THREE.LineSegments>(null)
+    const velocitiesRef = useRef<Float32Array>(null!)
+    const mouseRef = useRef({ x: 0, y: 0 })
+    const { size, camera } = useThree()
+
+    // パーティクルの設定（ハート形成時は500個に増やす）
+    const baseParticleCount = EMOTION_CONFIG.particles.count  // 80個
+    const totalParticleCount = 500  // ハート形成時の総数
+    const [visibleCount, setVisibleCount] = useState(baseParticleCount)
+
+    // ハート形成の状態管理
+    const isFormingHeart = useRef(false)
+    const heartPositionsLeftRef = useRef<Float32Array>(null!)
+    const heartPositionsRightRef = useRef<Float32Array>(null!)
+    const originalPositionsRef = useRef<Float32Array>(null!)
+    const morphProgressLeft = useRef(0)
+    const morphProgressRight = useRef(0)
+    const currentHeartSide = useRef<'left' | 'right' | null>(null)
+
+    // 重み付きランダム選択
+    const selectRandomIcon = () => {
+        const emotions = EMOTION_CONFIG.emotions
+        const totalWeight = emotions.reduce((sum, e) => sum + e.weight, 0)
+        let random = Math.random() * totalWeight
+
+        for (let i = 0; i < emotions.length && i < 16; i++) {
+            random -= emotions[i].weight
+            if (random <= 0) {
+                return i
+            }
+        }
+        return 0
+    }
+
+    const [positions, uvOffsets, scales, rotations, colors, randomOffsets, iconIndices] = useMemo(() => {
+        const positions = new Float32Array(totalParticleCount * 3)
+        const velocities = new Float32Array(totalParticleCount * 3)
+        const uvOffsets = new Float32Array(totalParticleCount * 2)
+        const scales = new Float32Array(totalParticleCount)
+        const rotations = new Float32Array(totalParticleCount)
+        const colors = new Float32Array(totalParticleCount * 3)
+        const randomOffsets = new Float32Array(totalParticleCount)
+        const iconIndices = new Float32Array(totalParticleCount)
+
+        const emotions = EMOTION_CONFIG.emotions
+        const bounds = EMOTION_CONFIG.particles.bounds
+
+        for (let i = 0; i < totalParticleCount; i++) {
+            // ランダムな位置
+            positions[i * 3] = (Math.random() - 0.5) * bounds.width
+            positions[i * 3 + 1] = (Math.random() - 0.5) * bounds.height
+            positions[i * 3 + 2] = (Math.random() - 0.5) * bounds.depth
+
+            // ランダムな速度
+            velocities[i * 3] = (Math.random() - 0.5) * EMOTION_CONFIG.particles.speed
+            velocities[i * 3 + 1] = (Math.random() - 0.5) * EMOTION_CONFIG.particles.speed
+            velocities[i * 3 + 2] = (Math.random() - 0.5) * EMOTION_CONFIG.particles.speed
+
+            // 重み付きランダムな感情を選択
+            const emotionIndex = selectRandomIcon()
+            iconIndices[i] = emotionIndex
+            const gridX = emotionIndex % EMOTION_CONFIG.atlas.gridSize
+            const gridY = Math.floor(emotionIndex / EMOTION_CONFIG.atlas.gridSize)
+
+            uvOffsets[i * 2] = gridX / EMOTION_CONFIG.atlas.gridSize
+            uvOffsets[i * 2 + 1] = gridY / EMOTION_CONFIG.atlas.gridSize
+
+            // スケール
+            scales[i] = 0.8 + Math.random() * 0.4
+            rotations[i] = Math.random() * Math.PI * 2
+            randomOffsets[i] = Math.random()
+
+            // カラー（白色に設定、グラデーションはシェーダーで処理）
+            colors[i * 3] = 1.0
+            colors[i * 3 + 1] = 1.0
+            colors[i * 3 + 2] = 1.0
+        }
+
+        velocitiesRef.current = velocities
+        // 元の位置を保存
+        originalPositionsRef.current = new Float32Array(positions)
+
+        return [positions, uvOffsets, scales, rotations, colors, randomOffsets, iconIndices]
+    }, [totalParticleCount])
+
+    // ハート位置の初期化（左右両方を事前に生成）
+    useEffect(() => {
+        heartPositionsLeftRef.current = createHeartPositions(totalParticleCount, 'left')
+        heartPositionsRightRef.current = createHeartPositions(totalParticleCount, 'right')
+    }, [totalParticleCount])
+
+    // ScrollTriggerの設定（カスタムフック使用）
+    useEmotionScroll({
+        meshRef,
+        onHeartFormationChange,
+        setVisibleCount,
+        baseParticleCount,
+        totalParticleCount,
+        morphProgressLeft,
+        morphProgressRight,
+        currentHeartSide,
+        isFormingHeart
+    })
+
+    // 接続線の初期設定
+    const linePositions = useMemo(() => {
+        return new Float32Array(totalParticleCount * totalParticleCount * 6)
+    }, [totalParticleCount])
+
+    const lineColors = useMemo(() => {
+        return new Float32Array(totalParticleCount * totalParticleCount * 6)
+    }, [totalParticleCount])
+
+    // マウス位置の更新
+    useEffect(() => {
+        const handleMouseMove = (event: MouseEvent) => {
+            mouseRef.current.x = (event.clientX / window.innerWidth) * 2 - 1
+            mouseRef.current.y = -(event.clientY / window.innerHeight) * 2 + 1
+        }
+
+        window.addEventListener('mousemove', handleMouseMove)
+        return () => window.removeEventListener('mousemove', handleMouseMove)
+    }, [])
+
+    // パーティクル数の制御
+    useEffect(() => {
+        if (meshRef.current) {
+            meshRef.current.geometry.setDrawRange(0, visibleCount)
+        }
+    }, [visibleCount])
+
+    // アニメーションループ
+    useFrame((state, delta) => {
+        if (!meshRef.current || !linesRef.current) return
+
+        const positionsAttr = meshRef.current.geometry.attributes.position
+        const positions = positionsAttr.array as Float32Array
+        const velocities = velocitiesRef.current
+        const bounds = EMOTION_CONFIG.particles.bounds
+
+        // シェーダーのuniform更新
+        if (shaderMaterial.uniforms.time) {
+            shaderMaterial.uniforms.time.value += delta
+        }
+        if (shaderMaterial.uniforms.uMouse) {
+            shaderMaterial.uniforms.uMouse.value.set(mouseRef.current.x, mouseRef.current.y)
+        }
+
+        // パーティクルの位置更新
+        for (let i = 0; i < visibleCount; i++) {
+            const progressLeft = morphProgressLeft.current
+            const progressRight = morphProgressRight.current
+
+            // 左右どちらかのハートが形成中の場合
+            if ((progressLeft > 0 || progressRight > 0) &&
+                (heartPositionsLeftRef.current || heartPositionsRightRef.current)) {
+
+                // 使用するハート位置と進行度を決定
+                let targetPositions: Float32Array | null = null
+                let progress = 0
+
+                if (currentHeartSide.current === 'left' && heartPositionsLeftRef.current) {
+                    targetPositions = heartPositionsLeftRef.current
+                    progress = progressLeft
+                } else if (currentHeartSide.current === 'right' && heartPositionsRightRef.current) {
+                    targetPositions = heartPositionsRightRef.current
+                    progress = progressRight
+                }
+
+                if (targetPositions && progress > 0) {
+                    // ハート形成のモーフィング
+                    const targetX = targetPositions[i * 3]
+                    const targetY = targetPositions[i * 3 + 1]
+                    const targetZ = targetPositions[i * 3 + 2]
+                    const origX = originalPositionsRef.current[i * 3]
+                    const origY = originalPositionsRef.current[i * 3 + 1]
+                    const origZ = originalPositionsRef.current[i * 3 + 2]
+
+                    // スクロール進行度に基づいて位置を補間
+                    positions[i * 3] = origX + (targetX - origX) * progress
+                    positions[i * 3 + 1] = origY + (targetY - origY) * progress
+                    positions[i * 3 + 2] = origZ + (targetZ - origZ) * progress
+                } else {
+                    // 通常の動き（ハート形成が始まっているが進行度が0の場合）
+                    positions[i * 3] = originalPositionsRef.current[i * 3]
+                    positions[i * 3 + 1] = originalPositionsRef.current[i * 3 + 1]
+                    positions[i * 3 + 2] = originalPositionsRef.current[i * 3 + 2]
+                }
+            } else {
+                // 通常の動き（ハート形成していない時）
+                positions[i * 3] += velocities[i * 3] * EMOTION_CONFIG.particles.speed
+                positions[i * 3 + 1] += velocities[i * 3 + 1] * EMOTION_CONFIG.particles.speed
+                positions[i * 3 + 2] += velocities[i * 3 + 2] * EMOTION_CONFIG.particles.speed
+
+                // 境界チェック（バウンス）
+                if (Math.abs(positions[i * 3]) > 300) {
+                    velocities[i * 3] *= -EMOTION_CONFIG.particles.bounceSpeed
+                    positions[i * 3] = Math.sign(positions[i * 3]) * 300
+                }
+                if (Math.abs(positions[i * 3 + 1]) > 200) {
+                    velocities[i * 3 + 1] *= -EMOTION_CONFIG.particles.bounceSpeed
+                    positions[i * 3 + 1] = Math.sign(positions[i * 3 + 1]) * 200
+                }
+                if (Math.abs(positions[i * 3 + 2]) > 100) {
+                    velocities[i * 3 + 2] *= -EMOTION_CONFIG.particles.bounceSpeed
+                    positions[i * 3 + 2] = Math.sign(positions[i * 3 + 2]) * 100
+                }
+
+                // 速度減衰
+                velocities[i * 3] *= 0.999
+                velocities[i * 3 + 1] *= 0.999
+                velocities[i * 3 + 2] *= 0.999
+
+                // 元の位置を更新
+                originalPositionsRef.current[i * 3] = positions[i * 3]
+                originalPositionsRef.current[i * 3 + 1] = positions[i * 3 + 1]
+                originalPositionsRef.current[i * 3 + 2] = positions[i * 3 + 2]
+            }
+        }
+
+        positionsAttr.needsUpdate = true
+
+        // 接続線の更新
+        const linePositionsAttr = linesRef.current.geometry.attributes.position
+        const lineColorsAttr = linesRef.current.geometry.attributes.color
+        const linePositions = linePositionsAttr.array as Float32Array
+        const lineColors = lineColorsAttr.array as Float32Array
+
+        let lineIndex = 0
+        const maxDistance = EMOTION_CONFIG.connections.maxDistance
+
+        for (let i = 0; i < visibleCount && i < baseParticleCount; i++) {
+            for (let j = i + 1; j < visibleCount && j < baseParticleCount; j++) {
+                if (lineIndex >= EMOTION_CONFIG.connections.maxLines) break
+
+                const x1 = positions[i * 3]
+                const y1 = positions[i * 3 + 1]
+                const z1 = positions[i * 3 + 2]
+
+                const x2 = positions[j * 3]
+                const y2 = positions[j * 3 + 1]
+                const z2 = positions[j * 3 + 2]
+
+                const distance = Math.sqrt(
+                    (x2 - x1) ** 2 +
+                    (y2 - y1) ** 2 +
+                    (z2 - z1) ** 2
+                )
+
+                if (distance < maxDistance) {
+                    const opacity = (1 - distance / maxDistance) * EMOTION_CONFIG.connections.opacity
+
+                    // Line start point
+                    linePositions[lineIndex * 6] = x1
+                    linePositions[lineIndex * 6 + 1] = y1
+                    linePositions[lineIndex * 6 + 2] = z1
+
+                    // Line end point
+                    linePositions[lineIndex * 6 + 3] = x2
+                    linePositions[lineIndex * 6 + 4] = y2
+                    linePositions[lineIndex * 6 + 5] = z2
+
+                    // Line colors with gradient
+                    const color = new THREE.Color(EMOTION_CONFIG.connections.color)
+                    lineColors[lineIndex * 6] = color.r * opacity
+                    lineColors[lineIndex * 6 + 1] = color.g * opacity
+                    lineColors[lineIndex * 6 + 2] = color.b * opacity
+
+                    lineColors[lineIndex * 6 + 3] = color.r * opacity * 0.5
+                    lineColors[lineIndex * 6 + 4] = color.g * opacity * 0.5
+                    lineColors[lineIndex * 6 + 5] = color.b * opacity * 0.5
+
+                    lineIndex++
+                }
+            }
+        }
+
+        linesRef.current.geometry.setDrawRange(0, lineIndex * 2)
+        linePositionsAttr.needsUpdate = true
+        lineColorsAttr.needsUpdate = true
+    })
+
+    // シェーダーマテリアル
+    const shaderMaterial = useMemo(() => {
+        return new THREE.ShaderMaterial({
+            uniforms: {
+                map: { value: texture },
+                atlasSize: { value: EMOTION_CONFIG.atlas.gridSize },
+                time: { value: 0 },
+                uMouse: { value: new THREE.Vector2(0, 0) },
+                uMouseInfluence: { value: EMOTION_CONFIG.particles.mouseInfluence },
+                uColor1: { value: new THREE.Color(EMOTION_CONFIG.colors.primary) },
+                uColor2: { value: new THREE.Color(EMOTION_CONFIG.colors.secondary) }
+            },
+            vertexShader,
+            fragmentShader,
+            transparent: true,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending
+        })
+    }, [texture])
+
+    return (
+        <group rotation={[0, 0, 0]}>
+            {/* パーティクル */}
+            <points ref={meshRef} material={shaderMaterial}>
+                <bufferGeometry>
+                    <bufferAttribute
+                        attach="attributes-position"
+                        args={[positions, 3]}
+                        count={totalParticleCount}
+                        array={positions}
+                        itemSize={3}
+                    />
+                    <bufferAttribute
+                        attach="attributes-uvOffset"
+                        args={[uvOffsets, 2]}
+                        count={totalParticleCount}
+                        array={uvOffsets}
+                        itemSize={2}
+                    />
+                    <bufferAttribute
+                        attach="attributes-scale"
+                        args={[scales, 1]}
+                        count={totalParticleCount}
+                        array={scales}
+                        itemSize={1}
+                    />
+                    <bufferAttribute
+                        attach="attributes-rotation"
+                        args={[rotations, 1]}
+                        count={totalParticleCount}
+                        array={rotations}
+                        itemSize={1}
+                    />
+                    <bufferAttribute
+                        attach="attributes-color"
+                        args={[colors, 3]}
+                        count={totalParticleCount}
+                        array={colors}
+                        itemSize={3}
+                    />
+                    <bufferAttribute
+                        attach="attributes-randomOffset"
+                        args={[randomOffsets, 1]}
+                        count={totalParticleCount}
+                        array={randomOffsets}
+                        itemSize={1}
+                    />
+                    <bufferAttribute
+                        attach="attributes-iconIndex"
+                        args={[iconIndices, 1]}
+                        count={totalParticleCount}
+                        array={iconIndices}
+                        itemSize={1}
+                    />
+                </bufferGeometry>
+            </points>
+
+            {/* 接続線 */}
+            <lineSegments ref={linesRef}>
+                <bufferGeometry>
+                    <bufferAttribute
+                        attach="attributes-position"
+                        args={[linePositions, 3]}
+                        count={totalParticleCount * totalParticleCount * 2}
+                        array={linePositions}
+                        itemSize={3}
+                    />
+                    <bufferAttribute
+                        attach="attributes-color"
+                        args={[lineColors, 3]}
+                        count={totalParticleCount * totalParticleCount * 2}
+                        array={lineColors}
+                        itemSize={3}
+                    />
+                </bufferGeometry>
+                <lineBasicMaterial
+                    vertexColors
+                    blending={THREE.AdditiveBlending}
+                    transparent
+                    opacity={EMOTION_CONFIG.connections.opacity}
+                />
+            </lineSegments>
+        </group>
+    )
+}

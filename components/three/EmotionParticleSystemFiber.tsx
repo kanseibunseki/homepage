@@ -10,6 +10,9 @@ import { EMOTION_CONFIG } from './constants/emotionConfig'
 import { TextureAtlasGenerator } from './utils/textureAtlasGenerator'
 import { features } from '@/config/features'
 
+import { vertexShader, fragmentShader } from './emotion-system/shaders'
+import { createHeartPositions } from './emotion-system/geometryUtils'
+
 // GSAPプラグインの登録
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
@@ -18,12 +21,12 @@ if (typeof window !== 'undefined') {
 /**
  * 感情パーティクルコンポーネント
  */
-function EmotionParticles({ 
-  texture, 
-  onHeartFormationChange 
-}: { 
+function EmotionParticles({
+  texture,
+  onHeartFormationChange
+}: {
   texture: THREE.Texture
-  onHeartFormationChange?: (forming: boolean) => void 
+  onHeartFormationChange?: (forming: boolean) => void
 }) {
   const meshRef = useRef<THREE.Points>(null)
   const linesRef = useRef<THREE.LineSegments>(null)
@@ -35,7 +38,7 @@ function EmotionParticles({
   const baseParticleCount = EMOTION_CONFIG.particles.count  // 80個
   const totalParticleCount = 500  // ハート形成時の総数
   const [visibleCount, setVisibleCount] = useState(baseParticleCount)
-  
+
   // ハート形成の状態管理
   const isFormingHeart = useRef(false)
   const heartPositionsLeftRef = useRef<Float32Array>(null!)
@@ -44,13 +47,13 @@ function EmotionParticles({
   const morphProgressLeft = useRef(0)
   const morphProgressRight = useRef(0)
   const currentHeartSide = useRef<'left' | 'right' | null>(null)
-  
+
   // 重み付きランダム選択
   const selectRandomIcon = () => {
     const emotions = EMOTION_CONFIG.emotions
     const totalWeight = emotions.reduce((sum, e) => sum + e.weight, 0)
     let random = Math.random() * totalWeight
-    
+
     for (let i = 0; i < emotions.length && i < 16; i++) {
       random -= emotions[i].weight
       if (random <= 0) {
@@ -89,7 +92,7 @@ function EmotionParticles({
       iconIndices[i] = emotionIndex
       const gridX = emotionIndex % EMOTION_CONFIG.atlas.gridSize
       const gridY = Math.floor(emotionIndex / EMOTION_CONFIG.atlas.gridSize)
-      
+
       uvOffsets[i * 2] = gridX / EMOTION_CONFIG.atlas.gridSize
       uvOffsets[i * 2 + 1] = gridY / EMOTION_CONFIG.atlas.gridSize
 
@@ -107,80 +110,25 @@ function EmotionParticles({
     velocitiesRef.current = velocities
     // 元の位置を保存
     originalPositionsRef.current = new Float32Array(positions)
-    
-    return [positions, uvOffsets, scales, rotations, colors, randomOffsets, iconIndices]
-  }, [totalParticleCount])
 
-  // ハート型の位置を生成（左右対応）
-  const createHeartPositions = useCallback((side: 'left' | 'right' = 'right') => {
-    const heartPos = new Float32Array(totalParticleCount * 3)
-    
-    // ハートシェイプの生成（正しい向き）
-    const shape = new THREE.Shape()
-    shape.moveTo(2.5, -2.5)
-    shape.bezierCurveTo(2.5, -2.5, 2, 0, 0, 0)
-    shape.bezierCurveTo(-3, 0, -3, -3.5, -3, -3.5)
-    shape.bezierCurveTo(-3, -5.5, -1.5, -7.7, 2.5, -9.5)
-    shape.bezierCurveTo(6, -7.7, 8, -5.5, 8, -3.5)
-    shape.bezierCurveTo(8, -3.5, 8, 0, 5, 0)
-    shape.bezierCurveTo(3.5, 0, 2.5, -2.5, 2.5, -2.5)
-    
-    const extrudeSettings = {
-      depth: 2,
-      bevelEnabled: true,
-      bevelSegments: 2,
-      steps: 2,
-      bevelSize: 1,
-      bevelThickness: 1
-    }
-    
-    const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
-    geometry.scale(2, 2, 2)
-    geometry.center()
-    
-    // 左右で回転方向を変える
-    if (side === 'left') {
-      geometry.rotateY(Math.PI / 6)  // 左向きに回転
-    } else {
-      geometry.rotateY(-Math.PI / 6)  // 右向きに回転
-    }
-    
-    // サーフェスサンプリング
-    const positionAttribute = geometry.getAttribute('position')
-    const vertices = positionAttribute.array
-    const vertexCount = vertices.length / 3
-    
-    // X座標のオフセット（左:-100, 右:+100）
-    const xOffset = side === 'left' ? -100 : 100
-    
-    for (let i = 0; i < totalParticleCount; i++) {
-      // ランダムに頂点を選択
-      const idx = Math.floor(Math.random() * vertexCount) * 3
-      
-      // スケールと位置調整
-      heartPos[i * 3] = vertices[idx] * 15 + xOffset      // X: 左右に配置
-      heartPos[i * 3 + 1] = vertices[idx + 1] * 15        // Y
-      heartPos[i * 3 + 2] = vertices[idx + 2] * 15        // Z
-    }
-    
-    return heartPos
+    return [positions, uvOffsets, scales, rotations, colors, randomOffsets, iconIndices]
   }, [totalParticleCount])
 
   // ハート位置の初期化（左右両方を事前に生成）
   useEffect(() => {
-    heartPositionsLeftRef.current = createHeartPositions('left')
-    heartPositionsRightRef.current = createHeartPositions('right')
-  }, [createHeartPositions])
+    heartPositionsLeftRef.current = createHeartPositions(totalParticleCount, 'left')
+    heartPositionsRightRef.current = createHeartPositions(totalParticleCount, 'right')
+  }, [totalParticleCount])
 
   // ScrollTriggerの設定
   useEffect(() => {
     if (typeof window === 'undefined' || !meshRef.current) return
-    
+
     // ブロックの監視とハート形成
     const setupScrollTriggers = () => {
       // VisionSection全体（最初の右ハート）
-      const visionSection = document.querySelector('.visionSection') || 
-                           document.querySelector('[class*="visionSection"]')
+      const visionSection = document.querySelector('.visionSection') ||
+        document.querySelector('[class*="visionSection"]')
       if (visionSection) {
         ScrollTrigger.create({
           trigger: visionSection,
@@ -190,18 +138,16 @@ function EmotionParticles({
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             morphProgressRight.current = self.progress
-            
+
             if (self.progress > 0) {
               currentHeartSide.current = 'right'
               if (!isFormingHeart.current) {
-                console.log('Starting initial right heart formation (VisionSection)')
                 isFormingHeart.current = true
                 onHeartFormationChange?.(true)
                 setVisibleCount(totalParticleCount)
               }
             } else if (self.progress === 0 && isFormingHeart.current) {
               // 上スクロールでトップに戻る時
-              console.log('Returning to top from VisionSection')
               morphProgressRight.current = 0
               morphProgressLeft.current = 0
               isFormingHeart.current = false
@@ -209,17 +155,13 @@ function EmotionParticles({
               onHeartFormationChange?.(false)
               setVisibleCount(baseParticleCount)
             }
-            
-            console.log(`VisionSection heart progress: ${(self.progress * 100).toFixed(1)}%`)
           },
           onLeave: () => {
             // 下スクロールでセクションを離れる時
-            console.log('Leaving VisionSection (downward)')
             // progressはそのまま維持（次のトリガーへスムーズに遷移）
           },
           onEnterBack: () => {
             // 上スクロールで戻ってきた時
-            console.log('Entering back to VisionSection (upward)')
             currentHeartSide.current = 'right'
             morphProgressLeft.current = 0  // 左ハートをリセット
             if (!isFormingHeart.current) {
@@ -230,7 +172,6 @@ function EmotionParticles({
           },
           onLeaveBack: () => {
             // 上スクロールでトップに戻る時
-            console.log('Leaving VisionSection back to top')
             morphProgressRight.current = 0
             morphProgressLeft.current = 0
             isFormingHeart.current = false
@@ -240,7 +181,7 @@ function EmotionParticles({
           }
         })
       }
-      
+
       // ブロック1（左ハート）
       const block1 = document.getElementById('vision-block-1')
       if (block1) {
@@ -253,27 +194,22 @@ function EmotionParticles({
           onUpdate: (self) => {
             morphProgressLeft.current = self.progress
             morphProgressRight.current = 1 - self.progress  // 右ハートは逆進行
-            
+
             if (self.progress > 0) {
               currentHeartSide.current = 'left'
               if (!isFormingHeart.current) {
-                console.log('Starting left heart formation')
                 isFormingHeart.current = true
                 onHeartFormationChange?.(true)
                 setVisibleCount(totalParticleCount)
               }
             }
-            
-            console.log(`Block1: Left=${(self.progress * 100).toFixed(1)}%, Right=${((1-self.progress) * 100).toFixed(1)}%`)
           },
           onLeave: () => {
             // 下スクロールでblock2へ
-            console.log('Leaving Block1 (downward)')
             // progressは維持
           },
           onEnterBack: () => {
             // 上スクロールでblock2から戻る
-            console.log('Entering back to Block1 (upward)')
             currentHeartSide.current = 'left'
             if (!isFormingHeart.current) {
               isFormingHeart.current = true
@@ -283,14 +219,13 @@ function EmotionParticles({
           },
           onLeaveBack: () => {
             // 上スクロールでVisionSectionへ戻る
-            console.log('Leaving Block1 back to VisionSection')
             morphProgressLeft.current = 0
             morphProgressRight.current = 1  // 右ハートへ完全遷移
             currentHeartSide.current = 'right'
           }
         })
       }
-      
+
       // ブロック2（右ハート）
       const block2 = document.getElementById('vision-block-2')
       if (block2) {
@@ -303,22 +238,18 @@ function EmotionParticles({
           onUpdate: (self) => {
             morphProgressRight.current = self.progress
             morphProgressLeft.current = 1 - self.progress  // 左ハートは逆進行
-            
+
             if (self.progress > 0) {
               currentHeartSide.current = 'right'
               if (!isFormingHeart.current) {
-                console.log('Starting second right heart formation')
                 isFormingHeart.current = true
                 onHeartFormationChange?.(true)
                 setVisibleCount(totalParticleCount)
               }
             }
-            
-            console.log(`Block2: Right=${(self.progress * 100).toFixed(1)}%, Left=${((1-self.progress) * 100).toFixed(1)}%`)
           },
           onEnterBack: () => {
             // 上スクロールで下から戻る
-            console.log('Entering back to Block2 (upward)')
             currentHeartSide.current = 'right'
             if (!isFormingHeart.current) {
               isFormingHeart.current = true
@@ -328,14 +259,12 @@ function EmotionParticles({
           },
           onLeaveBack: () => {
             // 上スクロールでblock1へ戻る
-            console.log('Leaving Block2 back to Block1')
             morphProgressRight.current = 0
             morphProgressLeft.current = 1  // 左ハートへ完全遷移
             currentHeartSide.current = 'left'
           },
           onLeave: () => {
             // 下スクロールで完全に離れた時
-            console.log('Leaving Block2 completely')
             // 最後のハート状態を維持または通常状態へ
             setTimeout(() => {
               morphProgressLeft.current = 0
@@ -349,10 +278,10 @@ function EmotionParticles({
         })
       }
     }
-    
+
     // DOM読み込み後に実行
     const timer = setTimeout(setupScrollTriggers, 1000)
-    
+
     return () => {
       clearTimeout(timer)
       ScrollTrigger.getAll().forEach(trigger => trigger.kill())
@@ -394,7 +323,7 @@ function EmotionParticles({
     const positions = positionsAttr.array as Float32Array
     const velocities = velocitiesRef.current
     const bounds = EMOTION_CONFIG.particles.bounds
-    
+
     // シェーダーのuniform更新
     if (shaderMaterial.uniforms.time) {
       shaderMaterial.uniforms.time.value += delta
@@ -407,15 +336,15 @@ function EmotionParticles({
     for (let i = 0; i < visibleCount; i++) {
       const progressLeft = morphProgressLeft.current
       const progressRight = morphProgressRight.current
-      
+
       // 左右どちらかのハートが形成中の場合
-      if ((progressLeft > 0 || progressRight > 0) && 
-          (heartPositionsLeftRef.current || heartPositionsRightRef.current)) {
-        
+      if ((progressLeft > 0 || progressRight > 0) &&
+        (heartPositionsLeftRef.current || heartPositionsRightRef.current)) {
+
         // 使用するハート位置と進行度を決定
         let targetPositions: Float32Array | null = null
         let progress = 0
-        
+
         if (currentHeartSide.current === 'left' && heartPositionsLeftRef.current) {
           targetPositions = heartPositionsLeftRef.current
           progress = progressLeft
@@ -423,7 +352,7 @@ function EmotionParticles({
           targetPositions = heartPositionsRightRef.current
           progress = progressRight
         }
-        
+
         if (targetPositions && progress > 0) {
           // ハート形成のモーフィング
           const targetX = targetPositions[i * 3]
@@ -432,7 +361,7 @@ function EmotionParticles({
           const origX = originalPositionsRef.current[i * 3]
           const origY = originalPositionsRef.current[i * 3 + 1]
           const origZ = originalPositionsRef.current[i * 3 + 2]
-          
+
           // スクロール進行度に基づいて位置を補間
           positions[i * 3] = origX + (targetX - origX) * progress
           positions[i * 3 + 1] = origY + (targetY - origY) * progress
@@ -462,12 +391,12 @@ function EmotionParticles({
           velocities[i * 3 + 2] *= -EMOTION_CONFIG.particles.bounceSpeed
           positions[i * 3 + 2] = Math.sign(positions[i * 3 + 2]) * 100
         }
-        
+
         // 速度減衰
         velocities[i * 3] *= 0.999
         velocities[i * 3 + 1] *= 0.999
         velocities[i * 3 + 2] *= 0.999
-        
+
         // 元の位置を更新
         originalPositionsRef.current[i * 3] = positions[i * 3]
         originalPositionsRef.current[i * 3 + 1] = positions[i * 3 + 1]
@@ -482,7 +411,7 @@ function EmotionParticles({
     const lineColorsAttr = linesRef.current.geometry.attributes.color
     const linePositions = linePositionsAttr.array as Float32Array
     const lineColors = lineColorsAttr.array as Float32Array
-    
+
     let lineIndex = 0
     const maxDistance = EMOTION_CONFIG.connections.maxDistance
 
@@ -493,40 +422,40 @@ function EmotionParticles({
         const x1 = positions[i * 3]
         const y1 = positions[i * 3 + 1]
         const z1 = positions[i * 3 + 2]
-        
+
         const x2 = positions[j * 3]
         const y2 = positions[j * 3 + 1]
         const z2 = positions[j * 3 + 2]
-        
+
         const distance = Math.sqrt(
-          (x2 - x1) ** 2 + 
-          (y2 - y1) ** 2 + 
+          (x2 - x1) ** 2 +
+          (y2 - y1) ** 2 +
           (z2 - z1) ** 2
         )
-        
+
         if (distance < maxDistance) {
           const opacity = (1 - distance / maxDistance) * EMOTION_CONFIG.connections.opacity
-          
+
           // Line start point
           linePositions[lineIndex * 6] = x1
           linePositions[lineIndex * 6 + 1] = y1
           linePositions[lineIndex * 6 + 2] = z1
-          
+
           // Line end point
           linePositions[lineIndex * 6 + 3] = x2
           linePositions[lineIndex * 6 + 4] = y2
           linePositions[lineIndex * 6 + 5] = z2
-          
+
           // Line colors with gradient
           const color = new THREE.Color(EMOTION_CONFIG.connections.color)
           lineColors[lineIndex * 6] = color.r * opacity
           lineColors[lineIndex * 6 + 1] = color.g * opacity
           lineColors[lineIndex * 6 + 2] = color.b * opacity
-          
+
           lineColors[lineIndex * 6 + 3] = color.r * opacity * 0.5
           lineColors[lineIndex * 6 + 4] = color.g * opacity * 0.5
           lineColors[lineIndex * 6 + 5] = color.b * opacity * 0.5
-          
+
           lineIndex++
         }
       }
@@ -549,108 +478,8 @@ function EmotionParticles({
         uColor1: { value: new THREE.Color(EMOTION_CONFIG.colors.primary) },
         uColor2: { value: new THREE.Color(EMOTION_CONFIG.colors.secondary) }
       },
-      vertexShader: `
-        uniform float atlasSize;
-        uniform float time;
-        uniform vec2 uMouse;
-        uniform float uMouseInfluence;
-        
-        attribute vec2 uvOffset;
-        attribute float scale;
-        attribute float rotation;
-        attribute vec3 color;
-        attribute float randomOffset;
-        attribute float iconIndex;
-        
-        varying vec2 vUvOffset;
-        varying vec3 vColor;
-        varying float vAtlasSize;
-        varying float vOpacity;
-        varying float vIconIndex;
-        
-        void main() {
-          vUvOffset = uvOffset;
-          vColor = color;
-          vAtlasSize = atlasSize;
-          vIconIndex = iconIndex;
-          
-          vec3 pos = position;
-          
-          // マウスインタラクション
-          vec2 mousePos = uMouse * 300.0;
-          float mouseDistance = distance(pos.xy, mousePos);
-          float mouseInfluence = smoothstep(uMouseInfluence * 2.0, 0.0, mouseDistance);
-          
-          // マウスから離れる動き
-          if (mouseDistance < uMouseInfluence * 2.0) {
-            vec2 direction = normalize(pos.xy - mousePos);
-            pos.xy += direction * mouseInfluence * 30.0;
-          }
-          
-          // 浮遊アニメーション
-          float floatY = sin(time + randomOffset * 6.28) * 5.0;
-          float floatX = cos(time * 0.7 + randomOffset * 6.28) * 3.0;
-          pos.x += floatX;
-          pos.y += floatY;
-          
-          vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-          gl_Position = projectionMatrix * mvPosition;
-          
-          float distanceScale = 300.0 / length(mvPosition.xyz);
-          gl_PointSize = scale * ${EMOTION_CONFIG.particles.size}.0 * distanceScale;
-          
-          // 距離に応じた透明度
-          vOpacity = smoothstep(500.0, 100.0, length(mvPosition.xyz));
-          vOpacity *= 0.7 + sin(time * 2.0 + randomOffset * 6.28) * 0.3;
-        }
-      `,
-      fragmentShader: `
-        uniform sampler2D map;
-        uniform float time;
-        uniform vec3 uColor1;
-        uniform vec3 uColor2;
-        
-        varying vec2 vUvOffset;
-        varying vec3 vColor;
-        varying float vAtlasSize;
-        varying float vOpacity;
-        varying float vIconIndex;
-        
-        void main() {
-          // Y座標を反転
-          vec2 uv = vUvOffset + vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y) / vAtlasSize;
-          vec4 texColor = texture2D(map, uv);
-          
-          if (texColor.a < 0.01) discard;
-          
-          // グロー効果
-          float glow = sin(time * 2.0 + vIconIndex * 0.5) * 0.3 + 0.7;
-          
-          // カラーグラデーション
-          vec3 gradientColor = mix(uColor1, uColor2, sin(time + vIconIndex) * 0.5 + 0.5);
-          
-          // 元の色と混合
-          vec3 finalColor = texColor.rgb;
-          
-          // 白い部分にグラデーションカラーを適用
-          float brightness = (finalColor.r + finalColor.g + finalColor.b) / 3.0;
-          if (brightness > 0.8) {
-            finalColor = mix(finalColor, gradientColor, 0.5);
-          }
-          
-          // グロー効果を適用
-          finalColor *= glow + 0.5;
-          
-          // エッジフェード（円形にフェードアウト）
-          float dist = distance(gl_PointCoord, vec2(0.5));
-          float edgeFade = 1.0 - smoothstep(0.4, 0.5, dist);
-          
-          // 最終的な透明度
-          float finalAlpha = texColor.a * vOpacity * edgeFade;
-          
-          gl_FragColor = vec4(finalColor, finalAlpha);
-        }
-      `,
+      vertexShader,
+      fragmentShader,
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending
@@ -754,7 +583,7 @@ function Scene() {
   // テクスチャアトラスの生成
   useEffect(() => {
     const atlasGenerator = new TextureAtlasGenerator()
-    
+
     atlasGenerator.generate(
       EMOTION_CONFIG.emotions,
       EMOTION_CONFIG.atlas
@@ -769,12 +598,12 @@ function Scene() {
     }
   }, [])
 
-  // グループの回転（ハート形成中は停止）
-  useFrame((state, delta) => {
+  // グループの回転処理を削除（浮遊感はShaderで維持）
+  /* useFrame((state, delta) => {
     if (groupRef.current && !isFormingHeart.current) {
       groupRef.current.rotation.y += EMOTION_CONFIG.animation.rotationSpeed
     }
-  })
+  }) */
 
   if (!texture) {
     return null // テクスチャ読み込み中
@@ -782,8 +611,8 @@ function Scene() {
 
   return (
     <group ref={groupRef}>
-      <EmotionParticles 
-        texture={texture} 
+      <EmotionParticles
+        texture={texture}
         onHeartFormationChange={(forming: boolean) => {
           isFormingHeart.current = forming
         }}
@@ -798,8 +627,9 @@ function Scene() {
 export default function EmotionParticleSystemFiber() {
   return (
     <Canvas
-      camera={{ 
-        position: [0, 0, 300], 
+      dpr={[1, 1.5]}
+      camera={{
+        position: [0, 0, 300],
         fov: 75,
         near: 0.1,
         far: 1000
@@ -813,15 +643,15 @@ export default function EmotionParticleSystemFiber() {
         zIndex: 0,
         pointerEvents: 'none',
       }}
-      gl={{ 
-        antialias: true, 
+      gl={{
+        antialias: true,
         alpha: true,
         powerPreference: 'high-performance'
       }}
     >
       {/* 開発時のみStats表示 */}
       {features.showStats && <Stats />}
-      
+
       {/* シーン */}
       <Scene />
     </Canvas>

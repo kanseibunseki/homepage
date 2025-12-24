@@ -16,7 +16,7 @@ export default function LenisProvider({
   useIsomorphicLayoutEffect(() => {
     // Lenisインスタンスの作成
     const lenis = new Lenis({
-      duration: 1.2, // スクロールアニメーションの継続時間
+      duration: 1.0, // スクロールアニメーションの継続時間
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // カスタムイージング関数
       orientation: 'vertical', // 垂直スクロール
       gestureOrientation: 'vertical', // ジェスチャーも垂直
