@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import EmotionParticleSystemFiber from '../three/EmotionParticleSystemFiber'
 import CursorRipple from '../effects/CursorRipple'
 import ScrollDebugger from '../debug/ScrollDebugger'
@@ -95,13 +96,13 @@ const HeroSection = () => {
 
             {/* ボタングループ */}
             <div className={styles.buttonGroup}>
-              <button className={styles.primaryButton}>
+              <Link href="/contact" className={styles.primaryButton}>
                 <span className={styles.buttonText}>分析を開始</span>
                 <span className={styles.buttonIcon}>→</span>
-              </button>
-              <button className={styles.secondaryButton}>
+              </Link>
+              <Link href="/n1-interview" className={styles.secondaryButton}>
                 <span className={styles.buttonText}>詳細を見る</span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
