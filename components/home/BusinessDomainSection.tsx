@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import styles from './BusinessDomainSection.module.css'
 
@@ -9,6 +10,7 @@ interface ServiceCard {
   title: string
   subtitle: string
   description: string
+  link: string
 }
 
 const BusinessDomainSection = () => {
@@ -22,14 +24,16 @@ const BusinessDomainSection = () => {
       symbol: '',  // 3Dキューブで置き換え
       title: 'コンサルティング',
       subtitle: '感性をビジネスの力に',
-      description: '「KANSEI Agents」が暴き出すインサイトを、ビジネスの血肉へ。経験豊富なコンサルタントが、データと感性を繋ぎ、持続可能な成長戦略を共に描きます。'
+      description: '「KANSEI Agents」が暴き出すインサイトを、ビジネスの血肉へ。経験豊富なコンサルタントが、データと感性を繋ぎ、持続可能な成長戦略を共に描きます。',
+      link: '/consulting'
     },
     {
       id: 'n1-interview',
       symbol: '',  // 3Dキューブで置き換え
       title: 'N1インタビューサービス',
       subtitle: '一人ひとりの声に、深く向き合う',
-      description: '顧客一人ひとりの声に徹底的に向き合い、表層的なデータでは見えない真の感性とニーズを引き出します。質的なインサイトから、ビジネスの核心的課題を発見します。'
+      description: '顧客一人ひとりの声に徹底的に向き合い、表層的なデータでは見えない真の感性とニーズを引き出します。質的なインサイトから、ビジネスの核心的課題を発見します。',
+      link: '/n1-interview'
     }
   ]
 
@@ -66,7 +70,7 @@ const BusinessDomainSection = () => {
           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="businessGrid" width="80" height="80" patternUnits="userSpaceOnUse">
-                <path d="M 80 0 L 0 0 0 80" fill="none" stroke="rgba(138, 43, 226, 0.05)" strokeWidth="0.5"/>
+                <path d="M 80 0 L 0 0 0 80" fill="none" stroke="rgba(138, 43, 226, 0.05)" strokeWidth="0.5" />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#businessGrid)" />
@@ -113,46 +117,52 @@ const BusinessDomainSection = () => {
         </div>
 
         {/* サービスカード表示（選択されたタブのみ） */}
-        <div className={`${styles.serviceDisplay} ${isVisible ? styles.displayVisible : ''}`}>
-          {services
-            .filter((service) => service.id === activeTab)
-            .map((service) => (
-              <div key={service.id} className={styles.serviceCard}>
-                <div className={styles.cardInner}>
-                  <div className={styles.cardSymbol}>
-                    <div className={styles.cube}>
-                      <div className={styles.cubeFace + ' ' + styles.cubeFront}></div>
-                      <div className={styles.cubeFace + ' ' + styles.cubeBack}></div>
-                      <div className={styles.cubeFace + ' ' + styles.cubeRight}></div>
-                      <div className={styles.cubeFace + ' ' + styles.cubeLeft}></div>
-                      <div className={styles.cubeFace + ' ' + styles.cubeTop}></div>
-                      <div className={styles.cubeFace + ' ' + styles.cubeBottom}></div>
-                    </div>
+        {services
+          .filter((service) => service.id === activeTab)
+          .map((service) => (
+            <div key={service.id} className={styles.serviceCard}>
+              <div className={styles.cardInner}>
+                <div className={styles.cardSymbol}>
+                  <div className={styles.cube}>
+                    <div className={styles.cubeFace + ' ' + styles.cubeFront}></div>
+                    <div className={styles.cubeFace + ' ' + styles.cubeBack}></div>
+                    <div className={styles.cubeFace + ' ' + styles.cubeRight}></div>
+                    <div className={styles.cubeFace + ' ' + styles.cubeLeft}></div>
+                    <div className={styles.cubeFace + ' ' + styles.cubeTop}></div>
+                    <div className={styles.cubeFace + ' ' + styles.cubeBottom}></div>
                   </div>
-                  <h3 className={styles.cardTitle}>
-                    {service.title}
-                  </h3>
-                  <p className={styles.cardSubtitle}>
-                    {service.subtitle}
-                  </p>
-                  <div className={styles.cardDivider} />
-                  <p className={styles.cardDescription}>
-                    {service.description}
-                  </p>
-                  <div className={styles.cardGlow} />
-                  <div className={styles.cardBorder} />
                 </div>
+                <h3 className={styles.cardTitle}>
+                  {service.title}
+                </h3>
+                <p className={styles.cardSubtitle}>
+                  {service.subtitle}
+                </p>
+                <div className={styles.cardDivider} />
+                <p className={styles.cardDescription}>
+                  {service.description}
+                </p>
+
+                <div className={styles.buttonContainer}>
+                  <Link href={service.link} className={styles.detailButton}>
+                    <span className={styles.buttonText}>詳細を見る</span>
+                    <span className={styles.buttonIcon}>→</span>
+                  </Link>
+                </div>
+
+                <div className={styles.cardGlow} />
+                <div className={styles.cardBorder} />
               </div>
-            ))}
-        </div>
+            </div>
+          ))}
 
         {/* フローティングパーティクル */}
         <div className={styles.floatingParticles}>
           {[...Array(6)].map((_, i) => (
-            <div 
+            <div
               key={i}
               className={styles.particle}
-              style={{ 
+              style={{
                 animationDelay: `${i * 1.5}s`,
                 left: `${10 + i * 15}%`,
                 top: `${20 + (i % 3) * 30}%`

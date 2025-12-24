@@ -5,11 +5,11 @@
   width: 100%;
   min-height: 100vh;
   background: linear-gradient(180deg,
-    rgba(5, 5, 10, 0.4) 0%,
-    rgba(10, 5, 30, 0.4) 25%,
-    rgba(5, 10, 40, 0.4) 50%,
-    rgba(10, 5, 30, 0.4) 75%,
-    rgba(5, 5, 10, 0.4) 100%);
+      rgba(5, 5, 10, 0.4) 0%,
+      rgba(10, 5, 30, 0.4) 25%,
+      rgba(5, 10, 40, 0.4) 50%,
+      rgba(10, 5, 30, 0.4) 75%,
+      rgba(5, 5, 10, 0.4) 100%);
   overflow: hidden;
   padding: 140px 0 100px;
   z-index: 2;
@@ -22,7 +22,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
+  background:
     radial-gradient(circle at 20% 50%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 80% 80%, rgba(0, 255, 204, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 40% 20%, rgba(0, 255, 136, 0.05) 0%, transparent 40%);
@@ -31,8 +31,15 @@
 }
 
 @keyframes backgroundPulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 /* コンテナ */
@@ -76,6 +83,7 @@
   0% {
     filter: brightness(1) drop-shadow(0 0 20px rgba(0, 255, 204, 0.5));
   }
+
   100% {
     filter: brightness(1.3) drop-shadow(0 0 40px rgba(138, 43, 226, 0.8));
   }
@@ -100,9 +108,9 @@
   width: 80px;
   height: 2px;
   background: linear-gradient(90deg,
-    transparent 0%,
-    #00ffcc 50%,
-    transparent 100%);
+      transparent 0%,
+      #00ffcc 50%,
+      transparent 100%);
   animation: linePulse 2s ease-in-out infinite;
 }
 
@@ -117,10 +125,13 @@
 }
 
 @keyframes linePulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.5;
     transform: scaleX(1);
   }
+
   50% {
     opacity: 1;
     transform: scaleX(1.2);
@@ -128,10 +139,13 @@
 }
 
 @keyframes corePulse {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
     box-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
   }
+
   50% {
     transform: scale(1.3);
     box-shadow: 0 0 40px rgba(138, 43, 226, 1);
@@ -189,7 +203,7 @@
   display: grid;
   grid-template-columns: 1fr 1.2fr;
   gap: 50px;
-  align-items: start;
+  align-items: stretch;
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 40px;
@@ -199,6 +213,7 @@
 .leftColumn {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 40px;
 }
 
@@ -214,7 +229,7 @@
 }
 
 .agentSectionAlt {
-  background: 
+  background:
     linear-gradient(135deg, rgba(10, 5, 30, 0.3) 0%, rgba(20, 10, 40, 0.2) 100%),
     radial-gradient(ellipse at center, rgba(138, 43, 226, 0.05) 0%, transparent 70%);
   padding: 80px 0;
@@ -291,7 +306,7 @@
   font-size: 20px;
   font-weight: 700;
   position: relative;
-  box-shadow: 
+  box-shadow:
     0 0 20px rgba(0, 255, 204, 0.3),
     inset 0 0 20px rgba(138, 43, 226, 0.2);
   animation: numberGlow 3s ease-in-out infinite;
@@ -299,13 +314,16 @@
 }
 
 @keyframes numberGlow {
-  0%, 100% {
-    box-shadow: 
+
+  0%,
+  100% {
+    box-shadow:
       0 0 20px rgba(0, 255, 204, 0.3),
       inset 0 0 20px rgba(138, 43, 226, 0.2);
   }
+
   50% {
-    box-shadow: 
+    box-shadow:
       0 0 40px rgba(0, 255, 204, 0.5),
       inset 0 0 30px rgba(138, 43, 226, 0.3);
   }
@@ -334,12 +352,15 @@
 /* Interview Agent Styles */
 
 .chatInterface {
-  background: 
+  background:
     linear-gradient(135deg, rgba(10, 10, 20, 0.9) 0%, rgba(20, 10, 40, 0.8) 100%);
   border: 1px solid rgba(0, 255, 204, 0.2);
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
     0 10px 40px rgba(0, 0, 0, 0.3),
     0 0 60px rgba(0, 255, 204, 0.1);
   transition: all 0.3s ease;
@@ -347,7 +368,7 @@
 
 .chatInterface:hover {
   border-color: rgba(0, 255, 204, 0.4);
-  box-shadow: 
+  box-shadow:
     0 15px 50px rgba(0, 0, 0, 0.4),
     0 0 80px rgba(0, 255, 204, 0.15);
 }
@@ -372,10 +393,13 @@
 }
 
 @keyframes statusPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.6;
     transform: scale(1.2);
@@ -384,7 +408,7 @@
 
 .chatMessages {
   padding: 20px;
-  height: 520px;
+  flex: 1;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -447,26 +471,29 @@
 }
 
 .analysisPanel {
-  background: 
+  background:
     linear-gradient(135deg, rgba(138, 43, 226, 0.15) 0%, rgba(0, 255, 204, 0.05) 100%);
   border-left: 3px solid #8a2be2;
   border-radius: 12px;
   padding: 20px;
   margin-left: 48px;
-  box-shadow: 
+  box-shadow:
     0 5px 20px rgba(138, 43, 226, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
   animation: panelGlow 3s ease-in-out infinite;
 }
 
 @keyframes panelGlow {
-  0%, 100% { 
-    box-shadow: 
+
+  0%,
+  100% {
+    box-shadow:
       0 5px 20px rgba(138, 43, 226, 0.2),
       inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
-  50% { 
-    box-shadow: 
+
+  50% {
+    box-shadow:
       0 8px 30px rgba(138, 43, 226, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
@@ -534,6 +561,7 @@
     opacity: 0;
     transform: scale(0.8) translateY(10px);
   }
+
   100% {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -578,7 +606,7 @@
 
 /* Neural Network Visualization */
 .neuralVisual {
-  background: 
+  background:
     radial-gradient(ellipse at center, rgba(138, 43, 226, 0.1) 0%, rgba(0, 0, 0, 0.8) 70%),
     linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(10, 5, 30, 0.7) 100%);
   border: 1px solid rgba(0, 255, 204, 0.15);
@@ -589,7 +617,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 
+  box-shadow:
     0 10px 40px rgba(0, 0, 0, 0.3),
     inset 0 0 60px rgba(138, 43, 226, 0.1);
   overflow: hidden;
@@ -603,21 +631,29 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: 
-    repeating-linear-gradient(
-      45deg,
+  background:
+    repeating-linear-gradient(45deg,
       transparent,
       transparent 10px,
       rgba(0, 255, 204, 0.02) 10px,
-      rgba(0, 255, 204, 0.02) 20px
-    );
-  animation: scanLines 10s linear infinite;
+      rgba(0, 255, 204, 0.02) 20px);
+  background:
+    repeating-linear-gradient(45deg,
+      transparent,
+      transparent 10px,
+      rgba(0, 255, 204, 0.02) 10px,
+      rgba(0, 255, 204, 0.02) 20px);
   pointer-events: none;
 }
 
 @keyframes scanLines {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(20px, 20px); }
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(20px, 20px);
+  }
 }
 
 .neuralSvg {
@@ -649,10 +685,13 @@
 }
 
 @keyframes nodePulse {
-  0%, 100% {
+
+  0%,
+  100% {
     r: 3;
     filter: drop-shadow(0 0 8px rgba(0, 255, 204, 0.8));
   }
+
   50% {
     r: 4;
     filter: drop-shadow(0 0 15px rgba(0, 255, 204, 1));
@@ -709,7 +748,7 @@
 }
 
 .metricCard {
-  background: 
+  background:
     linear-gradient(135deg, rgba(10, 10, 20, 0.9) 0%, rgba(20, 10, 40, 0.8) 100%);
   border: 1px solid rgba(0, 255, 204, 0.2);
   border-radius: 16px;
@@ -731,7 +770,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
+  background:
     radial-gradient(circle at 50% -50%, rgba(0, 255, 204, 0.2) 0%, transparent 70%);
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -744,7 +783,7 @@
 .metricCard:hover {
   transform: translateY(-8px) scale(1.02);
   border-color: rgba(0, 255, 204, 0.5);
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(0, 255, 204, 0.25),
     0 0 60px rgba(0, 255, 204, 0.1);
 }
@@ -756,13 +795,28 @@
   animation: iconFloat 3s ease-in-out infinite;
 }
 
-.metricCard:nth-child(1) .metricIcon { animation-delay: 0s; }
-.metricCard:nth-child(2) .metricIcon { animation-delay: 0.5s; }
-.metricCard:nth-child(3) .metricIcon { animation-delay: 1s; }
+.metricCard:nth-child(1) .metricIcon {
+  animation-delay: 0s;
+}
+
+.metricCard:nth-child(2) .metricIcon {
+  animation-delay: 0.5s;
+}
+
+.metricCard:nth-child(3) .metricIcon {
+  animation-delay: 1s;
+}
 
 @keyframes iconFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
 }
 
 .metricValue {
@@ -788,12 +842,12 @@
 
 /* Trend Graph */
 .trendGraph {
-  background: 
+  background:
     linear-gradient(135deg, rgba(10, 10, 20, 0.9) 0%, rgba(15, 10, 35, 0.8) 100%);
   border: 1px solid rgba(0, 255, 204, 0.2);
   border-radius: 16px;
   padding: 30px;
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
   position: relative;
@@ -820,8 +874,13 @@
 }
 
 @keyframes borderRotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .graphHeader {
@@ -865,7 +924,7 @@
 
 /* Word Cloud */
 .wordCloud {
-  background: 
+  background:
     radial-gradient(ellipse at center, rgba(138, 43, 226, 0.1) 0%, rgba(10, 10, 20, 0.9) 100%);
   border: 1px solid rgba(0, 255, 204, 0.2);
   border-radius: 16px;
@@ -877,7 +936,7 @@
   justify-content: center;
   min-height: 320px;
   position: relative;
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.3),
     inset 0 0 60px rgba(138, 43, 226, 0.05);
 }
@@ -896,8 +955,17 @@
 }
 
 @keyframes pulseGlow {
-  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
 }
 
 .word {
@@ -911,18 +979,53 @@
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-.word:nth-child(1) { animation-delay: 0s; }
-.word:nth-child(2) { animation-delay: 0.2s; }
-.word:nth-child(3) { animation-delay: 0.4s; }
-.word:nth-child(4) { animation-delay: 0.6s; }
-.word:nth-child(5) { animation-delay: 0.8s; }
-.word:nth-child(6) { animation-delay: 1s; }
-.word:nth-child(7) { animation-delay: 1.2s; }
-.word:nth-child(8) { animation-delay: 1.4s; }
-.word:nth-child(9) { animation-delay: 1.6s; }
-.word:nth-child(10) { animation-delay: 1.8s; }
-.word:nth-child(11) { animation-delay: 2s; }
-.word:nth-child(12) { animation-delay: 2.2s; }
+.word:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.word:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.word:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.word:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+.word:nth-child(5) {
+  animation-delay: 0.8s;
+}
+
+.word:nth-child(6) {
+  animation-delay: 1s;
+}
+
+.word:nth-child(7) {
+  animation-delay: 1.2s;
+}
+
+.word:nth-child(8) {
+  animation-delay: 1.4s;
+}
+
+.word:nth-child(9) {
+  animation-delay: 1.6s;
+}
+
+.word:nth-child(10) {
+  animation-delay: 1.8s;
+}
+
+.word:nth-child(11) {
+  animation-delay: 2s;
+}
+
+.word:nth-child(12) {
+  animation-delay: 2.2s;
+}
 
 .word:hover {
   transform: scale(1.2);
@@ -930,15 +1033,20 @@
 }
 
 @keyframes wordFloat {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0) rotate(0deg);
   }
+
   25% {
     transform: translateY(-8px) rotate(-2deg);
   }
+
   50% {
     transform: translateY(-10px) rotate(0deg);
   }
+
   75% {
     transform: translateY(-8px) rotate(2deg);
   }
@@ -975,7 +1083,7 @@
 
 /* Radar Chart */
 .radarChart {
-  background: 
+  background:
     radial-gradient(circle at center, rgba(0, 255, 204, 0.05) 0%, rgba(10, 10, 20, 0.9) 100%);
   border: 1px solid rgba(0, 255, 204, 0.2);
   border-radius: 16px;
@@ -983,7 +1091,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.3),
     inset 0 0 40px rgba(0, 255, 204, 0.05);
   position: relative;
@@ -999,9 +1107,9 @@
   width: 200%;
   height: 200%;
   transform: translate(-50%, -50%);
-  background: 
-    conic-gradient(from 0deg, 
-      transparent 0deg, 
+  background:
+    conic-gradient(from 0deg,
+      transparent 0deg,
       rgba(0, 255, 204, 0.02) 60deg,
       transparent 120deg,
       rgba(138, 43, 226, 0.02) 180deg,
@@ -1020,12 +1128,12 @@
 
 /* Analysis Matrix */
 .analysisMatrix {
-  background: 
+  background:
     linear-gradient(135deg, rgba(10, 10, 25, 0.95) 0%, rgba(25, 15, 45, 0.9) 100%);
   border: 1px solid rgba(0, 255, 204, 0.15);
   border-radius: 20px;
   padding: 35px;
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
   position: relative;
@@ -1039,7 +1147,7 @@
   left: -100%;
   right: -100%;
   bottom: -100%;
-  background: 
+  background:
     radial-gradient(circle at 20% 30%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 80% 70%, rgba(0, 255, 204, 0.1) 0%, transparent 50%);
   animation: matrixGlow 10s ease-in-out infinite;
@@ -1047,8 +1155,17 @@
 }
 
 @keyframes matrixGlow {
-  0%, 100% { transform: rotate(0deg) scale(1); opacity: 0.5; }
-  50% { transform: rotate(180deg) scale(1.2); opacity: 1; }
+
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: rotate(180deg) scale(1.2);
+    opacity: 1;
+  }
 }
 
 .analysisMatrix h4 {
@@ -1130,8 +1247,17 @@
 }
 
 @keyframes categoryPulse {
-  0%, 100% { opacity: 0.5; transform: translateX(0); }
-  50% { opacity: 1; transform: translateX(3px); }
+
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: translateX(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(3px);
+  }
 }
 
 .matrixBarContainer {
@@ -1150,7 +1276,7 @@
   background: linear-gradient(90deg, #00ffcc 0%, #00ff88 50%, #00ffcc 100%);
   border-radius: 4px;
   transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 
+  box-shadow:
     0 0 20px rgba(0, 255, 204, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
   position: relative;
@@ -1159,8 +1285,15 @@
 }
 
 @keyframes barGradient {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .matrixBarFill::after {
@@ -1170,16 +1303,21 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(255, 255, 255, 0.2) 50%, 
-    transparent 100%);
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.2) 50%,
+      transparent 100%);
   animation: shimmer 2s infinite;
 }
 
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .matrixScore {
@@ -1244,7 +1382,7 @@
 
 /* Insight Box */
 .insightBox {
-  background: 
+  background:
     linear-gradient(135deg, rgba(138, 43, 226, 0.2) 0%, rgba(0, 255, 204, 0.15) 100%);
   border: 2px solid rgba(0, 255, 204, 0.3);
   border-radius: 20px;
@@ -1252,20 +1390,23 @@
   margin-top: 25px;
   position: relative;
   overflow: hidden;
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(138, 43, 226, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   animation: insightGlow 4s ease-in-out infinite;
 }
 
 @keyframes insightGlow {
-  0%, 100% { 
-    box-shadow: 
+
+  0%,
+  100% {
+    box-shadow:
       0 10px 30px rgba(138, 43, 226, 0.2),
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
-  50% { 
-    box-shadow: 
+
+  50% {
+    box-shadow:
       0 15px 40px rgba(138, 43, 226, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.2),
       0 0 60px rgba(0, 255, 204, 0.1);
@@ -1280,13 +1421,18 @@
   width: 200%;
   height: 200%;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-  animation: insightRotate 10s linear infinite;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
   pointer-events: none;
 }
 
 @keyframes insightRotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .insightHeader {
@@ -1310,8 +1456,15 @@
 }
 
 @keyframes iconBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
 }
 
 .insightText {
@@ -1334,7 +1487,7 @@
   padding: 0;
   border: 1px solid rgba(0, 255, 204, 0.2);
   overflow: hidden;
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }

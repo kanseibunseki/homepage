@@ -80,21 +80,21 @@ export const InterviewAgent = ({ isVisible, neuralNodes, pulseAnimation }: Inter
 
                         <div className={styles.analysisPanel}>
                             <div className={styles.sentimentMeter}>
-                                <span>感情分析</span>
+                                <span>インサイト深度</span>
                                 <div className={styles.meterBar}>
-                                    <div className={styles.meterFill} style={{ width: '90%', background: 'linear-gradient(90deg, #00ff88, #00ffcc)' }}></div>
+                                    <div className={styles.meterFill} style={{ width: '85%', background: 'linear-gradient(90deg, #0088ff, #00ccff)' }}></div>
                                 </div>
                                 <div className={styles.meterLabels}>
-                                    <span>ネガティブ</span>
-                                    <span className={styles.score}>+0.9</span>
-                                    <span>ポジティブ</span>
+                                    <span>顕在的</span>
+                                    <span className={styles.score} style={{ color: '#00ccff' }}>潜在欲求: 有能感</span>
+                                    <span>潜在的</span>
                                 </div>
                             </div>
 
                             <div className={styles.keywordsExtracted}>
-                                <span className={styles.keywordTag}>検索機能</span>
-                                <span className={styles.emotionTag}>満足</span>
-                                <span className={styles.contextTag}>使いやすさ</span>
+                                <span className={styles.keywordTag} style={{ borderColor: '#0088ff', color: '#0088ff' }}>#自己効力感</span>
+                                <span className={styles.keywordTag} style={{ borderColor: '#00ccff', color: '#00ccff' }}>#業務効率化</span>
+                                <span className={styles.keywordTag} style={{ borderColor: '#00ccff', color: '#00ccff' }}>#達成感</span>
                             </div>
                         </div>
 
@@ -108,21 +108,49 @@ export const InterviewAgent = ({ isVisible, neuralNodes, pulseAnimation }: Inter
 
                         <div className={styles.analysisPanel}>
                             <div className={styles.sentimentMeter}>
-                                <span>感情分析</span>
+                                <span>心理的摩擦 (Friction)</span>
                                 <div className={styles.meterBar}>
-                                    <div className={styles.meterFill} style={{ width: '35%', background: 'linear-gradient(90deg, #ff6600, #ff9933)' }}></div>
+                                    <div className={styles.meterFill} style={{ width: '75%', background: 'linear-gradient(90deg, #aa00ff, #ff0066)' }}></div>
                                 </div>
                                 <div className={styles.meterLabels}>
-                                    <span>ネガティブ</span>
-                                    <span className={styles.score}>-0.3</span>
-                                    <span>ポジティブ</span>
+                                    <span>スムーズ</span>
+                                    <span className={styles.score} style={{ color: '#ff0066' }}>認知負荷: 高</span>
+                                    <span>高負荷</span>
                                 </div>
                             </div>
 
                             <div className={styles.keywordsExtracted}>
-                                <span className={styles.keywordTag}>初期設定</span>
-                                <span className={styles.emotionTag}>改善希望</span>
-                                <span className={styles.keywordTag}>ガイダンス</span>
+                                <span className={styles.keywordTag} style={{ borderColor: '#aa00ff', color: '#aa00ff' }}>#認知的不協和</span>
+                                <span className={styles.keywordTag} style={{ borderColor: '#ff0066', color: '#ff0066' }}>#安心感の欠如</span>
+                                <span className={styles.keywordTag} style={{ borderColor: '#ff0066', color: '#ff0066' }}>#メンタルモデル不一致</span>
+                            </div>
+                        </div>
+
+                        <div className={styles.messageUser}>
+                            <span className={styles.messageAvatar}>U</span>
+                            <div className={styles.messageContent}>
+                                <p>AIの提案が的確で、まるで自分のことを<br />理解してくれているようです。</p>
+                                <span className={styles.messageTime}>10:28</span>
+                            </div>
+                        </div>
+
+                        <div className={styles.analysisPanel}>
+                            <div className={styles.sentimentMeter}>
+                                <span>インサイト深度</span>
+                                <div className={styles.meterBar}>
+                                    <div className={styles.meterFill} style={{ width: '95%', background: 'linear-gradient(90deg, #0088ff, #00ffcc)' }}></div>
+                                </div>
+                                <div className={styles.meterLabels}>
+                                    <span>顕在的</span>
+                                    <span className={styles.score} style={{ color: '#00ffcc' }}>潜在欲求: 受容</span>
+                                    <span>潜在的</span>
+                                </div>
+                            </div>
+
+                            <div className={styles.keywordsExtracted}>
+                                <span className={styles.keywordTag} style={{ borderColor: '#00ffcc', color: '#00ffcc' }}>#信頼構築</span>
+                                <span className={styles.keywordTag} style={{ borderColor: '#0088ff', color: '#0088ff' }}>#自己重要感</span>
+                                <span className={styles.keywordTag} style={{ borderColor: '#00ffcc', color: '#00ffcc' }}>#パートナーシップ</span>
                             </div>
                         </div>
                     </div>
