@@ -46,10 +46,10 @@ export default function MembersPage() {
                 <h3 className={styles.detailsTitle}>受賞歴・実績</h3>
                 <ul className={styles.detailsList}>
                   <li>優勝/2連続金賞 MUFG Data Science Champion Ship<br />
-                  Jリーグの観客動員数予測、クラウドファンの成功予測など</li>
+                    Jリーグの観客動員数予測、クラウドファンの成功予測など</li>
                   <li>デロイトアナリティクス 金賞</li>
                   <li>電子情報通信学会MVE研究会での発表論文がMVE賞を受賞<br />
-                  （NTTも参画する日本最大級の学会）</li>
+                    （NTTも参画する日本最大級の学会）</li>
                   <li>関西学院大学 首席卒業</li>
                 </ul>
               </div>
@@ -57,14 +57,14 @@ export default function MembersPage() {
           </div>
         </div>
 
-        {/* メンバー2: 田中文士 */}
+        {/* メンバー2: 田中丈士 */}
         <div className={styles.memberCard} id="tanaka">
           <div className={styles.memberCardInner}>
             <div className={styles.memberImageWrapper}>
               <div className={styles.memberImageGlow}></div>
               <img
                 src="/img/members/members_3.png"
-                alt="田中文士"
+                alt="田中丈士"
                 className={styles.memberImage}
                 width={300}
                 height={300}
@@ -72,7 +72,7 @@ export default function MembersPage() {
             </div>
 
             <div className={styles.memberInfo}>
-              <h2 className={styles.memberName}>田中 文士</h2>
+              <h2 className={styles.memberName}>田中 丈士</h2>
               <p className={styles.memberRole}>システムエンジニア</p>
               <p className={styles.memberDuty}>担当：システム開発</p>
 
@@ -81,14 +81,14 @@ export default function MembersPage() {
                 <ul className={styles.detailsList}>
                   <li>学生時からWEBサイト制作事業を収益化</li>
                   <li>完全オリジナルのゲーム開発<br />
-                  ゲームのルール設計からUI/UXデザインまで全て自ら設計、<br />
-                  アプリのリリース＆収益化を実現。</li>
+                    ゲームのルール設計からUI/UXデザインまで全て自ら設計、<br />
+                    アプリのリリース＆収益化を実現。</li>
                   <li>音楽分野のSNS開発<br />
-                  ユーザー管理・データベース設計・セキュリティ向上、<br />
-                  UI最適化・リアルタイム通信機能など全て自ら実装。</li>
+                    ユーザー管理・データベース設計・セキュリティ向上、<br />
+                    UI最適化・リアルタイム通信機能など全て自ら実装。</li>
                   <li>Salesforce プロジェクトマネージャー<br />
-                  10社以上のDXを推進。顧客管理システムの導入など、<br />
-                  業務プロセスの効率化を成功に導く。</li>
+                    10社以上のDXを推進。顧客管理システムの導入など、<br />
+                    業務プロセスの効率化を成功に導く。</li>
                 </ul>
               </div>
             </div>
